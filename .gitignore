@@ -1,0 +1,65 @@
+# Ignore everything by default
+*
+.zsh_history
+.bash_history
+
+# Allow the .gitignore itself and the include list
+!.gitignore
+!.dotfiles-include.txt
+
+# Allow important top-level files
+!.zshrc
+!.zprofile
+!.vimrc
+!.bashrc
+!.bash_profile
+!.bash_logout
+!.gtkrc-2.0
+
+# Allow hidden folders (must allow parent folders explicitly!)
+!.backups/
+!.backups/**
+
+# Allow everything in .config — one directory at a time (clean and minimal)
+!.config/
+!.config/kitty/**
+!.config/emacs/**
+!.config/qutebrowser/**
+!.config/rofi/**
+!.config/Kvantum/**
+!.config/hypr/**
+!.config/waybar/**
+!.config/wlogout/**
+!.config/dunst/**
+!.config/systemd/**
+!.config/nvim/**
+!.config/lf/**
+!.config/geany/**
+!.config/gtk-3.0/**
+!.config/gtk-4.0/**
+!.config/qt5ct/**
+!.config/qt6ct/**
+!.config/Mousepad/**
+!.config/libvirt/**
+!.config/hyprshell/**
+!.config/xsettingsd/**
+!.config/xfce4/**
+!.config/user-dirs.locale
+!.config/user-dirs.dirs
+!.config/swaylock/**
+!.config/swappy/**
+!.config/session/**
+!.config/prayer-times/**
+!.config/peaclock/**
+!.config/nwg-look/**
+!.config/freerdp/**
+!.config/autostart/**
+!.config/mpv/**
+
+
+# Ignore sensitive files
+*token*
+*key*
+*secret*
+*password*
+*.pem
