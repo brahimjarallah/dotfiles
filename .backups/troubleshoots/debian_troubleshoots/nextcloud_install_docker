@@ -1,0 +1,60 @@
+تنصيب وإعداد Nextcloud على السيرفر المنزلي
+⚓︎
+
+تنصيب وتشغيل خدمة Nextcloud على السيرفر المنزلي.
+تطبيق Nextcloud يقدم لك الكثير من الخِدْمَات السحابية، على السيرفر المنزلي، وبشكل يحفظ لك خصوصيتك.
+خِدْمَات عدّة، مثل مزامنة ومشاركة الملفات والصور والاحتفاظ بنسخ احتياطية بشكل دائم منها، مزامنة جهات الاتصال والمهام والمواعيد، ومشاركتها مع أفراد الأسرة.
+إعداد مجلدات الخدمة
+⚓︎
+mkdir -p /mnt/srv/docker/cont/nextcloud/{db,html,db-backup} /mnt/srv/data/nc-data
+إضافة الخدمة إلى docker-compose file
+⚓︎
+بالأمر:
+nano /mnt/srv/docker/comp/docker-compose.yml
+وإضافة ما يلي:
+docker-compose.yml
+  nextcloud:
+    image: nextcloud:25
+    container_name: nextcloud
+    user: 1000:1000
+    networks:
+      - hs
+    links:
+      - nextcloud-db
+    hostname: nc.vs-yt.mm
+    environment:
+      - TZ=Africa/Cairo
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_HOST=nextcloud-db
+      - NEXTCLOUD_TRUSTED_DOMAINS=localhost nextcloud 192.168.100.76:8080 nc.vs-yt.mm *.vs-yt.mm
+      # - NEXTCLOUD_ADMIN_USER=mbesar
+      # - NEXTCLOUD_ADMIN_PASSWORD=password
+      # - NEXTCLOUD_DATA_DIR=/var/www/html/data # if you need to change data folder
+    volumes:
+      - /mnt/srv/docker/cont/nextcloud/html:/var/www/html
+      - /mnt/srv/data/nc-data:/var/www/html/data
+    ports:
+      - 8080:80
+    restart: unless-stopped
+ #--------------------------------------
+  nextcloud-db:
+    image: postgres:15
+    container_name: nextcloud-db
+    user: 1000:1000
+    networks:
+      - hs
+    environment:
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_DB=nextcloud
+    volumes:
+      - /mnt/srv/docker/cont/nextcloud/db:/var/lib/postgresql/data
+      - /mnt/srv/docker/cont/nextcloud/db-backup:/var/lib/postgresql/backup
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+إنشاء وتشغيل الخدمة
+⚓︎
+docker compose -f /mnt/srv/docker/comp/docker-compose.yml up -d

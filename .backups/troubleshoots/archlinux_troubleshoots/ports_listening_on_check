@@ -1,0 +1,7 @@
+paru net-tools
+
+
+sudo netstat -tunlp
+
+netstat -tulpn | grep LISTEN | grep :80
+

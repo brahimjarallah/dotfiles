@@ -1,0 +1,59 @@
+تحديث النظام
+⚓︎
+apt update && apt upgrade
+تنصيب sudo
+⚓︎
+apt install sudo
+إضافة حسابك إلى مجموعة sudo
+⚓︎
+gpasswd -a $USER sudo
+ضبط إعدادات locale
+⚓︎
+export PATH=$PATH:/usr/sbin &&
+export LANGUAGE=en_US.UTF-8 &&
+export LANG=en_US.UTF-8 &&
+export LC_ALL=en_US.UTF-8 &&
+locale-gen en_US.UTF-8
+
+
+Swap⚓︎
+ZRAM⚓︎
+تنصيب أدوات Z-RAM
+sudo apt install zram-tools
+ضبط الإعدادات على 70% من مساحة الرام:
+echo -e "ALGO=zstd\nPERCENT=70" | sudo tee -a /etc/default/zramswap
+I set it to 80%
+
+إعادة تشغيل الخدمة
+sudo service zramswap reload
+SWAP FILE⚓︎
+إنشاء ملف بمساحة 4 جيجا
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=4194304
+ضبط الصلاحيات على الملف
+sudo chmod 600 /swapfile
+format as swap - تخصيص الملف للعمل
+sudo mkswap /swapfile
+تفعيله
+sudo swapon /swapfile
+fstab إضافة الملف إلى
+أخذ نسخة إحتياطية من الملف الأصلي
+sudo cp /etc/fstab /etc/fstab.bak
+تعديل ملف الـ fstab
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+مراجعة الاعدادات
+⚓︎
+sudo swapon --show
+إضافة مستودعات none-free
+⚓︎
+ملاحظة هامة
+
+التنصيب تم باستخدام
+debian-firmware-11.5.0-amd64-netinst.iso
+cat /etc/apt/sources.list | grep "bullseye main contrib non-free" || sudo sed -i "s/bullseye main/bullseye main contrib non-free/g" /etc/apt/sources.list
+sudo apt update
+
+sudo apt install intel-microcode
+
+(if amd --> sudo apt install amd64-microcode
+)
+

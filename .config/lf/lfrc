@@ -1,0 +1,52 @@
+########## GENERAL SETTINGS ##########
+
+set shell zsh
+set shellopts '-c'
+
+set previewer ~/.config/lf/previewer.sh
+set cleaner   ~/.config/lf/cleaner.sh
+
+# Interface
+set drawbox   true         # Draw UI box around panels
+set icons     true         # Enable icons (requires Nerd Fonts)
+set number    true         # Show line numbers
+set scrolloff 10           # Margin when scrolling
+set period    0            # Disable auto-reload delay
+set dirfirst  true         # Show directories first
+
+########## BASIC NAVIGATION ##########
+
+map h updir                 # Go up one directory
+map l open                 # Open file or enter directory
+
+map j down                 # Move down
+map k up                   # Move up
+
+map q quit                 # Quit lf
+
+########## QUICK DIRECTORY ACCESS ##########
+
+map gh cd ~                # Go to home
+map gd cd ~/Downloads      # Go to Downloads
+map gp cd ~/Pictures       # Go to Pictures
+
+########## SEARCH ##########
+
+map / search               # Start search
+map n search-next          # Go to next result
+map N search-prev          # Go to previous result
+
+########## FILE ACTIONS ##########
+
+map y copy                 # Yank (copy)
+map p paste                # Paste
+map d delete               # Delete (confirm in lf)
+map r rename               # Rename
+
+########## CUSTOM SHELL SCRIPTS ##########
+
+map i shell ~/.config/lf/info.sh                 # Show file info
+map S shell ~/.config/lf/scripts/open_in_term.sh  # Open in terminal
+
+cmd yankpath %{ echo -n "$f" | xclip -sel clip }
+map Y yankpath

@@ -1,0 +1,36 @@
+Connect Android To Arch Linux Via USB – Connect over MTP in Linux
+How to Connect Android To Arch Linux with a USB?
+This is because we don’t have MTP support enabled. MTP ( Media Transfer Protocol ) is a protocol that lets you access Android File System. This protocol is not enabled by default on Arch.
+
+Enable MTP Support with mtpfs
+First enable MTP support by installing :
+
+$ sudo pacman -S mtpfs
+For devices running Android 4+, this should do the trick. However, on later versions, we would need another package called jmtpfs from AUR repository. You can fetch it by:
+
+$ paru jmtpfs
+At this point, we have MTP enabled. However, it would still not be visible in your File Manager as it is not auto-mounted as we desire. To auto mount it, we need to install a package with :
+
+
+$ sudo pacman -S gvfs-mtp
+Enable PTP Support
+PTP stands for “Picture Transfer Protocol” and infact is the protocol on which MTP is based. When you communicate with your Android phone via PTP, it appears as a digital camera to your PC.
+
+To enable PTP, we need to install a package with :
+
+$ sudo pacman -Sy gvfs-gphoto2
+Finally, for the changes to take effect, we need to reboot the system which can be done with :
+
+$ reboot
+Accessing Device Files
+Once the system restarts, connect your Android Device via an USB to your PC and when the Device gives you a pop up, chose the desired option.
+
+Now, your File Manager should list your device and you can access the Device files easily !
+
+
+Accessing Device Files From Our File Manager
+Accessing Device Files From Our File Manager
+Conclusion
+Note that this method works only for Android Phones only and won’t work with iPhones as it uses a different set of methods to connect to PCs. Hope you now know exactly how to connect Android to Arch Linux via USB over MTP/PTP for your file transfer. Stay tuned for further articles!
+
+

@@ -1,0 +1,45 @@
+#VIM: how to select a line, up to the cursor, including the char under the cursor?
+
+Select from cursor to first column of the line:
+
+v0
+Select from cursor to first printable character of the line:
+
+v^
+Select from cursor to end of the line:
+
+v$
+Select from cursor to end of the word:
+
+ve
+Select from cursor to beginning of the word:
+
+vb
+Select from cursor to the next opening parenthesis on the line (inclusive):
+
+vf(
+Select from cursor to the previous double quote on the line (exclusive):
+
+vT"
+Select from cursor to the next occurence of foo in the buffer (always exclusive):
+
+v/foo<CR>
+Select from cursor to previous occurence of bar in the buffer (always exclusive):
+
+v?bar<CR>
+Select the whole word under cursor:
+
+viw
+Select everything between a pair of parenthesis:
+
+vi( (or vib)
+Select the body of a function:
+
+vi{ (or viB)
+Select a whole sentence:
+
+vis
+Select a whole paragraph:
+
+vip
+For even more, see :help motion.txt.

@@ -1,0 +1,14 @@
+Wget – Download files to Specific Directory
+
+The default wget download files under the current working directory
+Using wget -O Option
+
+wget -O /tmp/Ubuntu.iso https://releases.ubuntu.com/20.04/ubuntu-20.04-desktop-amd64.iso  
+
+The above command will download the remote ISO file with the Wget command and save it as /tmp/Ubuntu.iso in the local system. No matter what is the current working directory.
+--------------------------------------------------------------------------------
+Using wget -P Option
+Alternatively, -P PREFIX is a directory where all other files and subdirectories will be saved to
+
+wget -P /tmp https://releases.ubuntu.com/20.04/ubuntu-20.04-desktop-amd64.iso
+The above command will download the iso file under the /tmp directory.

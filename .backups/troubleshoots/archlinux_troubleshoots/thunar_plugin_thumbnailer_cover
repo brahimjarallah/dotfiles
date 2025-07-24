@@ -1,0 +1,27 @@
+packages to install:
+tumbler
+ffmpegthumbnailer
+
+directory to create:
+mkdir -p $XDG_CONFIG_HOME/tumber
+
+file to copy:
+cp /etc/xdg/tumbler/tumbler.rc $XDG_CONFIG_HOME/tumbler/
+
+disable the ffmpegthumbnailer in ~/.config/tumbler.rc
+# ffmpegthumbnailer plugin
+[FfmpegThumbnailer]
+Disabled=true
+Priority=2
+Locations=
+MaxFileSize=0
+
+# remove the -f flag from the Exec key in /usr/share/thumbnailers/
+
+[Thumbnailer Entry]
+TryExec=ffmpegthumbnailer
+Exec=ffmpegthumbnailer -i %i -o %o -s %s
+...
+
+reboot your system.
+

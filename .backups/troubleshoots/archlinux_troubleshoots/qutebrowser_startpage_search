@@ -1,0 +1,14 @@
+Startpage.com - preferences & query URL
+URL bar searching with Startpage uses such URL:
+
+https://www.startpage.com/do/dsearch?query=%s
+while no-cookie settings uses something like this:
+
+https://www.startpage.com/do/mypage.pl?prfe=36c84513558a2d34bf0d89ea505333ad9c86bd6598735d590c1c89932309a9bc559a4c3539b4c3d7984abfd0db70840b
+I want to clean cookies when I exit the browser, while at the same time keeping startpage's preferences AND using it as a URL bar search engine. So basically it comes down to combining those two URLs, so that such URL contains both preferences information and the "%s" query placeholder. Is this possible?
+
+
+Upvote
+12
+
+

@@ -1,0 +1,40 @@
+First, you must clone the openproject-deploy repository:
+
+git clone https://github.com/opf/openproject-deploy --depth=1 --branch=stable/12 openproject
+Then, change into the compose folder, this folder will be the location where you enter all following commands:
+
+cd openproject/compose
+Make sure you are using the latest version of the Docker images:
+
+docker-compose pull
+Launch the containers:
+
+OPENPROJECT_HTTPS=false docker-compose up -d
+----------------------
+
+You can stop the Compose stack by running:
+
+docker-compose stop
+You can stop and remove all containers by running:
+
+docker-compose down
+----------------------
+
+
+All-in-one container
+Quick Start
+The fastest way to get an OpenProject instance up and running is to run the following command:
+
+docker run -it -p 8080:80 \
+  -e OPENPROJECT_SECRET_KEY_BASE=secret \
+  -e OPENPROJECT_HOST__NAME=localhost:8080 \
+  -e OPENPROJECT_HTTPS=false \
+  openproject/community:12
+
+--------------------
+
+If you want to destroy the container, run the following commands
+
+docker stop openproject
+docker rm openproject
+

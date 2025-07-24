@@ -1,0 +1,71 @@
+Install XScreenSaver on  linux:
+
+XScreensaver is included in Ubuntu software repositoray as like some other distributions, so you can easily install it by running the following command in a terminal window.
+
+# sudo pacman -S xscreensaver
+
+To check your XScreenSaver version, execute the following command:
+
+# xscreensaver --help
+---------------------------------------------------------
+Autostart with Systemd service
+
+Alternatively, you can get XScreenSaver autostart at boot time with Systemd :
+
+First, execute the following command to create a directory for storing Systemd service file of individual users.
+
+# mkdir -p ~/.config/systemd/user/
+
+Then create xscreensaver.service file with a command line text editor such as Nano
+
+# vim ~/.config/systemd/user/xscreensaver.service
+
+** Copy and paste the following text into the file :
+
+[Unit]
+Description=XScreenSaver
+[Service]
+ExecStart=/usr/bin/xscreensaver -nosplash
+[Install]
+WantedBy=default.target
+
+
+** Finally, enable this service so that XScreenSaver will be automatically started at boot time.
+
+# systemctl --user enable xscreensaver
+
+
+-----------------------------------------------------------
+**** method 2: *****
+********************
+
+** How to Get XScreenSaver Autostart at boot time
+Since Ubuntu comes with gnome-screensaver, which is a fork of XScreenSaver, we need to remove gnome-screensaver in order to autostart XScreenSaver at boot time.
+
+# sudo pacman -R gnome-screensaver
+
+Now start the xscreensaver configuration tool - from a terminal:
+
+# xscreensaver-demo
+
+
+starting xscreensaver from login
+
+# sudo ln -s /usr/bin/xscreensaver-command /usr/bin/gnome-screensaver-command
+
+Logout or reboot for all changes to take effect.
+--------------------------------------
+** to lock secreen use:
+# xscreensaver-command --lock
+---------------------------------------
+
+R.M :
+to tell xscreensaver never to automatically activate the screensaver, except with a manual command :
+
+One solution is to set the timeout to :
+
+# timeout: 100000:00:00
+
+
+
+

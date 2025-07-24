@@ -1,0 +1,4 @@
+apt install yamllint
+
+
+yamllint docker-compose.yml

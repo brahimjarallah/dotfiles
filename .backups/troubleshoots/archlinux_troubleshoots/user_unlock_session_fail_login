@@ -1,0 +1,16 @@
+To unlock a user, do:
+
+$ faillock --user username --reset
+
+By default, the lock mechanism is a file per-user located at /run/faillock/.
+
+ Deleting or emptying the file unlocks that user—the directory is owned by root, but the file is owned by the user, so the faillock command only empties the file, therefore does not require root.
+
+*** The module pam_faillock.so can be configured with the file:
+
+ /etc/security/faillock.conf.
+
+==> The lockout parameters:
+unlock_time     —  the lockout time (in seconds, default 10 minutes).
+fail_interval   —  the time in which failed logins can cause a lockout (in seconds, default 15 minutes).
+deny 	        —  the number of failed logins before lockout (default 3).

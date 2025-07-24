@@ -1,0 +1,16 @@
+Error starting domain: internal error: Did not find USB device 0480:0901
+
+---- Solved -----
+
+So this is how I got it fixed:
+
+virsh edit <vmname> # brings up emacs (or vim for the really smart people) with the xml for the vm
+
+-- added  startupPolicy='optional' to the <source> line as below
+
+  <hostdev mode='subsystem' type='usb' managed='yes'>
+       <source startupPolicy='optional'/>
+         <vendor id='0x03f0'/>
+         <product id='0x4217'/>
+       </source>
+     </hostdev

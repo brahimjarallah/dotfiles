@@ -1,0 +1,35 @@
+mkdir ~/.trash
+alias rmf='mv --backup=numbered --target-directory=$HOME/.trash'
+or
+alias rmf='mv -b --target-directory=$HOME/.trash'
+
+
+----------------------------------------------------------------------
+or scrpit and put it under ->  ~/.local/bin/rmf :
+or sharable under ->  /usr/local/bin 
+------------------
+#!/bin/sh
+# This is a substitute for rm that moves deleted files to a recycle bin
+
+RECYCLE=~/.trash
+CURRENTDIR=`pwd`
+
+for file in "$CURRENTDIR"/$*
+do mv "$file" "$RECYCLE"
+done
+
+exit 0
+
+
+-----------------------------------------------------
+** schedule command execution to delete files every day 9AM in crontab: **
+-----------------------------------------------------
+
+On arch linux:
+sudo apt -get install cronie
+sudo systemctl enable --now cronie 
+sudo ln -s /usr/bin/vim /usr/bin/vi
+
+0 9 * * * /usr/bin/rm -rf /home/hnider/.trash/*
+
+

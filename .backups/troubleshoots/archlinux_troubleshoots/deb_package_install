@@ -1,0 +1,11 @@
+ A .deb file will be installed  by using these commands:
+
+sudo dpkg -i /path/to/deb/file
+sudo apt-get install -f
+
+Using:
+sudo apt install ./name.deb
+
+Or
+
+sudo apt install /path/to/package/name.deb

@@ -1,0 +1,79 @@
+Uninstall Emacs
+
+If you’ve already installed an older version of Emacs with your package manager - uninstall it:
+
+yay -R emacs
+
+Download Emacs 28.1
+
+First we need to download the source code for the latest version of Emacs:
+
+cd
+wget https://ftp.nluug.nl/pub/gnu/emacs/emacs-28.1.tar.xz
+
+Unpack
+
+Then we need to unpack it:
+
+tar -xf emacs-28.1.tar.xz
+
+Let’s navigate into the Emacs source folder:
+
+cd emacs-28.1/
+
+Install libgccjit
+
+Now let’s install the required JIT compilation with GCC backend library:
+
+yay -S libgccjit
+
+Building
+
+We can now build Emacs:
+
+./configure --with-native-compilation
+
+Now, we can make:
+
+make -j$(nproc)
+
+And lastly, install it for use:
+
+sudo make install
+
+# where is it?
+whereis emacs
+# > emacs: /usr/local/bin/emacs /usr/local/lib/emacs /usr/share/emacs
+
+# check version
+emacs --version
+# > emacsclient 28.1
+
+Emacs Client
+
+I like to run the emacsclient rather than just launching Emacs the normal way you’d load other apps via a menu or launcher. By doing this we can launch into it faster, as the emacsclient runs in the background and will spawn windows almost instantly when called this way.
+
+In your application startup add this:
+
+emacs --daemon &
+
+If you use a window manager, you will want to add this command to your autorun script, like I do, as shown here using awesomeWM.
+
+In your hotkeys you can add a command to launch Emacs in client mode. This is how I do it using sxhkd:
+
+# ~/config/sxhkd/sxhkdrc
+
+# Emacs
+super + alt + m
+    emacsclient -c -a emacs
+
+Set Emacs As Default Editor
+
+You can make Emacs your default text editor by setting up a few variables which your system will use when you log in. To do this, edit your .profile file in your $HOME and add the following:
+
+# ~/.profile
+export EDITOR="emacsclient -t"
+export CODEEDITOR="emacsclient -c -a 'emacs'"
+export VISUAL="emacsclient -c -a 'emacs'"
+export SUDO_EDITOR="emacsclient -t"
+

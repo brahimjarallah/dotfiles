@@ -1,0 +1,7 @@
+albert: /usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.32' not found (required by /usr/lib/libalbert.so.0.22)
+
+||||||||
+VVVVVVVV
+
+sudo pacman -Sy glibc lib32-glibc
+sudo pacman -Sy gcc libgccjit

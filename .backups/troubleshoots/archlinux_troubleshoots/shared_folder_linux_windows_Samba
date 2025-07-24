@@ -1,0 +1,71 @@
+How To Access Windows Shared Folder From Linux?
+By Shams On Aug 28, 2017  2
+Sharing files between two operating system is easy, but between the different operating systems such as Linux, Windows and Mac OS is a bit confusing. Windows has its files sharing protocol (SMB), and Linux has itself (Samba). Here we help you to learn how to access Windows shared folder from Linux. This file sharing article guide you to connect Windows and Linux system at home or office network.
+
+Previously, we wrote many articles related to network file sharing between the operating system and make them connect with each other. The below network file sharing articles are beneficial to read.
+
+How to Share File between Ubuntu and Windows 10?
+Sharing Files between Linux Mint and Windows 10
+Share Files Using Command Line in Windows
+Share File Between VirtualBox and Host
+How to Drag and Drop Files in Hyper-v Virtual Machines?
+Transfer Files to Hyper-V Virtual Machines
+Sharing File between Mac OS and Windows 10
+Yes, we already have many informative articles that help you make your network easy with different operating systems. Just follow the step by step file sharing guide between Windows and Linux.
+
+Share File Between Windows and Linux
+Before access Windows shared folder from Linux, once check the Windows 10 network discovery is enabled, the shared folder must share correctly with share and NTFS permission. See the screenshot of sharing a folder in Windows 10.
+
+How to Share a Folder in Windows 10 - Technig
+How to Share a Folder in Windows 10 – Technig
+Create a folder and right-click the folder then click Properties.
+On the Properties, select Sharing tab then clicks Advanced Sharing.
+Select Share this folder on the Advanced sharing page then click Permission.
+Now, tick the check box of Change on Permission window and click OK to apply the changes.
+For more details about sharing files in Windows 10 read this article: “Sharing files between Linux and Windows 10“. You can find enabling network discovery and file sharing by details.
+
+Install Samba Linux File Sharing Service
+Now, let’s access Windows shared folder from Linux Ubuntu. Before accessing the shared folder from Linux, you must have installed the Sharing Services on your Linux system. If you didn’t, the system would ask you to install sharing services when you attempt to share a folder on Linux.
+
+Install file sharing service in Linux Ubuntu - Technig
+Install file sharing service in Linux Ubuntu – Technig
+On the Linux Ubuntu prompt that the sharing service has not installed. You need to install the Windows networks sharing service to share your folders. So click Install service and continue to finalize the sharing services installation.
+
+This is because the Samba Linux file sharing system has not installed on your Linux system.
+
+The Samba is a free software re-implementation of the SMB/CIFS networking protocol. Samba provides file and print services for various Windows clients and can integrate with a Windows Server domain, either as a Domain Controller (DC) or as a domain member. So in this article, we are using in Per-to-Per network between Windows clients and Linux Ubuntu clients. If you don’t like reading then watch the video tutorials at the end of this post.
+
+Finally, start Sabma Linux file sharing service with “sudo start smbd” command and follow the next step to access Windows shared folder from Linux.
+
+Access Windows Shared Folder from Linux
+You should be able to mount the shared folder by using the GUI in Linux, but it’s also very easy to do with the command line. We’re going to use the terminal for accessing shared files quicker.
+
+First, you’ll need the cifs-utils package to mount SMB shares. Just type the “sudo apt-get install cifs-utils” command at the terminal to install cifs-utils package.
+
+How to access Windows shared folder from Linux command line - Technig
+How to access Windows shared folder from Linux command line – Technig
+After installing cifs-utils package, try to create a folder and mount the Windows SMB share folder with. To create a folder type “mkdir ~/Desktop/WinFiles” command.
+
+To mount the Windows shared folder type “sudo mount.cifs //Technig-Win10/SharedFiles /home/ulx/Desktop/WinFiles/ -o user=Win10” command.
+
+# [[example]]
+# sudo mount.cifs //WIN-PC/shared /home/archlin/shared/ -o user=win
+
+Access Windows Shared Folder from Linux
+Access Windows Shared Folder from Linux
+If you need help to understand the mount command, just check the below commands descriptions.
+
+sudo mount.cifs: This is just the mount command, set to mount a CIFS (SMB) share.
+Technig-Win10: Is the name of the Windows computer. Type “hostname” on CMD to find your Windows computer name.
+//Technig-Win10/SharedFiles: Is the full path to the Windows shared folder.
+/home/ulx/Desktop/WinFiles: Is where we’d like the share files to be mounted on the Linux system.
+-o user=Win10: Is the Windows username that we are using to access the shared folder. Type “net user” in CMD to find the user name of Windows.
+Now, open the WinFiles to see the shared files inside. These are the shared files from Windows 10.
+
+sudo mount.cifs //192.168.122.82/shared /home/arlin/shared/ -o user=ultimate
+
+** in /etc/fstab
+//192.168.122.82/sharename/  /mnt/share  cifs  guest,uid=0,iocharset=utf8 0 0
+or
+//192.168.122.82/sharename/  ~/share  cifs  guest,uid=0,iocharset=utf8 0 0
+

@@ -1,0 +1,9 @@
+### ***  See nvidia monitoring *** ###
+nvidia-smi
+
+### ***  check your nvidia driver version on Linux: *** ###
+nvidia-smi --query-gpu=driver_version --format=csv
+
+### ***  configure the NVIDIA graphics driver *** ###
+sudo nvidia-settings & 
+

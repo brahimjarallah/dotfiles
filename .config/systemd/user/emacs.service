@@ -1,0 +1,182 @@
+[Unit]
+Description=Emacs text editor daemon
+Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/emacs --fg-daemon
+ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
+# Enable and start the service
+print_status "Enabling Emacs daemon service..."
+systemctl --user daemon-reload
+systemctl --user enable emacs.service
+
+# Try to start the service, but don'\''t fail if it doesn'\''t work
+print_status "Starting Emacs daemon..."
+if systemctl --user start emacs.service; then
+    print_success "Emacs daemon started successfully"
+else
+    print_warning "Failed to start Emacs daemon automatically. You can start it manually later."
+fi
+
+# Step 5: Create desktop entry for Emacs client
+print_status "Creating desktop entry..."
+cat > ~/.local/share/applications/emacsclient.desktop << 'EOF'
+[Desktop Entry]
+Name=Emacs Client
+Comment=Edit text with Emacs daemon
+Exec=emacsclient -c %F
+Icon=emacs
+Type=Application
+Terminal=false
+Categories=Development;TextEditor;
+StartupWMClass=Emacs
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
+# Step 6: Create launcher script
+print_status "Creating launcher script..."
+cat > ~/.local/bin/emacs-client << 'EOF'
+#!/bin/bash
+# Emacs client launcher script
+
+# Check if daemon is running
+if ! pgrep -x "emacs" > /dev/null; then
+    echo "Starting Emacs daemon..."
+    emacs --daemon
+    sleep 2
+fi
+
+# Launch client
+emacsclient -c "$@"
+chmod +x ~/.local/bin/emacs-client
+
+# Add ~/.local/bin to PATH if it'\''s not already there
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    echo '\''export PATH="$HOME/.local/bin:$PATH"'\'' >> ~/.zshrc
+    print_status "Added ~/.local/bin to PATH in ~/.zshrc"
+fi
+
+# Step 7: Create Hyprland keybinding configuration
+print_status "Creating Hyprland configuration snippet..."
+cat > ~/.config/hypr/emacs-keybinds.conf << 'EOF'
+# Emacs keybindings for Hyprland
+# Add this to your hyprland.conf: source = ~/.config/hypr/emacs-keybinds.conf
+
+# Launch Emacs client
+bind = SUPER, E, exec, ~/.local/bin/emacs-client
+bind = SUPER_SHIFT, E, exec, ~/.local/bin/emacs-client ~/.config/emacs/init.el
+
+# Quick notes
+bind = SUPER, N, exec, ~/.local/bin/emacs-client --eval "(org-capture)"
+
+# Open terminal in Emacs
+bind = SUPER_ALT, T, exec, ~/.local/bin/emacs-client --eval "(eshell)"
+# Step 8: Create org directories and sample files
+print_status "Creating Org mode directories and sample files..."
+
+# Create sample org files
+cat > ~/Documents/org/tasks.org << 'EOF'
+#+TITLE: Tasks
+#+STARTUP: overview
+
+* Tasks
+** TODO Example task
+   This is an example task. You can create new tasks with C-c C-t.
+   
+** DONE Completed task
+   CLOSED: [2024-01-01 Mon 10:00]
+   This task is completed.
+
+* Projects
+** Project 1
+   Description of project 1.
+cat > ~/Documents/org/notes.org << 'EOF'
+#+TITLE: Notes
+#+STARTUP: overview
+
+* Notes
+** Daily Notes
+   Use C-c c to capture notes quickly.
+   
+** Ideas
+   Store your ideas here.
+# Create a quick setup verification script
+cat > ~/.local/bin/emacs-setup-check << 'EOF'
+#!/bin/bash
+# Check Emacs setup
+
+echo "🔍 Emacs Setup Check"
+echo "===================="
+
+echo -n "Emacs installed: "
+if command -v emacs &> /dev/null; then
+    echo "✅ Yes ($(emacs --version | head -n1))"
+else
+    echo "❌ No"
+fi
+
+echo -n "Emacs daemon service: "
+if systemctl --user is-enabled emacs.service &> /dev/null; then
+    echo -n "✅ Enabled, "
+    if systemctl --user is-active emacs.service &> /dev/null; then
+        echo "✅ Running"
+    else
+        echo "⚠️  Not running"
+    fi
+else
+    echo "❌ Not enabled"
+fi
+
+echo -n "Config directory: "
+if [[ -d ~/.config/emacs ]]; then
+    echo "✅ Exists"
+else
+    echo "❌ Missing"
+fi
+
+echo -n "Hyprland keybinds: "
+if [[ -f ~/.config/hypr/emacs-keybinds.conf ]]; then
+    echo "✅ Created"
+else
+    echo "❌ Missing"
+fi
+
+echo -n "Org directories: "
+if [[ -d ~/Documents/org && -d ~/Documents/org-roam ]]; then
+    echo "✅ Created"
+else
+    echo "❌ Missing"
+fi
+
+echo ""
+echo "💡 Next steps:"
+echo "1. Add 'source = ~/.config/hypr/emacs-keybinds.conf' to your hyprland.conf"
+echo "2. Reload Hyprland config or restart"
+echo "3. Press Super+E to test Emacs launch"
+chmod +x ~/.local/bin/emacs-setup-check
+
+print_success "✅ Emacs installation and configuration completed!"
+print_status "🎯 Running setup verification..."
+~/.local/bin/emacs-setup-check
+
+print_warning "⚠️  IMPORTANT: Add this line to your ~/.config/hypr/hyprland.conf:"
+echo "source = ~/.config/hypr/emacs-keybinds.conf"
+
+print_status "📚 Key shortcuts after setup:"
+echo "- Super+E: Launch Emacs"
+echo "- Super+Shift+E: Open Emacs config"
+echo "- Super+N: Quick note capture"
+echo "- C-x g: Magit (Git interface)"
+echo "- C-c p: Projectile commands"
+
+print_status "🔧 Useful commands:"
+echo "- emacs-client: Launch Emacs client"
+echo "- emacs-setup-check: Verify setup"
+echo "- systemctl --user status emacs: Check daemon status"
+
+print_success "🎉 Setup complete! First launch will install packages (may take a few minutes)."

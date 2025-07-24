@@ -1,0 +1,19 @@
+paru plymouth
+
+sudo vim /etc/mkinitcpio.conf
+HOOKS=(base udev plymouth autodetect modconf block filesystems keyboard fsck)
+
+sudo mkinitcpio -p linux
+
+sudo vim /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet splash vt.global_cursor_default=0"
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+reboot
+
+sudo plymouth-set-default-theme -l
+
+sudo vim /etc/plymouth/plymouthd.conf
+Theme=spinfinity
+
+sudo mkinitcpio -p linux

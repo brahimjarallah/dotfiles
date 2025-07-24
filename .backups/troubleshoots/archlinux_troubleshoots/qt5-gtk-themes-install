@@ -1,0 +1,6 @@
+paru -S vimix-gtk-themes vimix-cursors vimix-icon-theme lfaenza-icon-theme xappearance qt5ct
+
+sudo vim /etc/environment
+QT_QPA_PLATFORMTHEME="qt5ct"
+
+

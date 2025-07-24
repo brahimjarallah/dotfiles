@@ -1,0 +1,19 @@
+sudo pacman -S ghc
+sudo pacman -S cabal-install
+sudo pacman -S stack
+sudo pacman -S kak-lsp kakoune haskell-language-server
+sudo pacman -S kak-lsp 11
+sudo pacman -S kakoune
+sudo pacman -S haskell-language-server 
+sudo pacman -Syyuu ghc
+
+
+---------------------------------
+simply with tui:
+
+sudo git clone https://aur.archlinux.org/ghcup-hs-bin.git
+makepkg -si
+
+haskell-language-server --version
+ghc --version
+ghci

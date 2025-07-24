@@ -1,0 +1,27 @@
+1- install flatpack and their dependencies:
+sudo pacman -S flatpak discover packagekit-qt5
+
+
+2- install flathub (store)
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpackreo
+or
+flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+ 
+3- reboot.
+
+------------------------------
+to search in terminal:
+# flatpak search <appId>
+----------------------------------------
+to search in flathub web:
+
+go to flathub.org
+--------------------------
+
+!!! 
+if you havn't install login screen( lightdm,gdm...)
+ add this line to ./xinitrc
+
+# dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY &
+
+

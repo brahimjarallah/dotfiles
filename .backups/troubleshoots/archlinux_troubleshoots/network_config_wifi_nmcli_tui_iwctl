@@ -1,0 +1,21 @@
+
+##### CLI method #####
+
+yay -S iwd
+
+nmcli dev wifi list
+
+nmcli dev wifi connect <SSID> password <mypassword>
+
+nmcli connection show
+
+------------------------------------------------------------
+##### TUI method #####
+nmtui
+
+------------------------------------------------------------
+##### GUI method #####
+
+yay -S network-manager-applet
+
+

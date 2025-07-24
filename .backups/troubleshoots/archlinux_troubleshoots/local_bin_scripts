@@ -1,0 +1,24 @@
+in ~/.bashrc
+# Add bin to PATH for my scripts
+PATH=$PATH:/home/$USER/.local/bin
+
+
+then go to ~/.local/bin
+and add your favorite binary script
+
+exmaple:
+
+vim ~/local/bin/testscript
+
+#!/bin/bash
+echo "this is a local binary test srcipt"
+
+$ sudo chmod u+x testscript
+
+$ bash
+$ testscript
+
+output --> this is a local binary test scipt
+
+which testscript
+/home/$USER/.local/bin

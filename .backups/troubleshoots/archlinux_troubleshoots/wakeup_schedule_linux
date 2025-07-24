@@ -1,0 +1,62 @@
+utomatically Wake Up Your Linux System From Sleep Or Hibernation Mode Using 'rtcwake' Utility
+Rtcwake comes pre-installed with most Linux operating systems by default, so don't bother installing it. Let me show you some practical examples. I tested the following commands on my Arch Linux desktop, and they worked well as I expected.
+
+The typical syntax of rtcwake command is:
+
+$ rtcwake [options] [-d device] [-m standby_mode] {-s seconds|-t time_t}
+Wake up system after a specific time
+First of all, make sure you have closed any running programs or saved any opened documents before running this program. The rtcwake command requires root permissions to work.
+
+Let us now suspend our system and wake it up after 60 seconds. To do so, run:
+
+$ sudo rtcwake -m disk -s 60
+Sample output would be:
+
+rtcwake: assuming RTC uses UTC ...
+rtcwake: wakeup from "disk" using /dev/rtc0 at Fri Apr 21 09:04:49 2017
+Wake up system after a specific time
+
+Here,
+
+-m indicates the mode.
+-s indicates the system's wakeup time. In our case, we have given 60 seconds.
+The rtcwake command supports the following modes.
+
+standby - This is the default mode, if you didn't mention the -m switch in your command. This state offers minimal, though real, power savings, while providing a very low-latency transition back to a working system.
+freeze - In this mode, all processes are frozen, all the devices are suspended and all the processors idled.
+mem - Suspend-to-RAM. In this state, everything will be put into low-power state, except memory to offer significant power savings. The contents of the RAM are retained.
+disk - Suspend-to-disk. This state offers the greatest power savings. This state operates similarly to Suspend-to-RAM, but includes a final step of writing memory contents to disk.
+off - It shuts down your pc completely. This is done by calling '/sbin/shutdown'. Not officially supported by ACPI, but it usually works.
+no - Don't suspend, only set the RTC wakeup time.
+on - Don't suspend, but read the RTC device until an alarm time appears. This mode is useful for debugging.
+disable - Disable a previously set alarm.
+show - Prints the alarm information in format: "alarm: off|on <time>". e.g. "alarm: on Fri Apr 21 15:00:05 2017".
+Wake up system at a specific time
+We can also wake our system up at a specific time using -t option as shown in the below example.
+
+$ sudo rtcwake -m no -l -t "$(date -d 'today 16:00:00' '+%s')"
+Sample output:
+
+Here,
+
+-m no - This option doesn't suspend the pc, only sets the RTC wakeup time.
+-l - Indicates the local time set in Bios.
+-t $(date +%s -d ‘today 16:00:00’) - Sets  the  wakeup  time to 4pm today.
+Useful Tip: To learn what each argument in a Linux/Unix command does, check out Explainshell.
+
+If you want to wake up your system tomorrow at a specific time, the command would be:
+
+$ sudo rtcwake -m no -l -t $(date +%s -d 'tomorrow 10:00')
+The above command will wake up your system at 10 am tomorrow, but won't suspend it immediately.
+
+To wake up your system at a specific date and time:
+
+$ sudo rtcwake -m no -l -t "$(date -d '2017-04-25 16:00:00' '+%s')"
+Additionally, you can run a specific program after waking your system up using "&&" operator as shown in the following example.
+
+$ sudo rtcwake -m mem -s 60 && chromium
+The above command suspends our system to RAM and wakes it up after 60 seconds and launches the chromium web browser. Cool, isn't it?
+
+For more details, refer man pages.
+
+$ man rtcwake

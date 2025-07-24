@@ -1,0 +1,19 @@
+(121/121) checking package integrity                   [############################] 100%
+error: libmfx: signature from "Daniel Bermond <dbermond@archlinux.org>" is marginal trust
+:: File /var/cache/pacman/pkg/libmfx-22.3.0-1-x86_64.pkg.tar.zst is corrupted (invalid or corrupted package (PGP signature)).
+Do you want to delete it? [Y/n] n
+error: vmaf: signature from "Daniel Bermond <dbermond@archlinux.org>" is marginal trust
+:: File /var/cache/pacman/pkg/vmaf-2.3.1-1-x86_64.pkg.tar.zst is corrupted (invalid or corrupted package (PGP signature))
+
+
+
+pacman -Sy archlinux-keyring && pacman -Su
+
+-------------
+
+
+gpg --recv-key <enterkeynumhere>
+gpg --lsign <enterkeynumhere>
+
+
+pacman-key --init

@@ -1,0 +1,5 @@
+sudo apt install nala
+
+sudo nala install linux-headers-$(uname -r)
+
+

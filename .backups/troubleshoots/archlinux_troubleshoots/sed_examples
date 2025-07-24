@@ -1,0 +1,145 @@
+#Sed examples
+Replacing text
+Replace all occurrences of a string
+$ sed 's/old/new/g' file.txt
+
+Substitute text but only if some other text is found in the string
+sed  -e '/CSE/ s/Count/100/; /EEE/ s/Count/70/;' dept.txt
+CSE - Count => CSE - 100
+
+##### hashtag search #####
+This will remove leading # from lines that contain LINE:
+sed '/LINE/ s/^#//'
+
+This will remove all leading # characters:
+sed '/LINE/ s/^#*//'
+
+This will add one # character:
+sed '/LINE/ s/^/#/'
+
+Replace only the nth occurrence of a string
+$ sed 's/old/new/2' file.txt
+
+Replace replace a string only on the 5th line
+$ sed '5 s/old/new/' file.txt
+
+Replace "world" with "universe" but only if the line begins with "hello"
+$ sed '/hello/s/world/universe/' file.txt
+
+Remove "" from the end of each line
+$ sed 's/\\$//' file.txt
+
+Remove all whitespace from beginning of each line
+$ sed 's/^\s*//' file.txt
+
+Remove comments. Even those that are at the end of a line
+$ sed 's/#.*$//' file.txt
+
+##### Search for text #####
+Search for a string and only print the lines that were matched
+$ sed -n '/hello/p' file.txt
+
+##### Case insensitive search #####
+
+
+$ sed -n '/hello/Ip' file.txt
+Search for a string but only output lines that do not match
+
+
+$ sed -n '/hello/!p' file.txt
+Appending lines
+Append line after line 2
+
+$ sed '2a Text after line 2' file.txt
+Append line at the end of the file
+
+
+$ sed '$a THE END!' file.txt
+Append line after every 3rd line starting from line 3
+
+
+$ sed '3~3a Some text' file.txt
+Numbering
+Number line of a file (simple left alignment)
+
+
+$ sed = file.txt | sed 'N;s/\n/\t/'
+Number line of a file (number on left, right-aligned)
+
+
+$ sed = file.txt | sed 'N; s/^/   /; s/ *\(.\{6,\}\)\n/\1  /'
+Number line of file, but only print numbers if line is not blank
+
+
+$ sed '/./=' file.txt | sed '/./N; s/\n/ /'
+Count lines (emulates "wc -l")
+
+
+$ sed -n '$='
+
+##### Prepending lines #####
+Insert text before line 5
+
+$ sed '5i line number five' file.txt
+
+Insert "Example: " before each line that contains "hello"
+$ sed '/hello/i Example: ' file.txt
+
+Insert "Example: " after each line that contains "hello"
+$ sed '/hello/a Example: ' file.txt
+
+##### Deleting lines #####
+Delete line 5-7 in file
+
+
+$ sed '5,7d' file.txt
+Delete every 2nd line starting with line 3
+
+
+$ sed '3~2d' file.txt
+Delete the last line in file
+
+
+$ sed '$d' file.txt
+Delete lines starting with "Hello"
+
+
+$ sed '/^Hello/d' file.txt
+Delete all empty lines
+
+
+$ sed '/^$/d' file.txt
+Delete lines starting with "#"
+
+
+$ sed '/^#/d' file.txt
+
+##### File spacing #####
+Double space
+
+
+$ sed G
+Delete all blank lines and double space
+
+
+$ sed '/^$/d;G'
+Triple space a file
+
+
+$ sed 'G;G'
+Undo double-spacing
+
+
+$ sed 'n;d'
+Insert a blank line above line which matches "regex"
+
+
+$ sed '/regex/{x;p;x;}'
+Insert a blank line below line which matches "regex"
+
+
+$ sed '/regex/G'
+Insert a blank line around line which matches "regex"
+
+
+$ sed '/regex/{x;p;x;G;}'

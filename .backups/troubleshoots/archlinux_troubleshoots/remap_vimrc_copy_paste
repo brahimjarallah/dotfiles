@@ -1,0 +1,9 @@
+The first issue I would like to address is that your mapping for copying the text, nnoremap <C-c> "*yy, will only work in normal mode. When you select text in Vim, you enter visual mode, and the first n of nnoremap makes the mapping work in normal mode only.
+
+You can make your mapping work by using noremap (all modes), vnoremap (visual and select mode), or xnoremap (visual mode only), like this:
+
+vnoremap <C-c> "*y
+
+# remap all modes:
+xnoremap <C-c> "+y
+xnoremap <C-p> "+p

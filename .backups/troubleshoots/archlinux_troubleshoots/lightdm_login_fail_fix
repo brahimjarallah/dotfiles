@@ -1,0 +1,11 @@
+sudo systemctl status lightdm
+pacman -Rns nvidia nvidia-utils nvidia-settings 
+sudo pacman -Rns nvidia nvidia-utils nvidia-settings 
+reboot
+pacman -S dkms linux-headers
+sudo pacman -S dkms linux-headers
+cd /var/cache/pacman/pkg/
+sudo pacman -U ./nvidia-* 
+sudo pacman -U ./nvidia-utils-515.65.01-2-x86_64.pkg.tar.zst ./nvidia-settings-515.65.01-1-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/n/nvidia-dkms-515.65.01-2-x86_64.pkg.tar.zst
+
+sudo mkinitcpio -P

@@ -1,0 +1,5 @@
+If anyone happen upon this issue while using neovim you should know (before you start pulling off your hair) that the .vimrc file is loaded from 
+~/.config/nvim/init.vim.
+
+mkdir -p ~/.config/nvim; ln -s ~/.vimrc ~/.config/nvim/init.vim
+

@@ -1,0 +1,6 @@
+** disable/enable kitty bell sound:
+
+# vim ~/.config/kitty/kitty.conf
+
+# enable_audio_bell yes
+enable_audio_bell no

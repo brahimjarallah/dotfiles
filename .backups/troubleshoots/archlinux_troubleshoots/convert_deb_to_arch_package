@@ -1,0 +1,32 @@
+-----------------------------------------------------
+Convert a Debian .deb package to an Arch Linux package
+-----------------------------------------------------
+
+***** What is archalien? *****
+
+It is a free tool written in Python that allows convert a Debian .deb package to an Arch Linux package. Its use and installation is very simple, the tool will save time in the building an Arch Linux package based on .debas well as assisting novice users in installing applications on Arch Linux-based distributions.
+
+***** Converting a .deb to an Arch Linux package *****
+
+To convert a .deb into an Arch Linux package quickly and easily, we must clone the archalien repository to download the latest version of the tool. To do this we must open a terminal and execute the following command:
+
+git clone https://github.com/Asher256/archalien.git
+
+***** Using Archalien *****
+
+Next we must execute the application indicating the .deb package that we want to convert. the syntax that we must use is the following:
+
+$ ./archalien.py apt-file_2.5.4ubuntu1_all.deb
+This results in an Arch Linux package with the following name: apt-file-2.5.4ubuntu1.pkg.tar.gz
+
+***** Install pkg.tar.gz package on Arch Linux and Derivatives *****
+
+To install the .pkg.tar.gz file resulting from the .deb conversion, just execute the following command:
+
+pacman -U nombredelpaquete
+
+or what is equal to
+
+pacman -U apt-file-2.5.4ubuntu1.pkg.tar.gz
+
+We are sure that this very practical and useful tool will save you a lot of time and save you some headaches.

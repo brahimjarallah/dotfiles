@@ -1,0 +1,48 @@
+***** Show all key codes *****
+xmodmap -pke
+
+***** Search for super key *****
+xmodmap -pke| grep Super
+-->> output is :
+keycode 133 = Super_L NoSymbol Super_L
+keycode 134 = Super_R NoSymbol Super_R
+
+-----------------------------------------------------
+***** Disable a super left key from cli  *****
+-----------------------------------------------------
+
+***** Disable a super left key temporarly from terminal: *****
+sudo xmodmap -e 'keycode 133='
+
+-----------------------------------------------------
+***** enable super left key form cli *****
+-----------------------------------------------------
+
+xmodmap -pke| grep 133
+sudo xmodmap -e 'keycode 133=Super_L NoSymbol Super_L'
+
+-----------------------------------------------------
+***** Disable a super left key at the boot: *****
+-----------------------------------------------------
+
+xmodmap -pke > ~/.Xmodmap
+vim ~/.Xmodmap 
+clear lock
+keycode 133 = 
+
+vim ~/.xinitrc 
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+
+
+-----------------------------------------------------
+Change "Alt_Left" with "Escape"
+-----------------------------------------------------
+
+xmodmap -pke > ~/.Xmodmap
+vim ~/.Xmodmap
+clear lock
+keycode 108 = Escape NoSymbol Escape NoSymbol Escape
+
+vim ~/.xinitrc 
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+

@@ -1,0 +1,102 @@
+----------------------------------------------------------------------
+### install TPM module on linux ###
+----------------------------------------------------------------------
+yay -S swtpm
+
+----------------------------------------------------------------------
+### download the latest virtio-win ISO ###
+----------------------------------------------------------------------
+
+if not already downloaded in ~/.../windows10/
+
+~/applications/system_app_images/windows_images/windows10/virtio-win-0.1.240.iso
+
+go to => https://github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md 
+
+click [Latest virtio-win ISO link] => https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win.iso
+
+----------------------------------------------------------------------
+### in qemu ->  add tpm v2.0 ###
+----------------------------------------------------------------------
+
+click => Add Hardware <=
+- add tpm ->  emulated -> v2.0 
+
+----------------------------------------------------------------------
+### in qemu ->  add virtio-driver ###
+----------------------------------------------------------------------
+click => Add Hardware <=
+- add Storage 
+- custom -> manage optiions
+- browse local -> select virtio driver
+- Device type -> choose CD_ROM
+
+### - On Boot Options ###
+- check (tick) the newest Storage device 
+
+----------------------------------------------------------------------
+Run win10 virtual machine
+----------------------------------------------------------------------
+
+on section drivers 
+- load drivers
+- select virtio driver
+- amd64
+- win10 
+- click ok
+
+### adjust resolution to 1920x1080 ###
+
+----------------------------------------------------------------------
+### install drivers packages on windows ###
+----------------------------------------------------------------------
+
+### download spice-guest-tools) ###
+
+https://www.spice-space.org/download.htmla =>
+https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe
+
+- install spice-guest-tools.exe
+- shutdown system and start it again!!
+(copy-paste works fine)
+
+- activate dynamic screen resolution in qemu 
+go to -> View -> Scale Display -> (check) Auto resize to VM with window
+
+
+----------------------------------------------------------------------
+### install virtiofs shared folder (linux <--> windows) ###
+----------------------------------------------------------------------
+###### HOST: (LINUX) #######
+
+1- Enable shared memory in kvm 
+2- Add virtio filesystem hardware
+- Click “Add hardware” at the bottom.
+- Select File system 
+- Then select Driver->virtiofs 
+- Click on browse select the host path from your Linux system (ex: /home/user/vfs_share)
+- In the target path, mention any name you want (ex: vfs_share)
+- click Finish
+
+---------------------------------------
+
+###### GUEST: (WINDOWS) #######
+0- Run Windows 10
+1- Download and Install the WinFSP .msi installer. (make sure 'Core' is installed)
+from this link => https://github.com/winfsp/winfsp/releases
+
+2- Download and install  the virtio-win-guest-tools.exe 
+- from this link => https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/ 
+- select => stable-virtio
+- then select this to download => virtio-win-guest-tools.exe    
+or click -> https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.240-1/virtio-win-guest-tools.exe
+
+3- After installation is complete, reboot Windows virtual machine
+
+4- start virtiofs service
+- Open the start menu and search for “Services”.
+- Scroll down to find out the “VirtIO-FS Service”
+- Right-click and hit Start to start the service.
+
+5- access virtiofs mounted virtual disk 
+- open Explorer, and access the mount which should be mapped as Z drive.

@@ -1,0 +1,27 @@
+----------------------------------------------------------------------
+### create snapshots ###
+----------------------------------------------------------------------
+
+sudo timeshift --create --comment  "my_snapshot_name"
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+----------------------------------------------------------------------
+### list snapshots ###
+----------------------------------------------------------------------
+sudo timeshift --list
+
+----------------------------------------------------------------------
+### other operations ###
+----------------------------------------------------------------------#
+
+  - Create a new snapshot (if scheduled):
+    sudo timeshift --check
+
+  - Restore a snapshot (selecting which snapshot to restore interactively):
+    sudo timeshift --restore
+
+  - Restore a specific snapshot:
+    sudo timeshift --restore --snapshot 'snapshot'
+
+  - Delete a specific snapshot:
+    sudo timeshift --delete --snapshot 'snapshot'

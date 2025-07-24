@@ -1,0 +1,36 @@
+
+-----------------------------------------------------
+Soulution 1:
+-----------------------------------------------------
+
+sudo nano /etc/modprobe.d/8192cu.conf
+
+# Disable Power Management
+options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+
+-----------------------------------------------------
+Soution 2
+-----------------------------------------------------
+
+ it may be related to the wireless power management. I've disabled it by running the following command:
+
+iwconfig wlan0 power off
+
+-----------------------------------------------------
+Soution 3
+-----------------------------------------------------
+It sounds like your router might be dropping the connection to your pi because its seeing no traffic from your pi over the wifi connection.
+try setting up cron to run ping every few minutes to ping your router or some other internal IP that's always available
+
+sudo vim /etc/crontab
+*/5 * * * * /bin/ping -c 1 192.168.1.1 >/dev/null 2>&1
+
+not forgetting to include a black line after the new entry.
+
+
+-----------------------------------------------------
+Soution 4
+-----------------------------------------------------
+ping periodicly
+
+*/10 * * * * fping -qg 192.168.1.0/24

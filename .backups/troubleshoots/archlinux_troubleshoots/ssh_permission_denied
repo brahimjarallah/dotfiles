@@ -1,0 +1,36 @@
+Fix Permission denied (publickey,password) or Permission denied, please try again.
+
+While using Linux, you may encounter the error, “#permission denied”.
+ This error is encountered when the user does not have the privileges to make edits to a file.
+ ... permissions define if the user can read, write, or execute the file.
+ They can be represented using symbolic or octal numbers.
+
+How to fix Permission denied (publickey,password)
+Change your root password
+if not working than 
+
+*** setting sshd_config
+# sudo vim /etc/ssh/sshd_config
+
+PermitRootlogin yes
+
+sudo systemctl reload sshd
+
+OR
+
+1.First Checking have Install SSH
+2.Not Install SSH than Installed it's 
+3.SSH Restart 
+4.SSH Enable.
+5.Checking SSH Status .
+6. Must Be Active (Status Running)
+error: Permission denied
+Change Your User go to Root User:- 
+$sudo -i
+
+Install SSH :-
+sudo apt-get update
+sudo apt-get install ssh
+systemctl restart ssh.service
+systemctl enable ssh.service
+systemctl status ssh.service

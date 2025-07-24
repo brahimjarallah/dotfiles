@@ -1,0 +1,48 @@
+ how to enable SSH on a Raspberry Pi and connect to it via SSH. 
+
+1. Image Your Raspberry Pi SD Card
+ Download the Raspberry Pi Imager 
+paru rpi-imager
+
+Open the Raspberry Pi Imager and click on CHOOSE OS.
+but we will be using the Rpi Lite (32-bit) version
+
+2. Enable SSH Access on Raspberry Pi
+
+ Create an empty file called ssh
+
+at the root of your SD card.
+touch /Volumes/boot/ssh
+
+3. Set Up WiFi on Raspberry Pi
+
+Create a file at the root of the SD card called wpa_supplicant.conf
+
+#vim wpa_supplicant.conf
+'''
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=<US>
+network={
+ ssid="WIFI_NAME"
+ psk="WIFI_PASSWORD"
+}
+'''
+
+If you’d like, you can assign your Raspberry Pi a hostname instead of using the IP address directly. In order to map a hostname to the IP address of your Raspberry Pi, you simply need to edit the hosts file on your computer.
+When you’ve done that, eject the SD card from your computer and insert it into your Raspberry Pi.
+
+4. Find the IP Address of Raspberry Pi
+
+
+In order to connect to the Raspberry Pi via SSH, execute the following command.
+# ping raspberrypi.local
+
+5. Login to Raspberry Pi vis SSH
+
+ssh pi@192.168.0.136
+
+The default Raspberry Pi username is pi
+and the default password is raspberry
+
+

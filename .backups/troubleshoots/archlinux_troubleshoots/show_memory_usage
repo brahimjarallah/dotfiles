@@ -1,0 +1,5 @@
+*** show zram mem: ***
+zramctl
+
+*** show free memory ***
+free -m

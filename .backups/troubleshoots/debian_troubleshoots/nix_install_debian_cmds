@@ -1,0 +1,30 @@
+----------------------------------------------------------------------
+***  nix installation command  ***
+----------------------------------------------------------------------
+
+$ sh <(curl -L https://nixos.org/nix/install) --daemon
+
+----------------------------------------------------------------------
+***  Common nix-env Commands  ***
+----------------------------------------------------------------------
+
+Searching for packages	nix search nixpkgs packagename
+Searching for packages	nix-env -qaP search package
+Installing a package	nix-env -iA packagename
+List installed packages	nix-env -q
+Uninstall packages	nix-env -e packagename
+Upgrade packages	nix-env -u
+
+test package without install	nix-shell -p packagename
+
+
+----------------------------------------------------------------------
+***  Common nix-channel commands  ***
+----------------------------------------------------------------------
+
+Listing current channels	nix-channel --list
+Adding a primary channel	nix-channel --add https://nixos.org/channels/channel-name nixos
+Adding other channels	nix-channel --add https://some.channel/url my-alias
+Remove a channel	nix-channel --remove channel-alias
+Updating a channel	nix-channel --update channel-alias
+Updating all channels	nix-channel --update

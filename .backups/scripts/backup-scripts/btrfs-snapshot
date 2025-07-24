@@ -1,0 +1,60 @@
+#!/bin/bash
+# Btrfs Timeline Snapshot Script
+# Usage: btrfs-snapshot [root|home|both]
+
+set -euo pipefail                           # Strict error handling: exit on error, unset vars, and pipeline failure
+
+SNAPSHOT_DIR="/.snapshots"                 # Directory where snapshots will be stored
+DATE=$(date +%Y-%m-%d-%H%M%S)              # Current timestamp used in snapshot names
+
+# Logging function: logs with timestamp and appends to log file
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a /var/log/btrfs-snapshots.log
+}
+
+# Function to create root (/) snapshot
+create_root_snapshot() {
+    local snapshot_name="root-${DATE}"                     # Set snapshot name for root
+    log "Creating root snapshot: ${snapshot_name}"         # Log the operation
+
+    if btrfs subvolume snapshot / "${SNAPSHOT_DIR}/${snapshot_name}"; then  # Try to create root snapshot
+        log "✅ Root snapshot created successfully: ${snapshot_name}"       # Success log
+    else
+        log "❌ Failed to create root snapshot: ${snapshot_name}"           # Failure log
+        return 1                                                            # Return error status
+    fi
+}
+
+# Function to create home (/home) snapshot
+create_home_snapshot() {
+    local snapshot_name="home-${DATE}"                    # Set snapshot name for home
+    log "Creating home snapshot: ${snapshot_name}"        # Log the operation
+
+    if btrfs subvolume snapshot /home "${SNAPSHOT_DIR}/${snapshot_name}"; then  # Try to create home snapshot
+        log "✅ Home snapshot created successfully: ${snapshot_name}"       # Success log
+    else
+        log "❌ Failed to create home snapshot: ${snapshot_name}"           # Failure log
+        return 1                                                            # Return error status
+    fi
+}
+
+# Main logic: decide which snapshot(s) to create based on user input
+case "${1:-both}" in        # Use first argument, or default to "both" if none provided
+    root)
+        create_root_snapshot          # Call root snapshot function
+        ;;
+    home)
+        create_home_snapshot          # Call home snapshot function
+        ;;
+    both)
+        create_root_snapshot          # Call both
+        create_home_snapshot
+        ;;
+    *)
+        echo "Usage: $0 [root|home|both]"  # Show usage if argument is invalid
+        exit 1
+        ;;
+esac
+
+log "Snapshot operation completed"   # Final log indicating the script finished
+

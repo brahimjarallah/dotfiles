@@ -1,0 +1,10 @@
+*** restart systemd without reboot ***
+
+systemctl daemon-reexec
+
+
+or 
+
+
+to reload daemon services:
+systemctl daemon-reload

@@ -1,0 +1,8 @@
+filepath
+----------------
+realpath filename
+
+shortcut of filepath
+----------------
+realpath -s filename
+

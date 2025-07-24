@@ -1,0 +1,55 @@
+CRIPT_PAT$SCRIPT_PAT
+
+#!/bin/bash
+SCRIPT_PATH="/path/to/script.sh"
+
+# Here you execute your script
+
+(exec "$SCRIPT_PATH")
+
+# or
+"$SCRIPT_PATH"
+
+# or
+. "$SCRIPT_PATH"
+
+# or
+source "$SCRIPT_PATH"
+
+# or
+bash "$SCRIPT_PATH"
+
+# or
+eval '"$SCRIPT_PATH"'
+
+# or
+OUTPUT=$("$SCRIPT_PATH")
+echo $OUTPUT
+
+# or
+OUTPUT=`"$SCRIPT_PATH"`
+echo $OUTPUT
+
+# or
+("$SCRIPT_PATH")
+
+######################################################################
+
+You can use /bin/sh to call or execute another script (via your actual script):
+
+ # cat showdate.sh
+ #!/bin/bash
+ echo "Date is: `date`"
+
+ # cat mainscript.sh
+ #!/bin/bash
+ echo "You are login as: `whoami`"
+ echo "`/bin/sh ./showdate.sh`" # exact path for the script file
+The output would be:
+
+ # ./mainscript.sh
+ You are login as: root
+ Date is: Thu Oct 17 02:56:36 EDT 2013
+
+
+

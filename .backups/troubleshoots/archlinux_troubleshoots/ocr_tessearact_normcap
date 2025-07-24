@@ -1,0 +1,39 @@
+# BUILD FROM SOURCE
+#
+# Clone repository
+git clone https://github.com/dynobo/normcap.git
+
+# Change into project directory
+cd normcap
+
+# Create virtual env and install dependencies
+hatch env create
+
+# Register pre-commit hook
+hatch run pre-commit install
+
+# Run NormCap in virtual env
+hatch run python -m normcap
+
+############################################################
+############################################################
+############################################################
+#
+#
+# Install dependencies (Ubuntu/Debian)
+sudo apt install build-essential tesseract-ocr tesseract-ocr-eng libtesseract-dev libleptonica-dev wl-clipboard
+
+## Install dependencies (Arch)
+sudo pacman -S tesseract tesseract-data-eng wl-clipboard
+
+## Install dependencies (Fedora)
+sudo dnf install tesseract wl-clipboard
+
+## Install dependencies (openSUSE)
+sudo zypper install python3-devel tesseract-ocr tesseract-ocr-devel wl-clipboard
+
+# Install normcap
+pip install normcap
+
+# Run
+./normcap

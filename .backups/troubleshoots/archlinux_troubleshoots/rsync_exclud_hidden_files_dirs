@@ -1,0 +1,13 @@
+----------------------------------------------------------------------
+*** excludes hidden files and directories ***
+----------------------------------------------------------------------
+
+--exclude=".*"
+
+ rsync -aAXxvh --progress --partial  --exclude=".*/" --exclude=media/msc /mnt/srv/home/  brahim@172.116.7.109:/home/brahim/homebak
+----------------------------------------------------------------------
+*** copy only hidden directories ***
+----------------------------------------------------------------------
+ rsync -aAXxvh --progress --partial  ~/.[^.]* /mnt/srv/home/  brahim@172.116.7.109:/home/brahim/homeconf
+
+rsync -a ~/.[^.]* /path/to/backup

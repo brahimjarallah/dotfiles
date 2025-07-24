@@ -1,0 +1,39 @@
+---------------------------------------------------------------------
+***	Create ssh ed25519 keygen	***
+----------------------------------------------------------------------
+
+ssh-keygen -t ed25519 -C "hnider_host" ~/.ssh
+--> save as hnider_id_ed25519
+--> then enter passphrase
+
+----------------------------------------------------------------------
+***	Copy key to the server	***
+----------------------------------------------------------------------
+
+ssh-copy-id -i ~/.ssh/hnider_id_ed25519.pub -p21956 pi@10.27.7.106
+
+----------------------------------------------------------------------
+***	configure ssh agent to login without password	***
+----------------------------------------------------------------------
+eval "$(ssh-agent)"
+ps aux | grep ssh-agent
+ps aux |less
+ssh-add ~/.ssh/hnider_id_ed25519
+
+----------------------------------------------------------------------
+***	secure ssh config ( disable root authentification)	***
+----------------------------------------------------------------------
+
+sudo vim /etc/ssh/ssh_config
+
+PasswordAuthentification no
+PermitEmptyPassword no
+UsePAM no
+PermitRootLogin no
+ForwardAgent yes
+
+----------------------------------------------------------------------
+***	Secure copy:	***
+----------------------------------------------------------------------
+scp index.html pi@10.27.7.XXX:/home/pi
+

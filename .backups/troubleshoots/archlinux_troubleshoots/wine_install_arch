@@ -1,0 +1,77 @@
+Installing Wine on Arch Linux
+To install Wine on Arch Linux, you first need to enable the multilib repository, which makes it possible to run and build 32-bit applications on 64-bit installations of Arch Linux, by uncommenting the following two lines in /etc/pacman.conf:
+
+[multilib]
+ 
+Include = /etc/pacman.d/mirrorlist
+Then, decide whether you want to install the wine (stable) package or the wine-staging (testing) package. Wine Staging contains patches and features that have not been integrated into the main branch yet. Some of the features in Wine Staging are purely experimental, intended to give developers the possibility to test them out and improve them before integrating them into the main branch. Visit the official page of Wine Staging to learn more about how it differs from the main branch.
+
+If you’ve decided for the wine package, issue the following command:
+
+# pacman -S wine
+If you’ve decided for the wine-staging package, issue the following command:
+
+# pacman -S wine-staging
+Installing All Optional Dependencies
+To avoid compatibility issues down the road, it’s useful do install all optional dependencies right away:
+
+# pacman -S $(pactree -l wine)
+or
+
+# pacman -S $(pactree -l wine-staging)
+This command passes all dependencies to Pacman and asks you to install them.
+
+Using Wine on Arch Linux
+To successfully run Windows applications on Arch Linux using Wine, you should be familiar with some basic configuration options as well as Wine’s GUI configuration tool, called Winecfg. With Winecfg, you can easily change settings for all applications or only for a specific application, mimicking different versions of Windows for each application.
+
+Changing the Default Location
+The one setting that you may want to change immediately after installation is called “Wine prefix” or “Wine bottle.” This setting tells Wine where to store configuration files and installed Windows applications. The default location is ~/.wine, and it’s also the place that Windows applications see as the C-drive.  You can override the default Wine prefix with the WINEPREFIX environment variable:
+
+$ export WINEPREFIX=~/.wine-new
+ 
+$ wine winecfg
+To revert to the default Wine prefix, run the following command:
+
+$ unset WINEPREFIX
+Or just set the WINEPREFIX environment variable to ~/.wine again:
+
+$ export WINEPREFIX=~/.wine
+ 
+$ wine winecfg
+To specify Wine prefix for each command, run the following command:
+
+$ WINEPREFIX=~/win32 wine winecfg
+Creating a 32-Bit Wine Prefix on a 64-Bit System
+Unfortunately, there are currently several serious bugs that make it impossible for 32-bit Windows applications to run in a 64-bit Wine prefix. The simplest solution is to use a 32-bit Wine prefix instead until the bugs are fixed. Type in a terminal:
+
+$ WINEARCH=win32 WINEPREFIX=~/win32 winecfg
+If the newly created Wine prefix isn’t specified as default, it’s necessary to specify it when installing a new 32-bit application:
+
+$ WINEPREFIX==~/win32 wine start /unix path_to_installer
+Installing a Windows Application
+Installing Windows applications on Arch Linux using Wine isn’t too different from installing Windows applications on Windows. Most Windows applications have an installer that you need to execute by typing the following command in a terminal:
+
+$ wine path_to_installer.exe
+From there, just follow the instructions the installer gives you to complete the installation process. In most cases, the default settings work perfectly fine.
+
+Running a Windows Application
+Once the application is installed, it’s time to run it. There are several ways how to run Wine applications, but the most foolproof is from the command line.
+
+To avoid dependency issues, change directory to the folder where the application is located using the cd command and use the following command to run the executable:
+
+$ wine path_to_executable.exe
+You can even pass Windows command-line arguments to programs just like you can on Windows:
+
+$ wine path_to_executable.exe -argument
+To execute a Windows application with the .msi suffix, either the Msiexec program or wine start
+
+$ wine msiexec /i path_to_executable.msi
+or
+
+$ wine start path_to_executable.msi
+Uninstalling a Windows Application
+The best way how to uninstall an application that has been installed using Wine is to invoke the uninstaller program, which is Wine’s alternative to the “Add/Remove Programs” control panel applet. Since Wine 1.1.3, the uninstaller has been replaced with an actual Add/Remove Programs control panel applet (appwiz.cpl), which can be invoked with the following command:
+
+$ wine uninstaller
+Conclusion
+If you’re someone who still depends on some Windows-only applications, Wine is the perfect solution how you can stay in Arch Linux all the time and still enjoy access to the Windows application you need or like to use. Unlike emulators or virtualization products, Wine doesn’t significantly impact application performance, making it suitable even for gaming

@@ -1,0 +1,41 @@
+##Unable to complete install: 'Requested operation is not valid: network 'default' is not active' qemu-kvm
+
+
+**solution 1:
+
+If you want to use the NAT backend you need to install some extra dependencies.
+libvirt package:
+https://archlinux.org/packages/community/x86_64/libvirt/ 32
+
+You need at least dnsmasq and an ebtables provider. etables is in Arch provided by iptables-nft which will conflict with the normal iptables package. You will need to replace iptables with iptables-nft .
+
+##################################################
+**solution 2: 
+
+if the following command shows default profile and the state is inactive
+
+sudo virsh net-list --all  
+then try,
+
+sudo virsh net-start default
+
+##################################################
+Command to check  : 
+                               virsh net-list --all
+
+Command to start default network : 
+
+                               virsh net-start default
+
+Command to autostart default network :
+ 
+                               virsh net-autostart default
+
+Command to disable autostart default network :
+ 
+                              virsh net-autostart  --disable default
+
+Command to inactive state of default network : 
+
+                              virsh net-destroy default
+

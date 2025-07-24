@@ -1,0 +1,18 @@
+----------------------------------------------------------------------
+***  mehtod 1  ***
+----------------------------------------------------------------------
+sudo add-apt-repository contib
+
+----------------------------------------------------------------------
+***  mehtod 2  ***
+----------------------------------------------------------------------
+
+
+sudo vim /etc/apt/sources.list
+// add non-free +  contrib
+deb http://security.debian.org/debian-security bookworm-security main  contrib non-free-firmware
+
+sudo apt update && sudo apt upgrade
+
+
+

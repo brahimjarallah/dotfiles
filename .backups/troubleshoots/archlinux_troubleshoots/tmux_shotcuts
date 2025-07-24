@@ -1,0 +1,32 @@
+C-b-c: create a new window
+C-b-,: rename current window
+C-b-1: go to window 1
+C-b-3: go to window 3
+C-b-%: spilt vertical window in the same directory
+C-b-": spilt horizontal window in the same directory
+C-b-:new: start new session
+C-b-s: return to other sessions
+C-b-$: rename session
+
+
+C-b-w  list windows
+C-b-n  next window
+C-b-p  previous window
+C-b-f  find window
+C-b-&  kill window
+
+
+C-b-o  swap panes
+C-b-q  show pane numbers
+C-b-x  kill pane
+C-b-+  break pane into window (e.g. to select text by mouse to copy)
+C-b--  restore pane from window
+C-b-⍽  space - toggle between layouts
+C-b-<prefix> q (Show pane numbers, when the numbers show up type the key to goto that pane)
+C-b-<prefix> { (Move the current pane left)
+C-b-<prefix> } (Move the current pane right)
+C-b-<prefix> z toggle pane zoom
+
+
+continue to previous session state ( it's powerful for ssh )
+> tmux attach 

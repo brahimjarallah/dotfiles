@@ -1,0 +1,42 @@
+----------------------------------------------------------------------
+file
+----------------------------------------------------------------------
+youtube-dl --extract-audio --audio-format mp3 <video URL>
+
+
+youtube-dl --extract-audio --audio-format mp3 <video URL> --verbose
+
+
+youtube-dl --extract-audio --audio-format mp3 <video URL> --audio-quality 128k
+
+youtube-dl --extract-audio --audio-format mp3 <video URL> --audio-quality 9
+
+
+youtube-dl --extract-audio --audio-format mp3 'https://www.youtube.com/watch?v=H9yZ2y__qBs' --audio-quality 9 -o ~/Downloads/military_drumming.mp3 --verbose
+
+
+----------------------------------------------------------------------
+PLAYLIST
+----------------------------------------------------------------------
+youtube-dl -cit --extract-audio --audio-format mp3 --audio-quality 9 https://www.youtube.com/playlist?list=PLAATlDE_4F0p2pnAI0iTaVpZViKiN1UAt -i  ~/Downloads/liquid_dnb/ --verbose
+
+
+IIIIIIIIIIIIIIIIIIIIIIIIIII
+VVVVVVVVVVVVVVVVVVVVVVVVVVV
+
+**********************************************************************
+**********************************************************************
+**********************************************************************
+----------------------------------------------------------------------
+man youtube-dl
+----------------------------------------------------------------------
+     --audio-quality QUALITY
+              Specify ffmpeg/avconv audio quality, insert a value between 0 (better) and 9 (worse) for VBR or a specific bitrate
+              like 128K (default 5)
+
+
+How do I put downloads into a specific folder?
+       Use  the -o to specify an output template, for example -o "/home/user/videos/%(title)s-%(id)s.%(ext)s".  If you want this
+       for all of your downloads, put the option into your configuration file.
+
+

@@ -1,0 +1,35 @@
+virsh net-list --all\n
+sudo virsh net-start default\nsudo virsh net-autostart default\n
+virsh net-list --all\n
+sudo pacman -S dnsmasq\n
+ip a show virbr0\n
+sudo systemctl restart libvirtd\n
+cat /proc/sys/net/ipv4/ip_forward\n
+sudo iptables -t nat -L -n | grep MASQUERADE\n
+htop
+sudo virsh net-list --all 
+sudo iptables -L -n -v
+brctl show (
+brctl show
+# Add rules to allow libvirt traffic through Docker's firewall\nsudo iptables -I DOCKER-USER -i virbr0 -o virbr0 -j ACCEPT\nsudo iptables -I DOCKER-USER -o virbr0 -j ACCEPT\nsudo iptables -I DOCKER-USER -i virbr0 -j ACCEPT
+# On Arch, install iptables-save/restore\nsudo pacman -S iptables\nsudo iptables-save > /etc/iptables/iptables.rules\nsudo systemctl enable iptables
+sudo vim  /etc/docker/daemon.json
+sudo systemctl restart docker+
+sudo systemctl restart docker
+sudo systemctl status virtstoraged\n
+sudo systemctl start virtstoraged\nsudo systemctl enable virtstoraged\n
+sudo pacman -S libvirt virt-manager qemu-full ebtables dnsmasq\n
+sudo pacman -S libvirt-daemon-config-storage libvirt-daemon-storage\n
+sudo systemctl enable --now libvirtd.service\n
+sudo systemctl status libvirtd\n
+ls /var/run/libvirt/virtstoraged-sock\n
+sudo systemctl enable --now libvirtd\n
+sudo systemctl status libvirtd\n
+sudo usermod -aG libvirt $USER\n
+sudo pacman -Syu libvirt qemu-full virt-manager dnsmasq bridge-utils edk2-ovmf\nsudo systemctl enable --now libvirtd virtstoraged.socket\nsudo usermod -aG libvirt $USER\nsudo reboot\n
+# Add rules to allow libvirt traffic through Docker's firewall\nsudo iptables -I DOCKER-USER -i virbr0 -o virbr0 -j ACCEPT\nsudo iptables -I DOCKER-USER -o virbr0 -j ACCEPT\nsudo iptables -I DOCKER-USER -i virbr0 -j ACCEPT
+sudo iptables -L -n -v
+sudo systemctl restart docker
+sudo virsh net-list --all 
+# On Arch, install iptables-save/restore\nsudo pacman -S iptables\nsudo iptables-save > /etc/iptables/iptables.rules\nsudo systemctl enable iptables
+history >> .notes.txt

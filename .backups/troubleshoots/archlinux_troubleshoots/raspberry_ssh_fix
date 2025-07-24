@@ -1,0 +1,56 @@
+cd ~/.ssh
+rm *
+------------------------------------------------------------------
+
+Your ISP may block connections to port 22 (nothing you or your router can do about it). Just set SSHd to run on a different port, e.g. 2222.
+
+In /etc/ssh/sshd_config, change Port 22 to Port 2222 and then sudo service ssh restart. Port forward 2222 (or whatever), and try again.
+
+------------------------------------------------------------------
+
+sudo apt-get purge openssh-server 
+sudo apt-get install openssh-server
+
+sudo service ssh status
+sudo service ssh start
+
+
+ssh -L localport:127.0.0.1:22 pi@192.168.1.192 -p 2222
+---------------------------------------
+
+Remove the cached key for 192.168.1.123 on the local machine:
+
+ssh-keygen -R 192.168.1.123
+
+---------------------------------------
+
+# Connected to the Internet, but can't ssh or ping ==>>>
+
+This happens a lot with one of my Raspberry Pis. I have a script which checks for an Internet connection and runs ifup wlan0 when a connection is not present. Some of the things you could try:
+
+    Rebooting the Raspberry Pi
+    Checking that you have a valid IP address using ifconfig
+    Ensuring that you have power-saving features disabled on the dongle by adding wireless-power off to your /etc/network/interfaces file
+    Run ifup --force wlan0
+
+Here's a script which runs every five minutes from cron:
+
+#!/bin/bash
+#Script to check the network connection
+
+#Check network connection
+if /sbin/ifconfig wlan0 | grep -q "inet addr:" ; then
+    #Connection is good; do nothing
+    echo "$(date "+%D [%H:%M:%S]") Connection is up"
+else
+    echo "$(date "+%D [%H:%M:%S]") Network connection down. Attempting to reconnect..."
+    sudo /sbin/ifup --force wlan0
+fi
+
+If that is a wireless card power management issue, you can also have a look at WLAN disappears after some time.
+
+Many wireless network cards don't support wireless-power off option in /etc/network/interfaces. To disable power management with a 8192CU module loaded, you can create a file sudo nano /etc/modprobe.d/8192cu.conf with the following contents.
+
+# Disable power management
+options 8192cu rtw_power_mgnt=0
+

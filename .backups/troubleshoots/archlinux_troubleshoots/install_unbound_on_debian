@@ -1,0 +1,23 @@
+sudo apt update
+sudo apt install unbound
+
+*** copy config file ***
+form ==> https://docs.pi-hole.net/guides/dns/unbound/
+to => /etc/unbound/unbound.conf
+
+sudo systemctl restart unbound
+sudo systemctl status unbound
+
+
+*** test unbound ***
+dig pi-hole.net @127.0.0.1 -p 5335
+
+*** test DNSSEC validation ***
+dig fail01.dnssec.works @127.0.0.1 -p 5335
+dig dnssec.works @127.0.0.1 -p 5335
+
+add => 127.0.0.1#5335 
+to dns configuration web ui
+and unchek other dns'ses
+
+click save

@@ -1,0 +1,50 @@
+----------------------------------------------------------------------
+STEP 1:  ** Check for exiting pub_keys:
+----------------------------------------------------------------------
+ls -al ~/.ssh/id_*.pub
+
+--> if there is no files or directory msg then :
+|||||||||
+VVVVVVVVV
+
+----------------------------------------------------------------------
+STEP 2:  ** create a new pub key:
+----------------------------------------------------------------------
+
+ssh-keygen -t rsa -b 4096 -C "hnider@protonmail.com"
+
+_ accept the default path
+_ enter passphrase
+_ all it's done!
+
+----------------------------------------------------------------------
+STEP 2:  ** Upload public key to a Remote server Using the ssh-copy-id
+----------------------------------------------------------------------
+Option1:
+
+ssh-copy-id [remote_username]@[server_ip_address]  :
+ssh-copy-id pi@10.83.19.134
+
+Option2:
+1. Upload Public Key Using the cat Command
+ssh  pi@10.83.19.134  mkdir -p .ssh
+
+2. Then, type in the password for the remote user.
+
+cat .ssh/id_rsa.pub | ssh pi@10.83.19.134 'cat >> .ssh/authorized_keys'
+
+----------------------------------------------------------------------
+Step 3: ** Log in to Server Without Password
+----------------------------------------------------------------------
+ssh pi@10.83.19.134
+
+----------------------------------------------------------------------
+Troubleshuts 4: File permissions on the remote server may cause issues with passwordless SSH login
+----------------------------------------------------------------------
+Set permissions 700 for the .ssh directory.
+Set permissions 640 for the .ssh/authorized_keys directory.
+
+Edit file permissions with the following command:
+ssh pi@10.83.19.134 "chmod 700 .ssh; chmod 640 .ssh/authorized_keys"
+
+

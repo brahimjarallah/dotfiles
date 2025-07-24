@@ -1,0 +1,57 @@
+tar.gz
+
+ tar -recommended-options filename.tar.gz -optional-options
+tar.bz2
+
+ tar -recommended-options filename.tar.bz2 -optional-options
+tar.xz
+
+or
+unxz   filename.img.xz
+
+
+ tar -recommended-options filename.tar.xz -optional-options
+Options
+
+Secondly the Recommended Options are:
+
+–x : Extract
+–v : Verbose Mode
+–f : File Name
+–z : Decompress for tar.gz file only
+–j : Decompress for tar.bz2 file only
+–J : Decompress for tar.xz file only
+Finally the Optional Options are
+
+–C : Followed by the Path of Destination Directory
+Extract Files in Same Current Directory
+Secondly the file extraction process should followed by the same directory.
+
+tar.gz
+
+ tar -xzvf techbrown.tar.gz
+tar.bz2
+
+ tar -xjvf techbrown.tar.bz2
+tar.xz
+
+ tar -xJvf techbrown.tar.xz
+Extract Files in Particular Destination Directory
+First of all Extracting files from the tarball. The extraction of tarball can be done using command.
+
+After that Tar ball mainly utilized for the archive of backups.
+
+Finally to get back files that are in compressed state roll backing to its original part is know as extract the tarballs.
+
+tar.gz
+
+ tar -xzvf techbrown.tar.gz -C /home/techbrown/
+tar.bz2
+
+ tar -xjvf techbrown.tar.bz2 -C /home/techbrown/
+tar.xz
+
+ tar -xJvf techbrown.tar.xz -C /home/techbrown/
+After that the Tar Command More Options or Help Manual can be found by using manual command.
+
+ man tar

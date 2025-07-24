@@ -1,0 +1,89 @@
+go to
+||||||||
+VVVVVVVV
+https://tteck.github.io/Proxmox/
+
+
+Proxmox Helper Scripts
+
+--------------------------------------------------
+Proxmox VE 7 Post Install
+--------------------------------------------------
+
+This script provides options for managing Proxmox VE repositories, including disabling the Enterprise Repo, adding or correcting PVE7 sources, enabling the No-Subscription Repo, adding the test Repo, disabling the subscription nag, updating Proxmox VE, and rebooting the system.
+
+Copy
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/post-pve-install.sh)"
+
+
+--------------------------------------------------
+Proxmox Kernel Clean
+--------------------------------------------------
+Cleaning unused kernel images is beneficial for reducing the length of the GRUB menu and freeing up disk space. By removing old, unused kernels, the system is able to conserve disk space and streamline the boot process.
+Run the command below in the Proxmox Shell.
+
+Copy
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/kernel-clean.sh)"
+Proxmox Edge Kernel Tool
+
+
+--------------------------------------------------
+Proxmox Edge Kernel Tool
+--------------------------------------------------
+PVE Edge Kernels are custom Linux kernels specifically designed for Proxmox VE 7. Unlike regular LTS (Long-Term Support) kernels, PVE Edge Kernels aim to keep up with new kernel releases and provide the latest features and improvements. These kernels are tailored to the needs of Proxmox VE and are optimized for virtualization and container-based environments.
+
+Copy
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/edge-kernel.sh)"
+
+
+--------------------------------------------------
+Proxmox CPU Scaling Governor
+--------------------------------------------------
+
+The CPU scaling governor determines how the CPU frequency is adjusted based on the workload, with the goal of either conserving power or improving performance. By scaling the frequency up or down, the operating system can optimize the CPU usage and conserve energy when possible. Generic Scaling Governors
+
+Copy
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/scaling-governor.sh)"
+
+--------------------------------------------------
+Proxmox LXC Cleaner
+--------------------------------------------------
+
+This script provides options to delete logs and cache, and repopulate apt lists for Ubuntu and Debian systems.
+Run the command below in the Proxmox Shell.
+
+Copy
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/clean-lxcs.sh)"
+
+
+--------------------------------------------------
+Proxmox Discord Dark Theme
+--------------------------------------------------
+
+A dark theme for the Proxmox Web UI is a custom theme created by Weilbyte that changes the look and feel of the Proxmox web-based interface to a dark color scheme. This theme can improve the visual experience and make the interface easier on the eyes, especially when used in low-light environments.
+
+
+Copy
+bash <(curl -s https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh ) install
+
+To uninstall the theme, simply run the script with the uninstall command.
+
+--------------------------------------------------
+other tools --> go to website https://tteck.github.io/Proxmox/
+--------------------------------------------------
+Home Assistant
+Automation
+MQTT
+Database
+Zigbee - Zwave
+Monitoring - Analytics
+Docker - Kubernetes
+Operating System
+Server - Networking
+Media - Photo
+Ad Blocker - DNS
+Document - Notes
+Dashboards
+File - Code
+Miscellaneous
+----------------------------------------

@@ -1,0 +1,7 @@
+yay -S ibus-uniemoji
+
+
+#  command exec
+
+ibus emoji
+

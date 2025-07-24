@@ -1,0 +1,41 @@
+----------------------------------------------------------------------
+### ***  This small utility is designed to rename all files in a folder according to a specified naming convention (camelCase, snake_case, kebab-case, etc.). *** ###
+----------------------------------------------------------------------
+
+# Go to github website of =>> 'stdrename'
+==>> https://github.com/Gadiguibou/stdrename
+
+1- Download the latest binary executable release supported by my OS.
+==> https://github.com/Gadiguibou/stdrename/releases
+
+2- Add it to your PATH.
+chmod +x ~/Downloads/stdrename && sudo mv ~/Downloads/stdrename ~/.local/bin
+
+3- add this permantly to ~/.bashrc
+export PATH="$HOME/.local/bin:$PATH"
+
+----------------------------------------------------------------------
+### ***  Usage *** ###
+----------------------------------------------------------------------
+stdrename -h
+==>>>
+    -p, --pascal       Uses the PascalCase naming convention
+        --screaming    Uses the SCREAMING_SNAKE_CASE naming convention
+    -S, --sentence     Uses the Sentence case naming convention
+    -T, --title        Uses the Title Case naming convention
+    -t, --train        Uses the Train-Case naming convention
+    -c, --camel        Uses the camelCase naming convention
+    -h, --help         Prints help information
+    -k, --kebab        Uses the kebab-case naming convention
+    -r, --recursive    Makes renaming recursive, renaming files in subfolders as well
+    -s, --snake        Uses the snake_case naming convention
+    -V, --version      Prints version information
+
+----------------------------------------------------------------------
+### ***  Example of usage *** ###
+----------------------------------------------------------------------
+
+rename to snake case 's' + including directories 'D' + recucusive 'r'
+$ stdrename -sDr ~/myTargetFolder
+
+----------------------------------------------------------------------

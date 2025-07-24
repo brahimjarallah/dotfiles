@@ -1,0 +1,290 @@
+Keycodes
+This is a table of all Key Codes and their associated data
+This table is based on the US standard 101 keyboard, the values may vary based on a specific hardware.
+Key Code
+
+Key
+Code
+Unicode
+Description
+
+3	Cancel	Pause		break
+8	Backspace	Backspace	⌫	backspace / delete
+9	Tab	Tab	↹	tab
+12	Clear	NumLock	⌧	clear
+13	Enter	Enter	↵	Enter / Return
+16	Shift	ShiftLeft	⇧	shift
+16	Shift	ShiftRight	⇧	shift
+17	Control	ControlLeft	^	ctrl
+17	Control	ControlRight	^	ctrl
+18	Alt	AltLeft	⎇ / ⌥	Alt / Option
+18	Alt	AltRight	⎇ / ⌥	Alt / Option
+19	Pause	Pause		pause/break
+20	CapsLock	CapsLock	⇪	caps lock
+21	Unidentified	Lang1		hangul
+25	Unidentified	Lang2		hanja
+27	Escape	Escape	⎋	escape
+28	henkan			conversion
+29	muhenkan			non-conversion
+32	(blank space)	Space		spacebar
+33	PageUp	Numpad9	⇞	page up
+34	PageDown	Numpad3	⇟	page down
+35	End	Numpad1		end
+36	Home	Numpad7	⌂	home
+37	ArrowLeft	ArrowLeft	←	left arrow
+38	ArrowUp	ArrowUp	↑	up arrow
+39	ArrowRight	ArrowRight	→	right arrow
+40	ArrowDown	ArrowDown	↓	down arrow
+41	Select			select
+42	Print			print
+43	Execute			execute
+44	F13	F13	⎙	Print Screen / F13 (firefox)
+45	Insert	Numpad0	x	insert
+46	Delete	NumpadDecimal	⌦	delete
+47	Help		⍰	help
+48	0	Digit0	⓪	0
+48	’	Digit0	’	apostrophe
+48	º	Digit0	º	ordinal indicator
+49	1	Digit1	①	1 Key
+49	!	Digit1	!	exclamation mark
+49	¡	Digit1	¡	inverted exclamation mark
+50	2	Digit2	②	2 Key
+50	@	Digit2	@	at sign
+50	²	Digit2	²	sqaure
+50	™	Digit2	™	trademark
+51	3	Digit3	③	3 Key
+51	#	Digit3	#	hash
+51	³	Digit3	³	cube
+51	£	Digit3	£	pound
+52	4	Digit4	④	4 Key
+52	¤	Digit4	¤	currency
+52	¢	Digit4	¢	cent
+53	5	Digit5	⑤	5 Key
+53	%	Digit5	%	percent
+53	€	Digit5	€	euro
+53	∞	Digit5	∞	infinity
+54	6	Digit6	⑥	6 Key
+54	§	Digit6	§	section sign
+54	¼	Digit6	¼	one quarter
+55	7	Digit7	⑦	7 Key
+55	&	Digit7	&	and
+55	½	Digit7	½	half
+56	8	Digit8	⑧	8 Key
+56	¾	Digit8	¾	three quarters
+56	•	Digit8	•	bullet
+57	9	Digit9	⑨	9 Key
+57	(	Digit9	(	parentheses left
+57	‘	Digit9	‘	inverted apostrophe
+57	ª	Digit9	ª	feminine ordinal indicator
+58	:	Period		:
+59	;	Semicolon		semicolon (firefox), equals
+60	<	Backquote		<
+61	=	Equal		equals (firefox)
+63	ß	Minus		ß / ?
+64	@			@ (firefox)
+65	a	KeyA		a
+65	á	KeyA	á	a acute
+66	b	KeyB		b
+66	∫	KeyB	∫	integral
+67	c	KeyC		c
+67	©	KeyC	©	copywright
+68	d	KeyD		d
+68	ð	KeyD	ð	voiced dental fricative
+68	∂	KeyD	∂	partial
+69	e	KeyE		e
+69	Dead	KeyE		e
+69	é	KeyE	é	e acute
+70	f	KeyF		f
+70	ƒ	KeyF	ƒ	f with hook
+71	g	KeyG		g
+72	h	KeyH		h
+72	˙	KeyH	˙	overdot
+72	˚	KeyH	˚	small degree
+73	i	KeyI		i
+73	Dead	KeyI		i
+73	^	KeyI	^	caret
+73	í	KeyI	í	i acute
+74	j	KeyJ		j
+74	∆	KeyJ	∆	delta
+75	k	KeyK		k
+75	°	KeyK	°	degree
+76	l	KeyL		l
+76	ø	KeyL	ø	close mid front rounded vowel
+77	m	KeyM		m
+77	µ	KeyM	µ	one millionth
+78	n	KeyN		n
+78	Dead	KeyN		n
+78	ñ	KeyN	ñ	n with tilde
+78	~	KeyN	~	tilde
+79	o	KeyO		o
+79	ó	KeyO	ó	o acute
+80	p	KeyP		p
+80	ö	KeyP	ö	o with umlaut
+80	π	KeyP	π	pi
+81	q	KeyQ		q
+81	ä	KeyQ	ä	open central unrounded vowel
+81	œ	KeyQ	œ	open mid front rounded vowel
+82	r	KeyR		r
+82	®	KeyR	®	registered trademark
+83	s	KeyS		s
+83	ß	KeyS	ß	sharp s
+84	t	KeyT		t
+84	þ	KeyT	þ	thorn
+84	†	KeyT	†	obelus
+85	u	KeyU		u
+85	Dead	KeyU		u
+85	ú	KeyU	ú	u acute
+85	¨	KeyU	¨	umlaut
+86	v	KeyV		v
+86	√	KeyV	√	sqaure root
+87	w	KeyW		w
+87	å	KeyW	å	open mid back unrounded vowel
+87	Σ	KeyW	Σ	sigma
+87	∑	KeyW	∑	summation sigma
+88	x	KeyX		x
+88	≈	KeyX	≈	approximate
+89	y	KeyY		y
+89	¥	KeyY	¥	yen
+89	ü	KeyY	ü	u with umlaut
+90	z	KeyZ		z
+90	æ	KeyZ	æ	near open front unrounded vowel
+90	Ω	KeyZ	Ω	ohm
+91	Meta	MetaLeft	⌘ ⊞	Windows Key / Left ⌘ / Chromebook Search key
+92	Meta	MetaRight	⌘ ⊞	Right Windows
+93	ContextMenu	ContextMenu	▤	Windows Menu / Right ⌘
+95	Standby		☾	sleep
+96	0	Numpad0	⓪	Number Pad 0
+97	1	Numpad1	①	Number Pad 1
+98	2	Numpad2	②	Number Pad 2
+99	3	Numpad3	③	Number Pad 3
+100	4	Numpad4	④	Number Pad 4
+101	5	Numpad5	⑤	Number Pad 5
+102	6	Numpad6	⑥	Number Pad 6
+103	7	Numpad7	⑦	Number Pad 7
+104	8	Numpad8	⑧	Number Pad 8
+105	9	Numpad9	⑨	Number Pad 9
+106	*	NumpadMultiply	×	multiply
+107	+	NumpadAdd		add
+108	,	NumpadDecimal		numpad period (firefox)
+109	-	NumpadSubtract		subtract
+110	.	NumpadDecimal		decimal point
+111	/	NumpadDivide	÷	divide
+112	F1	F1		f1
+113	F2	F2		f2
+114	F3	F3		f3
+115	F4	F4		f4
+116	F5	F5		f5
+117	F6	F6		f6
+118	F7	F7		f7
+119	F8	F8		f8
+120	F9	F9		f9
+121	F10	F10		f10
+122	F11	F11		f11
+123	F12	F12		f12
+124	F13	F13		f13
+125	F14	F14		f14
+126	F15	F15		f15
+127	F16	F16		f16
+128	F17	F17		f17
+129	F18	F18		f18
+130	F19	F19		f19
+131	F20	F20		F20
+132	F21	F21		F21
+133	F22	F22		F22
+134	F23	F23		F23
+135	F24	F24		F24
+136	F25	F25		F25
+137	F26	F26		F26
+138	F27	F27		F27
+139	F28	F28		F28
+140	F29	F29		F29
+141	F30	F30		F30
+142	F31	F31		F31
+143	F32	F32		F32
+144	NumLock	NumLock	⇭	num lock
+145	ScrollLock	ScrollLock	⤓	scroll lock
+151				airplane mode
+160	^	BracketLeft		^
+161	Dead	BracketRight		!
+162				؛ (arabic semicolon) / " / ¢
+163	#	Backquote		#
+164	$	Backslash		$
+165	^ù	Quote		ù
+166	BrowserBack			browser page backward
+167	BrowserForward			browser page forward
+168	BrowserRefresh			browser refresh
+169	)	Minus		closing paren (AZERTY)
+170	*	Backslash		*
+171	+	BracketRight		~ + * key
+172	|			home key, pipe key
+173	-	Minus		minus (firefox), mute/unmute
+174	AudioVolumeDown			decrease volume level
+175	AudioVolumeUp			increase volume level
+176	MediaTrackNext	MediaTrackNext		next
+177	MediaTrackPrevious	MediaTrackPrevious		previous
+178	MediaStop			stop
+179	MediaPlayPause			play/pause
+180	LaunchMail		✉	e-mail
+181	AudioVolumeMute	VolumeMute		mute/unmute (firefox)
+182	AudioVolumeDown	VolumeDown		decrease volume level (firefox)
+183	AudioVolumeUp	VolumeUp		increase volume level (firefox)
+186	;	Semicolon		semi-colon / ñ
+186	¶	Semicolon	¶	pilcrow
+186	…	Semicolon	…	ellipsis
+187	=	Equal		equal sign
+187	±	Equal	±	plus minus
+187	×	Equal	×	multiply
+187	≠	Equal	≠	not equal
+188	,	Comma		comma
+188	ç	Comma	ç	c cedilla
+188	≥	Comma	≥	greater than or equal
+189	-	Minus		dash
+189	–	Minus	–	dash
+189	_	Minus	_	underscore
+190	.	Period		period
+190	>	Period	>	greater than
+190	≤	Period	≤	less than or equal
+191	/	Slash		forward slash / ç
+191	?	Slash	?	question mark
+191	¿	Slash	¿	inverted question mark
+191	÷	Slash	÷	division
+192	`	Backquote		Backtick / grave accent / ñ / æ / ö / § / ±
+192	Dead	IntlBackslash		Backtick / grave accent / ñ / æ / ö / § / ±
+193	/	IntlRo		?, / or °
+194	.	NumpadComma		numpad period (chrome)
+219	[	BracketLeft		open bracket
+219	{	BracketLeft	{	braces left
+219	«	BracketLeft	«	left guillemet
+219	”	BracketLeft	”	right double quotation
+219	“	BracketLeft	“	inverted double quotation
+220	\	Backslash		back slash
+220	¬	Backslash	¬	logical negation
+221	]	BracketRight		close bracket / å
+221	}	BracketRight	}	braces right
+221	»	BracketRight	»	right guillemet
+222	'	Quote		single quote / ø / ä
+222	"	Quote	"	double quote
+222	´	Quote	´	accent
+223	`	Backquote		`
+224	Meta	OSLeft	⌘	left or right ⌘ key (firefox)
+225	AltGraph	AltRight	⎇ or ⌥	altgr
+226	\	IntlBackslash		< /git >, left back slash
+229	Dead	Backquote		
+230				GNOME Compose Key
+231				ç
+233				XF86Forward / é
+234				XF86Back / ê
+235				non-conversion / ë
+240	Alphanumeric			alphanumeric / ð
+242	HiraganaKatakana			hiragana/katakana / ò
+243	ZenkakuHankaku			half-width/full-width / ó
+244	KanjiMode			kanji / ô
+251				unlock track pad (Chrome/Edge) / û
+255	WakeUp	WakeUp		WakeUp
+Hire the top 3% of freelance talent
+Join the Toptal Network
+Copyright 2010 - 2023 Toptal, LLC
+
+Privacy Policy
+Website terms
+

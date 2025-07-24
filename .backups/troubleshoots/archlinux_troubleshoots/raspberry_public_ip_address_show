@@ -1,0 +1,13 @@
+getting your public IP on Raspberry PI.
+
+||||||||||||||||||
+VVVVVVVVVVVVVVVVVV
+
+curl ifconfig.me
+or
+curl ident.me
+or
+curl icanhazip.com
+
+You need to forward port 80 from router to your Raspberry PI in order to have public web server.
+

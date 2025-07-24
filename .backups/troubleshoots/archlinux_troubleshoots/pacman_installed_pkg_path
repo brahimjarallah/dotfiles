@@ -1,0 +1,1 @@
+ pacman -Ql boost-libs or pacman -Qk 

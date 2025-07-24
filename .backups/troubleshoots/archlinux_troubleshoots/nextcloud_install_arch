@@ -1,0 +1,234 @@
+--- update system ---
+
+sudo pacman -Syu
+
+--- install & enable nginx web server ---
+
+sudo pacman -S nginx-mainline 
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+-- if any trouble with nginx 
+
+Try to stop the process which are using the port 80:
+sudo fuser -k 80/tcp
+In some cases it may be some issues in the configuration file. 
+You can use --> 
+nginx -t -c /etc/nginx/nginx.conf 
+command to find any bugs in the configuration file. If you find the error, then run: sudo systemctl restart nginx  again
+
+Many times the error was caused by a default nginx site already on port 80. Removing default site worked
+sudo rm /etc/nginx/sites-enabled/default
+sudo systemctl restart nginx
+
+
+--- install & enable mariadb database ---
+
+sudo pacman -S mariadb
+sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+
+--- secure sql database installation ---
+
+sudo mysql_secure_installation
+> pass root -> n
+> unix_socker auth -> y
+> change root pass -> n
+> remove anonymous user -> y
+> disallow root login remotely -> y
+> remove test db -> y
+> reload priviledge tables -> y
+ 
+--- create nextcloud db ---
+
+sudo mysql -u root 
+> create database nextcloud;
+> create user 'archer'@'localhost' identified by '<myPassword>';
+> grant all privileges on nextcloud.* to 'archer'@'localhost' identified by '<myPassword>'; 
+> flush privileges; 
+> exit
+
+--- install php module ---
+
+sudo pacman -S php php-fpm php-gd php-intl
+
+--- edit web server conf file to use this version of php ---
+
+sudo vim /etc/nginx/nginx.conf
+go  to -->  #location ~ \.php$ 
+and change its parameters to :
+
+[
+        location ~ \.php$ {
+            root           /usr/share/nginx/html;
+            fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+
+]
+
+--- reload nginx web server ---
+
+sudo systemctl reload nginx
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+
+--- enable some extension in php module ---
+
+sudo vim /etc/php/php.ini
+-- replace parameters to :
+memory_limit = 512M
+
+-- uncomment theses :
+;extension=gd
+;extension=intl
+;extension=mysqli
+;extension=pdo_mysql
+;extension=zip
+
+--- install nextcloud ---
+sudo pacman -S nextcloud
+
+
+--- give permitions to nextcloud for http ---
+sudo chown -R http:http /usr/share/webapps/nextcloud/
+sudo mkdir /etc/nginx/conf.d
+sudo vim /etc/nginx/conf.d/nextcloud.conf
+copy this content into it:
+
+[---
+
+server {
+    listen 80;
+    server_name localhost;
+
+    # Add headers to serve security related headers
+    add_header X-Content-Type-Options nosniff;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Robots-Tag none;
+    add_header X-Download-Options noopen;
+    add_header X-Permitted-Cross-Domain-Policies none;
+
+    # Path to the root of your installation
+    root /usr/share/webapps/nextcloud/;
+
+    location = /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+
+    # The following 2 rules are only needed for the user_webfinger app.
+    # Uncomment it if you're planning to use this app.
+    #rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+    #rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json
+    # last;
+
+    location = /.well-known/carddav {
+        return 301 $scheme://$host/remote.php/dav;
+    }
+    location = /.well-known/caldav {
+       return 301 $scheme://$host/remote.php/dav;
+    }
+
+    location ~ /.well-known/acme-challenge {
+      allow all;
+    }
+
+    # set max upload size
+    client_max_body_size 512M;
+    fastcgi_buffers 64 4K;
+
+    # Disable gzip to avoid the removal of the ETag header
+    gzip off;
+
+    # Uncomment if your server is build with the ngx_pagespeed module
+    # This module is currently not supported.
+    #pagespeed off;
+
+    error_page 403 /core/templates/403.php;
+    error_page 404 /core/templates/404.php;
+
+    location / {
+       rewrite ^ /index.php$uri;
+    }
+
+    location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+       deny all;
+    }
+    location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console) {
+       deny all;
+     }
+
+    location ~ ^/(?:index|remote|public|cron|core/ajax/update|status|ocs/v[12]|updater/.+|ocs-provider/.+|core/templates/40[34])\.php(?:$|/) {
+       include fastcgi_params;
+       fastcgi_split_path_info ^(.+\.php)(/.*)$;
+       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+       fastcgi_param PATH_INFO $fastcgi_path_info;
+       #Avoid sending the security headers twice
+       fastcgi_param modHeadersAvailable true;
+       fastcgi_param front_controller_active true;
+       fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+       fastcgi_intercept_errors on;
+       fastcgi_request_buffering off;
+    }
+
+    location ~ ^/(?:updater|ocs-provider)(?:$|/) {
+       try_files $uri/ =404;
+       index index.php;
+    }
+
+    # Adding the cache control header for js and css files
+    # Make sure it is BELOW the PHP block
+    location ~* \.(?:css|js)$ {
+        try_files $uri /index.php$uri$is_args$args;
+        add_header Cache-Control "public, max-age=7200"; # Add headers to serve security related headers (It is intended to have those duplicated to the ones above)        add_header X-Content-Type-Options nosniff; add_header X-XSS-Protection "1; mode=block"; add_header X-Robots-Tag none; add_header X-Download-Options noopen; add_header X-Permitted-Cross-Domain-Policies none; Optional: Don't log access to assets access_log off; } location ~* \.(?:svg|gif|png|html|ttf|woff|ico|jpg|jpeg)$ {
+        try_files $uri /index.php$uri$is_args$args;
+        # Optional: Don't log access to other assets
+        access_log off;
+   }
+}
+
+---]
+
+--- make server include http configuration on its own ---
+
+sudo vim /etc/nginx/nginx.conf
+-- in http section modify include :
+http {
+    include       /etc/nginx/conf.d/*.conf;
+
+--- set some configuration options in php module ---
+sudo vim /etc/php/php-fpm.d/www.conf
+uncomment these lines :
+;env[PATH] = /usr/local/bin:/usr/bin:/bin
+;env[TMPDIR] = /tmp
+
+--- specify a data directory for nextcloud ---
+
+sudo mkdir /var/nextcloud
+sudo chown http:http /var/nextcloud
+sudo chmod 750 /var/nextcloud
+sudo mkdir -p /usr/share/webapps/nextcloud/data
+sudo chown -R http:http /usr/share/webapps/nextcloud/{apps,data}
+sudo chmod 750 /usr/share/webapps/nextcloud/{apps,data}
+
+--- tel php where is our apps dir & our file dir :
+
+sudo systemctl edit --force --full php-fmp.service
+--- add these lines :
+
+[Service]
+ReadWritePaths = /usr/share/webapps/nextcloud/apps
+ReadWritePaths = /usr/share/webapps/nextcloud/data
+ReadWritePaths = /etc/webapps/nextcloud/config
+ReadWritePaths = /var/nextcloud
+
+--- restart web server ---
+sudo systemctl restart php-fpm
+sudo systemctl start  nginx
+
+

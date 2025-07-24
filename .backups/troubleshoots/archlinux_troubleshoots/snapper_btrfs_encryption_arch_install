@@ -1,0 +1,139 @@
+passwd
+lsblk
+fdisk /dev/vda
+mkfs.fat -F32 /dev/vda1
+mkswap /dev/vda3
+swapon /dev/vda3
+cryptsetup luksFormat /dev/vda2
+cryptsetup luksOpen /dev/vda2 cryptroot
+mkfs.btrfs /dev/mapper/cryptroot
+mount /dev/mapper/cryptroot /mnt
+btrfs su cr /mnt/@
+btrfs su cr /mnt/@snapshots
+btrfs su cr /mnt/@home
+umount /mnt
+mkdir -p /mnt/{boot,home,.snapshots}
+mount -o noatime,compress=lzo,discard=async,subvol=@ /dev/mapper/cryptroot /mnt
+mkdir -p /mnt/{boot,.snapshots}
+mount -o noatime,compress=lzo,discard=async,subvol=@snapshots /dev/mapper/cryptroot /mnt/.snapshots
+mount /dev/vda1 /mnt/boot
+locale -a
+pacstrap /mnt base linux linux-firmware intel-ucode git vim sudo grub dhcpd bash-completion snapper btrfs-progs dhcp 
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+ln -sf /usr/share/zoneinfo/Africa/Tunis /etc/localtime
+hwclock --systohc
+
+vim /etc/locale.gen
+ en_US.UTF-8 UTF-8
+ ar_TN.UTF-8 UTF-8
+
+locale-gen
+echo LANG=en_US.UTF-8 >> /etc/locale.conf
+echo btsnap > /etc/hostname
+hostname
+cat /etc/hostname
+echo "127.0.0.1 localhost" >> /etc/hosts
+echo "::1       localhost" >> /etc/hosts
+echo "127.0.1.1 btsnap.localdomain btsnap" >> /etc/hosts
+cat /etc/hosts
+
+    pacman -S grub-btrfs networkmanager network-manager-applet wireless_tools wpa_supplicant dialog os-prober mtools sudo 
+
+grub-install --target=i386-pc /dev/vda
+grub-mkconfig -o /boot/grub/grub.cfg
+vim /etc/mkinitcpio.conf
+ MODULES=(btrfs)
+ HOOKS=(base udev autodetect modconf block encrypt filesystems keyboard fsck)
+
+mkinitcpio -p linux
+vim /etc/default/grub
+ GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=/dev/vda2:cryptroot root=/dev/mapper/cryptroot"
+
+grub-mkconfig -o /boot/grub/grub.cfg
+systemctl enable NetworkManager
+useradd -mG wheel brahim
+passwd brahim
+EDITOR=vim visudo
+ root ALL=(ALL:ALL) ALL
+ %sudo   ALL=(ALL:ALL) ALL
+exit
+umount -a
+reboot
+
+
+pacman -S nvidia nvidia-utils awesome firefox kitty picom pcmanfm-gtk3 nitrogen lxappearance xorg-server xorg-xrandr lightdm lightdm-gtk-greeter git xorg-xrdb pipewire pipewire-alsa pipewire-pulse reflector
+
+vim /etc/lightdm/lightdm.conf
+greeter-session=lightdm-gtk-greeter
+systemctl enable lightdm.service
+
+pacman -S nvidia nvidia-utils
+pacman -S xorg
+pacman -S gdm
+systemctl enable gdm
+pacman -S gnome gnome-extra firefox xdg-utils
+umount /.snapshots
+rm -rf /.snapshots/
+snapper -c root create-config /
+vim /etc/snapper/configs/root
+
+ ALLOW_USERS="brahim"
+
+ TIMELINE_MIN_AGE="1800"
+ TIMELINE_LIMIT_HOURLY="5"
+ TIMELINE_LIMIT_DAILY="8"
+ TIMELINE_LIMIT_WEEKLY="10"
+ TIMELINE_LIMIT_MONTHLY="7"
+ TIMELINE_LIMIT_YEARLY="0"
+
+chmod a+rx /.snapshots/
+systemctl start snapper-timeline.timer
+systemctl enable snapper-timeline.timer
+systemctl enable snapper-cleanup.timer
+systemctl start snapper-cleanup.timer
+systemctl start grub-btrfs.path
+systemctl enable grub-btrfs.path
+exit
+exit
+reboot
+*** snapper configuration ***********
+snapper -c root list
+
+ manual snapshot creation^C :
+snapper -c root create -c timeline --description AfterInstall
+snapper -c root list
+
+snapper -c root create -c timeline --description BeforeGUI
+git clone https://aur.archlinux.org/snapper-gui-git.git
+cd snapper-gui-git/
+sudo pacman -S base-devel
+makepkg -si
+open snapper GUI ^C
+
+btrfs property list -ts /.snapshots/5/snapshot/
+sudo btrfs property set -ts /.snapshots/5/snapshot/ ro false
+reboot
+snapper -c root list
+
+*create a boot snapshot (to avoid kernel update isssues)(**************
+
+sudo vim /usr/share/libalpm/hooks/50_bootbackup.hook
+
+ [Trigger]
+ Operation = Upgrade
+ Operation= Install
+ Operation = Remove
+ Туре = Package
+ Target = linux*
+ 
+ [Action]
+ Depends = rsync
+ Description = Backing up /boot...
+ When = PreTransaction
+ Exec = /usr/bin/rsync -a --delete /boot /.bootbackup
+
+napper -c root create -c timeline --description BootSnapshot
+snapper -c root list
+udo btrfs property set -ts /.snapshots/8/snapshot/ ro false
+reboot

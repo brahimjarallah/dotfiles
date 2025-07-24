@@ -1,0 +1,109 @@
+How to Set Time, Timezone and Synchronize System Clock Using timedatectl Command
+Aaron KiliApril 5, 2021 CategoriesCentOS, Fedora, Linux Commands, RedHat 16 Comments
+The timedatectl command is a new utility for RHEL/CentOS 7/8 and Fedora 30+ based distributions, which comes as a part of the systemd system and service manager, a replacement for old traditional date command used in sysvinit daemon based Linux distributions.
+
+Set System Time, Date and Timezone in Linux
+Use timedatectl to Set System Time, Date, and Timezone in Linux
+The timedatectl command allows you to query and change the configuration of the system clock and its settings, you can use this command to set or change the current date, time, and timezone or enable automatic system clock synchronization with a remote NTP server.
+
+In this tutorial, am going to take you through the ways you can manage time on your Linux system by setting the date, time, timezone, and synchronize time with NTP from the terminal using the new timedatectl command.
+
+It is always a good practice to maintain the correct time on your Linux server or system and it can have the following advantages:
+
+maintain a timely operation of system tasks since most tasks in Linux are controlled by time.
+the correct time for logging events and other information on the system and many more.
+How to Find and Set Local Timezone in Linux
+1. To display the current time and date on your system, use the timedatectl command from the command line as follows:
+
+# timedatectl  status
+Check Time and Date
+Check Time and Date
+In the screencast above, RTC time is the hardware clock time.
+
+2. The time on your Linux system is always managed through the timezone set on the system, to view your current timezone, do it as follows:
+
+# timedatectl 
+OR
+# timedatectl | grep Time
+Check Linux Time Zone
+Check Linux Time Zone
+3. To view all available timezones, run the command below:
+
+# timedatectl list-timezones
+List All Timezones in Linux
+List All Timezones in Linux
+4. To find the local timezone according to your location, run the following command:
+
+# timedatectl list-timezones |  egrep  -o "Asia/B.*"
+# timedatectl list-timezones |  egrep  -o "Europe/L.*"
+# timedatectl list-timezones |  egrep  -o "America/N.*"
+Find Local Timezone in Linux
+Find Local Timezone in Linux
+5. To set your local timezone in Linux, we will use the set-timezone switch as shown below.
+
+# timedatectl set-timezone "Asia/Kolkata"
+Set Local Timezone in Linux
+Set Local Timezone in Linux
+It is always recommended to use and set the coordinated universal time, UTC.
+
+# timedatectl set-timezone UTC
+Set UTC Time in Linux
+Set UTC Time in Linux
+You need to type the correct name timezone otherwise you may get errors when changing the timezone, in the following example, the timezone “Asia/Kolkata” is not correct therefore causing the error.
+
+Set Correct Timezone in Linux
+Set Correct Timezone in Linux
+How to Set Time and Date in Linux
+6. You can set the date and time on your system, using the timedatectl command as follows:
+
+Set Time in Linux
+To set time only, we can use a set-time switch along with the format of time in HH:MM:SS (Hour, Minute, and Seconds).
+
+# timedatectl set-time 15:58:30
+Set Local Time in Linux
+Set Local Time in Linux
+You may get the below error when setting the date as shown above:
+
+Failed to set time: NTP unit is active
+7. The error says that the NTP service is active. You need to disable it using the below command.
+
+# systemctl disable --now chronyd
+Set Date and Time in Linux
+8. To set date and time, we can use a set-time switch along with the format of date in YY:MM:DD (Year, Month, Day) and time in HH:MM:SS (Hour, Minute, and Seconds).
+
+# timedatectl set-time '2015-11-20 16:14:50'
+Set Date in Linux
+Set Date in Linux
+Set Date and Time in Linux
+Set Date and Time in Linux
+How to Find and Set Hardware Clock in Linux
+9. To set your hardware clock to coordinated universal time, UTC, use the set-local-rtc boolean-value option as follows:
+
+First Find out if your hardware clock is set to local timezone:
+
+# timedatectl | grep local
+Set your hardware clock to local timezone:
+
+# timedatectl set-local-rtc 1
+Set Hardware Clock Timezone
+Set Hardware Clock Timezone
+Set your hardware clock to coordinated universal time (UTC):
+
+# timedatectl set-local-rtc 0
+Set Hardware Clock to UTC
+Set Hardware Clock to UTC
+Synchronizing Linux System Clock with a Remote NTP Server
+NTP stands for Network Time Protocol is an internet protocol, which is used to synchronize the system clock between computers. The timedatectl utility enables you to automatically sync your Linux system clock with a remote group of servers using NTP.
+
+Please note that you must have NTP installed on the system to enable automatic time synchronization with NTP servers.
+
+To start automatic time synchronization with a remote NTP server, type the following command at the terminal.
+
+# timedatectl set-ntp true
+To disable NTP time synchronization, type the following command at the terminal.
+
+# timedatectl set-ntp false
+Summary
+These are very easy examples described in this tutorial and I hope you will find them helpful for setting various Linux system clocks and timezones. To learn more about this tool, head over to timedatectl man page.
+
+If you have anything to say about this article, feel free to leave a comment for any more information to add. Stay connected to Tecmint.

@@ -1,0 +1,105 @@
+⚓︎Home Server - Install and Use Docker
+==>> https://mmbesar.github.io/Tutorials/HS-Docker/
+
+أسهل طريقة لتوفير عديد من الخِدْمَات على السيرفر المنزلي، هى نظام الحاويات أو الـ Containers، باستخدام Docker أشهر تطبيق لصناعة وإدارة الحاويات.
+نشرح في الفيديو التقنية وكيفية تنصيها على السيرفر، وأقوى وأسهل أدواتها Docker Compose، وكيفية كتابة المِلَفّ واستخدامه.
+إعداد الحزم والمستودعات
+⚓︎
+تحديث النظام
+sudo apt update
+تنصيب الحزم اللازمة
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+إضافة مفاتيح المستودعات
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+تنصيب المستودعات
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+تنصيب Docker
+⚓︎
+تحديث النظام
+sudo apt update
+تنصيب التطبيقات
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+إضافة اسم المستخدم الحالي إلى مجموعة Docker
+⚓︎
+sudo usermod -aG docker $USER
+إعداد مجلدات Docker
+⚓︎
+إنشاء المجلدات
+sudo mkdir -p /mnt/srv/{docker/{comp,cont},data}
+ضبط الصلاحيات
+sudo chown -R $USER:$USER /mnt/srv/{docker,data}
+إعداد مجلدات الخدمات للخطوة التالية
+⚓︎
+mkdir -p /mnt/srv/docker/cont/{nginx,portainer}
+إنشاء docker-compose file
+⚓︎
+بالأمر:
+nano /mnt/srv/docker/comp/docker-compose.yml
+وإضافة ما يلي:
+docker-compose.yml
+version: "3.9"
+
+networks:
+  hs:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.14.4.0/24
+
+services:
+
+ # =====================================
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    networks:
+      hs:
+    command: --no-analytics
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/srv/docker/cont/portainer:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 9000:9000
+      - 8000:8000
+      - 9443:9443
+    restart: always
+  # =====================================
+  nginx:
+    image: lscr.io/linuxserver/nginx
+    container_name: nginx
+    networks:
+      hs:
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Africa/Cairo
+    volumes:
+      - /mnt/srv/docker/cont/nginx:/config
+    ports:
+      - 8082:80
+      #- 443:443
+    restart: unless-stopped
+ # =====================================
+كيفية استخدام أمر Docker Compose
+⚓︎
+logout
+
+login (again)
+
+groups
+تحميل صور الحاويات:
+docker compose -f /mnt/srv/docker/comp/docker-compose.yml pull
+إنشاء وتشغيل الخدمات:
+docker compose -f /mnt/srv/docker/comp/docker-compose.yml up -d
+إيقاف الخدمات:
+docker compose -f /mnt/srv/docker/comp/docker-compose.yml stop

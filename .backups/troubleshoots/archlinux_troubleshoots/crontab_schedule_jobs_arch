@@ -1,0 +1,14 @@
+** schedule command execution to delete files every day 9AM in crontab: **
+On arch linux:
+sudo apt -get install cronie
+sudo systemctl enable --now cronie
+sudo ln -s /usr/bin/vim /usr/bin/vi
+
+sudo crontab -u hnider -e
+
+30 9 * * * /usr/bin/rm -rf /home/hnider/.trash/*
+30 9 * * * /usr/bin/echo "hello cron" > /home/hnider/crontest3.txt
+
+files are found in  cd /var/spool/cron/
+or 
+/etc/cron*

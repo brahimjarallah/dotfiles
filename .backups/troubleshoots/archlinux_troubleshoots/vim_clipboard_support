@@ -1,0 +1,60 @@
+On Debian, install GTK Version of Vim:
+$ sudo apt-get install vim-gtk
+
+Fedora/REHL
+$ sudo yum install vim-X11
+
+Manjaro/Arch
+$ sudo pacman -Syu gvim
+
+######################################################################
+
+Building Vim from the source with the right flags is the general solution.
+
+git clone https://github.com/vim/vim.git
+cd vim/src
+./configure --with-x=yes --disable-gui
+
+The last command will probably raise an error message, which means you need to install dependencies. Experienced users know how to proceed, but if it's your first time on this, bad news is there isn't a magic solution, you need to track down the dependencies with your package manager or a search engine and keep trying the last line. In Debian and Ubuntu,
+
+apt build-dep vim
+
+will solve a great deal of those.
+
+Once ./configure succeeds,
+
+make -j9
+
+and if all the dependencies were satisfied, you can finally install it, but first uninstall your current Vim package, if any. As root,
+
+apt remove vim  #for Debian/Ubuntu
+make install
+
+######################################################################
+
+*** SSH***
+
+You can also use a clipboard on remote machines if you enable X11 forwarding over SSH. This is especially useful with the above tip since you can then use xclip to access your desktop's clipboard. The Vim on the machine you're ssh-ing to will still need the +clipboard feature.
+
+This requires the ForwardX11Trusted setting, and should only be done with trusted servers, as this gives the server almost complete control over your X11 session:
+
+$ ssh -XY myhost
+
+To make these settings persistent (so you don't need to add -XY every time), you could do something like this in your ~/.ssh/config:
+
+# Do **NOT** set this globally; it gives the server complete control over
+# your X11 session.
+
+Host myhost
+    ForwardX11 yes
+    ForwardX11Trusted yes
+
+######################################################################
+
+*** Neovim ***
+
+Neovim revamped the clipboard support. The built-in interface was removed and replaced with a system that call an external utility such as xclip, xsel, or pbcopy/pbpaste.
+
+It should automatically pick up these utilities and use them. On OS X pbcopy and pbpaste should be available by default, on Linux you probably want to install xclip, as that's the most widely available (there are actually two versions of xsel with incompatible flags. This is really stupid).
+
+Also see :help clipboard in Neovim.

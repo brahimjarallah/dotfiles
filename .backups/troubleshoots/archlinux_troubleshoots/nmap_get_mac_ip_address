@@ -1,0 +1,1 @@
+sudo nmap -sP -n X.X.X.X/24

@@ -1,0 +1,13 @@
+# sudo pacman -S ntfs-3g  fuse
+# sudo pacman -S epel-release
+# sudo mkdir -p  /mnt/hdd
+
+# lsblk
+# sudo blkid
+
+# sudo mount -t ntfs /dev/sda2 /mnt/hdd
+# sudo df -h
+
+# sudo vim /etc/fstab
+
+/dev/sda2	/mnt/hdd	ntfs	defaults	0  2

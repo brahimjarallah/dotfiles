@@ -1,0 +1,59 @@
+*** install aur: "xkb-switch"
+
+pacman -S xkb-switch
+
+
+*** make keyboard lang switchable form barmenu :
+
+setxkbmap -layout "us,ar" -option ""
+
+** make it permanent on next boot :
+copy => # setxkbmap -layout "us,fr,ar" -option ""
+to   =>  ~/.profile
+
+
+
+** to set manually a lang :
+setxkbmap us
+setxkbmap ar
+----------------------------------------------------------
+
+localectl list-x11-keymap-layouts | less
+localectl list-x11-keymap-variants | less
+localectl list-x11-keymap-models | less
+localectl list-x11-keymap-options | less
+
+sudo localectl set-x11-keymap us,ara asus_laptop qwerty grp:alt_shift_toggle
+or
+sudo localectl set-x11-keymap us,ara asus_laptop qwerty grp:rctrl_rshift_toggle
+
+cd /etc/X11/xorg.conf.d
+ls
+vim 00-keyboard.conf
+
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "us,fr,ar"
+        Option "XkbModel" "asus_laptop"
+        Option "XkbVariant" "qwerty"
+        Option "XkbOptions" "grp:alt_shift_toggle"
+EndSection
+~
+
+----------------------------------------------------------------------
+*** for hyprland: add these lines: ***
+----------------------------------------------------------------------
+
+input {
+    kb_layout = us, fr, ara,
+    kb_variant =
+    kb_model =
+    kb_options = grp:rctrl_rshift_toggle
+    kb_rules =
+    follow_mouse = 1 
+    touchpad {
+        natural_scroll = false
+    }
+    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+}

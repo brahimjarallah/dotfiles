@@ -1,0 +1,11 @@
+# NORMAL USER
+
+vim ~/.inputrc
+set completion-ignore-case on
+
+---------------------------------------------------------------------
+# ROOT
+
+sudo vim /etc/inputrc
+set completion-ignore-case on
+

@@ -1,0 +1,35 @@
+- open windows settings:
+- search for -> remote desktop settings
+- Enable Remote Dektop -> On
+- use a local account (on settings)
+- install freerdp on linux -> yay -S freerdp 
+
+- then use this script.sh:
+
+~/backups/scripts_backups/exec_scripts/launchvm.sh
+----------------------------------------------------------------------
+if [ -f ~/private/win10-credentials.sh ]; then
+    echo "Credential file exists. Using the file."
+    source ~/private/win10-credentials.sh
+else
+        win10user="win"
+        win10pass="Win"
+        vmip="192.168.122.132"
+fi
+
+
+tmp=$(virsh --connect qemu:///system list | grep " win10 " | awk '{ print $3}')
+
+if ([ "x$tmp" == "x" ] || [ "x$tmp" != "xrunning" ])
+then
+    echo "Virtual Machine win10 is starting now... Waiting 30s before starting xfreerdp."
+    notify-send "Virtual Machine win10 is starting now..." "Waiting 30s before starting xfreerdp."
+    virsh --connect qemu:///system start win10
+    sleep 30 
+else
+    notify-send "Virtual Machine win10 is already running." "Launching xfreerdp now!"
+    echo "Starting xfreerdp now..."
+fi
+
+wlfreerdp -grab-keyboard /v:$vmip /size:100% /cert-ignore /u:$win10user /p:$win10pass /d: /dynamic-resolution /gfx-h264:avc444 +gfx-progressive &
+----------------------------------------------------------------------

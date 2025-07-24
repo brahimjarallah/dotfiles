@@ -1,0 +1,11 @@
+sudo yum install npm
+
+npm install -g npm@9.2.0
+
+npm install -g yaml-lint
+
+yamllint docker-compose.yml
+
+
+
+

@@ -1,0 +1,24 @@
+Shortcuts🔗
+There are two types of shortcuts: those that manipulate the user interface directly, such as TAB to move from one pane to another, and those that are simply shortcuts to actual commands. In a way similar to Vim, these shortcuts are generally a verb followed by an object. For example, typing mn ([m]ake [n]ote), is used to create a new note: it will switch the interface to command line mode and pre-fill it with mknote "" from where the title of the note can be entered. See below for the full list of default shortcuts:
+
+:                 enter_command_line_mode
+TAB               focus_next
+SHIFT_TAB         focus_previous
+UP                move_up
+DOWN              move_down
+PAGE_UP           page_up
+PAGE_DOWN         page_down
+ENTER             activate
+DELETE, BACKSPACE delete
+(SPACE)           todo toggle $n
+n                 next_link
+b                 previous_link
+o                 open_link
+tc                toggle_console
+tm                toggle_metadata
+/                 search ""
+mn                mknote ""
+mt                mktodo ""
+mb                mkbook ""
+yn                cp $n ""
+dn                mv $n ""

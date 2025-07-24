@@ -1,0 +1,11 @@
+[Unit]
+Description=ydotool daemon
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/ydotoold --socket-path=/run/user/%i/ydotool_socket
+Environment="YDOTOOL_SOCKET=/run/user/%i/ydotool_socket"
+
+[Install]
+WantedBy=default.target

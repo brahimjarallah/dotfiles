@@ -1,0 +1,70 @@
+### ***  remaming files of '.txt' extension
+from ".txt" to ".text" *** ###
+
+ for x in *.txt; do mv -- "$x" "${x%.txt}.text"; done
+ -->
+10.text  2.text  4.text  6.text  8.text
+1.text   3.text  5.text  7.text  9.text
+
+or with (find command)
+find . -name "*.text" -exec sh -c 'x="{}"; mv -- "$x" "${x%.text}.txt"' \;
+
+----------------------------------------------------------------------
+
+### ***  renaming files from .txt to .TXT  *** ###
+perl-rename shoud be installed first !!!!!!!!!!!!!
+
+rename txt TXT *.txt
+--->
+10.TXT  1.TXT  2.TXT  3.TXT  4.TXT  5.TXT  6.TXT  7.TXT  8.TXT  9.TXT
+
+### ***  renaming files from .TXT to .txt  *** ###
+perl-rename 's/TXT/txt/' *.TXT
+---->
+change all file names of *.txt => form foo.txt to bar bar.txt
+10.txt  1.txt  2.txt  3.txt  4.txt  5.txt  6.txt  7.txt  8.txt  9.txt
+----------------------------------------------------------------------
+
+### ***  change all file names of *.txt => form foo.txt to bar bar.txt *** ###
+
+foo10.txt  foo1.txt  foo2.txt  foo3.txt  foo4.txt  foo5.txt  foo6.txt  foo7.txt  foo8.txt  foo9.txt
+
+perl-rename 's/foo/bar/' *.txt
+---->
+bar10.txt  bar1.txt  bar2.txt  bar3.txt  bar4.txt  bar5.txt  bar6.txt  bar7.txt  bar8.txt  bar9.txt
+______________________________________________________________________
+
+### ***  Change all files containing b or r --> to B or R  renaming translation  *** ###
+perl-rename 'y/br/BR/' *.txt
+
+bar10.txt  bar1.txt  bar2.txt  bar3.txt  bar4.txt  bar5.txt  bar6.txt  bar7.txt  bar8.txt  bar9.txt
+---->
+BaR10.txt  BaR1.txt  BaR2.txt  BaR3.txt  BaR4.txt  BaR5.txt  BaR6.txt  BaR7.txt  BaR8.txt  BaR9.txt
+
+----------------------------------------------------------------------
+### ***  Rename files with .txt extensions to UPPERCASE *** ###
+
+perl-rename 'y/a-z/A-Z/' *.txt
+---->
+BAR10.TXT  BAR1.TXT  BAR2.TXT  BAR3.TXT  BAR4.TXT  BAR5.TXT  BAR6.TXT  BAR7.TXT  BAR8.TXT  BAR9.TXT
+
+----------------------------------------------------------------------
+### ***  Rename files with .TXT extensions to LOWERCASE *** ###
+
+perl-rename 'y/A-Z/a-z/' *.TXT
+---->
+bar10.txt  bar1.txt  bar2.txt  bar3.txt  bar4.txt  bar5.txt  bar6.txt  bar7.txt  bar8.txt  bar9.txt
+
+----------------------------------------------------------------------
+### ***  Renaming files and dirs to FIRST LETTER UPPERCASE (current dir) *** ###
+
+for f in *; do 
+    mv "$f" "$(perl -lpe 's/.*/lc($&)/e; s/(^| )./uc($&)/ge' <<<"$f")"
+done
+
+----------------------------------------------------------------------
+### ***  Renaming in multiple folders with substitution  *** ###
+find Shofli_7al_2005 Shofli_7al_2006 Shofli_7al_2007 Shofli_7al_2008 Shofli_7al_2009  -depth -exec perl-rename 's/الحلقة السادسة عشر/16/' {} \;
+
+
+

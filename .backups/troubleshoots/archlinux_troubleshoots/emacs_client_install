@@ -1,0 +1,26 @@
+# sudo pacman -S emacs
+# sudo git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.emacs.d
+# ~/.emacs.d/bin/doom install
+
+# sudo vim ~/.bashrc
+export PATH="$HOME/.emacs.d/bin:$PATH"
+
+# sudo doom sync
+
+----------------------------------------------------
+-- Add emacs client daemon to autostart: (.xprofile)
+/usr/bin/emacs --daemon
+
+or in xmonadwm:
+
+--{
+import XMonad.Util.SpawnOnce
+
+myStatupHook :: X ()
+myStatupHook = do
+spawn "/usr/bin/emacs --daemon" 
+--}
+
+----------------------------------------------------
+--- To create alias add this line to ~/.bashrc file:
+alias emacs="emacsclient -c -a 'emacs'"

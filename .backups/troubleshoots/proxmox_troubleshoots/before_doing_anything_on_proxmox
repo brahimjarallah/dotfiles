@@ -1,0 +1,51 @@
+######################################################################
+### Proxmox VE 7 Post Install ########################################
+######################################################################
+# 
+# ||||||||||||||||||||||||||||||||
+# VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+# 
+# https://tteck.github.io/Proxmox/
+
+0- Proxmox VE Post Install
+# This script provides options for managing Proxmox VE repositories, including disabling the Enterprise Repo, adding or correcting PVE sources, enabling the No-Subscription Repo, adding the test Repo, disabling the subscription nag, updating Proxmox VE, and rebooting the system.
+
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/post-pve-install.sh)"
+
+0.1-Proxmox VE Dark Theme
+bash <(curl -s https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh ) install
+
+
+** 1- Remove production updates for proxmox
+vim /etc/apt/sources.list
+#not for production use
+deb http://download.proxmox.com/debian buster pve-no-subscription
+
+** 2- avoid error updates for entreprise subscription
+vim /etc/apt/sources.list.d/pve-enterprise.list
+# deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise
+
+** 3- update distribution
+apt-get update
+** 4- upgrade distribution
+apt dist-upgrade 
+
+reboot
+** 5- Activate smart Monitoring (files sys check)
+smartctl -a /dev/sda
+6- Passthrough prox iommu (virtual machines communication)
+vim /etc/default/grub
+"GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"
+update-grub
+vim /etc/modules
+vfio
+vfio_iommu_type1
+vfio_pci
+vfio_virqfd
+
+reboot
+
+7- Proxmox VE Monitor-All
+# This script will add Monitor-All to Proxmox VE, which will monitor the status of all your instances, both containers and virtual machine
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/monitor-all.sh)"
+

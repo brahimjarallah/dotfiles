@@ -1,0 +1,33 @@
+###### HOST: (LINUX) #######
+
+1- Enable shared memory in kvm 
+2- Add virtio filesystem hardware
+- Click “Add hardware” at the bottom.
+- Select File system 
+- Then select Driver->virtiofs 
+- Click on browse select the host path from your Linux system (ex: /home/user/vfs_share)
+- In the target path, mention any name you want (ex: vfs_share)
+- click Finish
+
+---------------------------------------
+
+###### GUEST: (WINDOWS) #######
+0- Run Windows 10
+1- Download and Install the WinFSP .msi installer. (make sure 'Core' is installed)
+from this link => https://github.com/winfsp/winfsp/releases
+
+2- Download and install  the virtio-win-guest-tools.exe 
+- from this link => https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/ 
+- select => stable-virtio
+- then select this to download => virtio-win-guest-tools.exe    
+or click -> https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.240-1/virtio-win-guest-tools.exe
+
+3- After installation is complete, reboot Windows virtual machine
+
+4- start virtiofs service
+- Open the start menu and search for “Services”.
+- Scroll down to find out the “VirtIO-FS Service”
+- Right-click and hit Start to start the service.
+
+5- access virtiofs mounted virtual disk 
+- open Explorer, and access the mount which should be mapped as Z drive.

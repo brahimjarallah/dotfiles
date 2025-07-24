@@ -1,0 +1,4 @@
+sudo pacman -S pipewire-pulse
+sudo pacman -S pipewire-alsa pipewire-jack
+reboot
+

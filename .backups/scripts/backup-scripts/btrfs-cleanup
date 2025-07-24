@@ -1,0 +1,151 @@
+#!/bin/bash
+# ↑ Tells the shell to run this script with the Bash interpreter.
+
+# === Strict error settings for safety ===
+set -euo pipefail
+# set -e: Exit immediately if a command fails (non-zero exit code).
+# set -u: Exit if a variable is used before being defined.
+# set -o pipefail: If a command in a pipeline fails, the whole pipeline fails.
+
+# === Define key variables ===
+
+SNAPSHOT_DIR="/.snapshots"
+# SNAPSHOT_DIR: The directory where all Btrfs snapshots are stored.
+
+LOG_FILE="/var/log/btrfs-snapshots.log"
+# LOG_FILE: Where all output and logs are saved for review.
+
+# === Retention policies ===
+
+# How many hourly and daily snapshots to keep for 'root'
+ROOT_HOURLY=10   # Keep the last 10 root snapshots
+ROOT_DAILY=10    # Keep only 1 snapshot per day, for 10 days
+
+# Same retention for 'home' snapshots
+HOME_HOURLY=20   # Keep last 20 home snapshots
+HOME_DAILY=15    # Keep 1 home snapshot per day for 15 days
+
+# === Define a logging function ===
+
+log() {
+    # This function logs a message with timestamp to screen and file
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+    # $(date '+%Y-%m-%d %H:%M:%S'): Formats the date as 'YYYY-MM-DD HH:MM:SS'
+    # $1: The message passed to the function
+    # tee -a: Appends to the log file and also prints to stdout
+}
+
+# === Generic cleanup function for snapshots ===
+
+cleanup_snapshots() {
+    local pattern="$1"      # Snapshot name pattern to match (e.g., "root-*")
+    local keep_count="$2"   # Number of latest snapshots to keep
+    local time_desc="$3"    # Description for logging (e.g., "root hourly")
+
+    log "Cleaning up $time_desc snapshots (keeping $keep_count latest)"
+
+    find "$SNAPSHOT_DIR" -maxdepth 1 -name "$pattern" -type d | \
+    # find: Search for snapshot directories matching the pattern
+    # -maxdepth 1: Don't recurse into subdirs
+    # -name "$pattern": Match snapshot names like "root-*"
+    # -type d: Only directories (subvolumes are mounted as dirs)
+
+        sort -r |                      # Sort results in reverse (newest first)
+        tail -n +$((keep_count + 1)) | # Skip first N, start from N+1
+        while read -r snapshot; do     # For each remaining snapshot
+            log "Deleting old snapshot: $(basename "$snapshot")"
+            if btrfs subvolume delete "$snapshot"; then
+                # Delete the Btrfs subvolume using the 'btrfs' command
+                log "✅ Deleted: $(basename "$snapshot")"
+            else
+                log "❌ Failed to delete: $(basename "$snapshot")"
+            fi
+        done
+}
+
+# === Clean up 'root' snapshots ===
+
+cleanup_root() {
+    log "Starting root snapshot cleanup"
+
+    # Step 1: Apply hourly cleanup policy
+    cleanup_snapshots "root-*" "$ROOT_HOURLY" "root hourly"
+
+    # Step 2: Ensure one snapshot per day for older snapshots
+    find "$SNAPSHOT_DIR" -maxdepth 1 -name "root-*" -type d -mtime +1 | \
+    # -mtime +1: Only consider snapshots older than 1 day
+
+        while read -r snapshot; do
+            day=$(basename "$snapshot" | cut -d'-' -f2-4)
+            # Extract date from snapshot name, e.g., '2025-07-24'
+
+            count=$(find "$SNAPSHOT_DIR" -maxdepth 1 -name "root-$day-*" -type d | wc -l)
+            # Count how many snapshots exist for that specific day
+
+            if [ "$count" -gt 1 ]; then
+                find "$SNAPSHOT_DIR" -maxdepth 1 -name "root-$day-*" -type d | \
+                    sort -r | tail -n +2 | \
+                    while read -r old_snapshot; do
+                        log "Deleting duplicate daily snapshot: $(basename "$old_snapshot")"
+                        btrfs subvolume delete "$old_snapshot" && \
+                        log "✅ Deleted daily duplicate: $(basename "$old_snapshot")"
+                    done
+            fi
+        done
+}
+
+# === Clean up 'home' snapshots ===
+
+cleanup_home() {
+    log "Starting home snapshot cleanup"
+
+    # Step 1: Keep latest N home snapshots
+    cleanup_snapshots "home-*" "$HOME_HOURLY" "home hourly"
+
+    # Step 2: Keep only 1 snapshot per day
+    find "$SNAPSHOT_DIR" -maxdepth 1 -name "home-*" -type d -mtime +1 | \
+        while read -r snapshot; do
+            day=$(basename "$snapshot" | cut -d'-' -f2-4)
+            count=$(find "$SNAPSHOT_DIR" -maxdepth 1 -name "home-$day-*" -type d | wc -l)
+
+            if [ "$count" -gt 1 ]; then
+                find "$SNAPSHOT_DIR" -maxdepth 1 -name "home-$day-*" -type d | \
+                    sort -r | tail -n +2 | \
+                    while read -r old_snapshot; do
+                        log "Deleting duplicate daily snapshot: $(basename "$old_snapshot")"
+                        btrfs subvolume delete "$old_snapshot" && \
+                        log "✅ Deleted daily duplicate: $(basename "$old_snapshot")"
+                    done
+            fi
+        done
+}
+
+# === MAIN SCRIPT EXECUTION ===
+
+log "===== Starting snapshot cleanup ====="
+
+# Clean root snapshots
+cleanup_root
+
+# Clean home snapshots
+cleanup_home
+
+# === Clean up old test snapshots ===
+# Delete test snapshots older than 60 minutes
+find "$SNAPSHOT_DIR" -maxdepth 1 -name "test-*" -type d -mmin +60 | \
+    while read -r test_snapshot; do
+        log "Cleaning up test snapshot: $(basename "$test_snapshot")"
+        btrfs subvolume delete "$test_snapshot" && \
+        log "✅ Cleaned test snapshot: $(basename "$test_snapshot")"
+    done
+
+log "===== Snapshot cleanup finished ====="
+
+# Log total remaining snapshots
+log "Current snapshots:"
+ls -la "$SNAPSHOT_DIR" | grep "^d" | wc -l | xargs -I {} log "Total snapshots: {}"
+# ls -la: List all items in the directory
+# grep "^d": Only directories (snapshots)
+# wc -l: Count them
+# xargs: Format output into the log line
+

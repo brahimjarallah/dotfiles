@@ -1,0 +1,133 @@
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.499: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.499: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.524: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.524: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.565: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.565: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.587: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.587: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.609: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.609: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.620: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.620: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.636: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.637: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.653: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.653: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.670: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.670: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.687: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.687: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.704: Negative content width -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+
+(STM32CubeIDE:200567): Gtk-WARNING **: 08:57:17.704: Negative content height -1 (allocation 1, extents 1x1) while allocating gadget (node scrolledwindow, owner GtkScrolledWindow)
+Aug 12, 2022 8:57:54 AM org.glassfish.grizzly.http.server.NetworkListener start
+INFO: Started listener bound to [localhost:1597]
+Aug 12, 2022 8:57:54 AM org.glassfish.grizzly.http.server.HttpServer start
+INFO: [HttpServer] Started.
+
+(STM32CubeIDE:200567): Tracker-CRITICAL **: 09:06:21.047: tracker_sparql_connection_close: assertion 'TRACKER_IS_SPARQL_CONNECTION (connection)' failed
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:06:21.047: Could not init tracker3 search engine: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Tracker3.Miner.Files was not provided by any .service files
+
+(STM32CubeIDE:200567): Tracker-CRITICAL **: 09:06:22.936: tracker_sparql_connection_close: assertion 'TRACKER_IS_SPARQL_CONNECTION (connection)' failed
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:06:22.936: Could not init tracker3 search engine: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Tracker3.Miner.Files was not provided by any .service files
+
+(STM32CubeIDE:200567): Tracker-CRITICAL **: 09:06:25.214: tracker_sparql_connection_close: assertion 'TRACKER_IS_SPARQL_CONNECTION (connection)' failed
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:06:25.215: Could not init tracker3 search engine: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Tracker3.Miner.Files was not provided by any .service files
+
+(STM32CubeIDE:200567): Tracker-CRITICAL **: 09:06:27.169: tracker_sparql_connection_close: assertion 'TRACKER_IS_SPARQL_CONNECTION (connection)' failed
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:06:27.169: Could not init tracker3 search engine: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Tracker3.Miner.Files was not provided by any .service files
+
+(STM32CubeIDE:200567): Tracker-CRITICAL **: 09:06:28.665: tracker_sparql_connection_close: assertion 'TRACKER_IS_SPARQL_CONNECTION (connection)' failed
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:06:28.666: Could not init tracker3 search engine: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Tracker3.Miner.Files was not provided by any .service files
+
+(STM32CubeIDE:200567): Tracker-CRITICAL **: 09:06:32.884: tracker_sparql_connection_close: assertion 'TRACKER_IS_SPARQL_CONNECTION (connection)' failed
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:06:32.884: Could not init tracker3 search engine: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Tracker3.Miner.Files was not provided by any .service files
+
+(STM32CubeIDE:200567): Tracker-CRITICAL **: 09:06:33.051: tracker_sparql_connection_close: assertion 'TRACKER_IS_SPARQL_CONNECTION (connection)' failed
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:06:33.051: Could not init tracker3 search engine: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Tracker3.Miner.Files was not provided by any .service files
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:51.975: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.005: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.020: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.031: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.048: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.065: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.083: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.098: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.116: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:52.132: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:57.411: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:200567): Gtk-CRITICAL **: 09:15:57.411: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.eclipse.swt.widgets.TabFolder to field java.util.EventObject.source
+WARNING: Please consider reporting this to the maintainers of org.eclipse.swt.widgets.TabFolder
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Aug 12, 2022 9:19:59 AM org.glassfish.grizzly.http.server.NetworkListener start
+INFO: Started listener bound to [localhost:1595]
+Aug 12, 2022 9:19:59 AM org.glassfish.grizzly.http.server.HttpServer start
+INFO: [HttpServer] Started.
+
+(STM32CubeIDE:219635): Gtk-CRITICAL **: 09:23:10.029: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:219635): Gtk-CRITICAL **: 09:23:12.989: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:219635): Gtk-CRITICAL **: 09:23:12.989: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:219635): Gtk-CRITICAL **: 09:52:18.856: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+
+(STM32CubeIDE:219635): Gtk-CRITICAL **: 09:52:18.934: gtk_box_gadget_distribute: assertion 'size >= 0' failed in GtkScrollbar
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.eclipse.swt.widgets.TabFolder to field java.util.EventObject.source
+WARNING: Please consider reporting this to the maintainers of org.eclipse.swt.widgets.TabFolder
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+Folder "/home/archer/.local/cmsis-packs" created
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+qrc:/main.qml:281:21: QML Rectangle: Detected anchors on an item that is managed by a layout. This is undefined behavior; use Layout.alignment instead.

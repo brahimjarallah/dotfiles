@@ -1,0 +1,56 @@
+on computer :
+download openwrt 32 bits for rpi 3 B:
+flash ssd with balena etcher with openwrt 32 bits for rpi 3B:
+
+umount /dev/sdb2
+
+fdisk /dev/sdb
+-delete second partion
+-create new from first start block to the end ( block start => 174456)
+-write changes
+
+resize2fs -f /dev/sdb2
+fs2csk /dev/sdb2
+umount /dev/sdb1
+
+##################################################
+* disconnect from home network
+* plug ssd into rpi
+* plug ethernet cable into rpi and bind it to pc
+* ssh into rpi:
+ssh root@192.168.1.1
+
+-change passwd
+passwd
+
+##################################################
+-edit dhcp file and apply changes :
+vim /etc/config/dhcp
+
+'''
+config dhcp 'lan'
+        option interface 'lan'
+        option leasetime '12h'
+        option dhcpv4 'server'
+        option dhcpv6 'server'
+       option ra 'server'
+        option ra_slaac '1'
+        list ra_flags 'managed-config'
+        list ra_flags 'other-config'
++        option -ignore 1         # <add this> Turn off dhcp server on lan interface
+
+'''
+##################################################
+* edit /etc/config/network file and apply changes :
+
+config interface 'lan'
+        option device 'br-lan'
+        option proto 'static'
+~        option ipaddr '192.168.1.24'  # router default ip
+        option netmask '255.255.255.0'
+        option ip6assign '60'
++        option dns '1.1.1.1' # dns
++        option gateway '192.168.1.1'  # gateway
+
+##################################################
+

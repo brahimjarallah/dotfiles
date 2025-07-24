@@ -1,0 +1,7 @@
+append content of:  bat.txt to => test1.txt test3.txt  
+tee < bat.txt -a test1.txt test3.txt  >/dev/null
+
+
+Using tee in Vim Editor
+:w !sudo tee %
+

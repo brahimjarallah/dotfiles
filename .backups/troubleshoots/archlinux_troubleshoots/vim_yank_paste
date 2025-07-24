@@ -1,0 +1,10 @@
+Yank the word you want to replace with yw.
+
+The yanked word is in the 0 register which you can see by issuing :registers.
+
+Go to the word you want to replace and do cw.
+ -> Do Ctrl+r followed by 0
+ to paste the 0 register.
+
+The map for that would look something like this (assuming Ctrl+j as our key combo):
+:map <C-j> cw<C-r>0<ESC>

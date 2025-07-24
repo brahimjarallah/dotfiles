@@ -1,0 +1,40 @@
+sudo apt-get update
+sudo apt-get install mdadm
+sudo blkid
+
+** Delete all partitions in the drive
+fdisk /dev/sda   
+fdisk /dev/sdb   
+
+sudo mkfs.ext4 /dev/sda1
+sudo mkfs.ext4 /dev/sdb1
+
+** create raid drives
+sudo mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
+--> accept y
+
+sudo mkfs -t ext4 /dev/md0
+sudo su
+
+** send metadata,name & UUID to be read as raid at reboot
+mdadm --detail --scan >> /etc/mdadm/mdadm.conf
+mdadm --detail --scan 
+
+** return to normal user
+exit
+
+sudo mkdir /raid
+sudo blkid
+--> /dev/md0: UUID="8c843529-1633-4cb4-aea8-0cc38a898c7a" BLOCK_SIZE="4096" TYPE="ext4"
+
+sudo vim /etc/fstab
+add this line -->
+UUID=8c843529-1633-4cb4-aea8-0cc38a898c7a	/raid	ext4	defaults 0 0
+
+sudo mount -a
+sudo lsblk
+
+sudo chmod -R 777 /raid
+sudo reboot
+
+cat /proc/mdstat

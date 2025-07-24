@@ -1,0 +1,79 @@
+docker-backup
+=============
+A tool to create & restore complete, self-contained backups of Docker containers
+
+`docker-backup` directly connects to Docker, analyzes a container's mounts &
+volumes, and generates a list of dirs & files that need to be backed up on the
+host system. This also collects all the metadata information associated with a
+container, so it can be restored or cloned on a different host, including its
+port-mappings and data volumes.
+
+The generated list can either be fed to an existing backup solution or
+`docker-backup` can directly create a `.tar` image of your container, so you can
+simply copy it to another machine.
+
+## Installation
+
+`docker-backup` requires Go 1.11 or higher. Make sure you have a working Go
+
+sudo apt install golang
+- Arch Linux: [docker-backup](https://aur.archlinux.org/packages/docker-backup/)
+
+   add to path env docker-backup folder (.bashrc)
+
+export PATH=$PATH:/home/user/docker-backup/
+
+
+    git clone https://github.com/muesli/docker-backup.git
+    cd docker-backup
+    go build
+
+go version
+
+Run `docker-backup --help` to see a full list of options.
+
+## Usage
+
+### Creating a Backup
+
+To backup a single container start `docker-backup` with the `backup` command and
+supply the ID of the container:
+
+    docker-backup backup <container ID>
+
+This will create a `.json` file with the container's metadata, as well as a file
+containing all the volumes that need to be backed up with an external tool like
+[restic](https://restic.net/) or [borgbackup](https://www.borgbackup.org/).
+
+If you want to directly create a `.tar` file containing all the container's
+data, simply run:
+
+    docker-backup backup --tar <container ID>
+
+You can also backup all running containers on the host with the `--all` flag:
+
+    docker-backup backup --all
+
+To backup all containers (regardless of their current running state), run:
+
+    docker-backup backup --all --stopped
+
+With the help of `--launch` you can directly launch a backup program with the
+generated file-list supplied as an argument:
+
+    docker-backup backup --all --launch "restic -r /dest backup --password-file pwfile --tag %tag --files-from %list"
+
+### Restoring a Backup
+
+To restore a container, run `docker-backup` with the `restore` command:
+
+    docker-backup restore <backup file>
+
+`docker-backup` will automatically detect whether you supplied a `.tar` or
+`.json` file and restore the container, including all its port-mappings and data
+volumes.
+
+If you want to start the container once the restore has finished, add the
+`--start` flag:
+
+    docker-backup restore --start <backup file>

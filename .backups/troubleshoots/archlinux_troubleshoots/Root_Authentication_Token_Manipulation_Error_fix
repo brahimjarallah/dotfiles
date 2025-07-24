@@ -1,0 +1,6 @@
+First -> reboot system
+Second -> rd.break on Grub
+# chroot /sysroot
+# mount -rw -o remount /
+# passwd
+  -> reset password

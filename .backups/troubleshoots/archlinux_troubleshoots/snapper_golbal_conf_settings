@@ -1,0 +1,137 @@
+yay -S grub-btrfs snapper-support btrfs-assistant snapper-gui
+
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+
+----------------------------------------------------------------------
+sudo umount /.snapshots
+sudo rm -rf /.snapshots
+sudo snapper -c root create-config /
+sudo btrfs subvolume delete /.snapshots
+sudo mkdir /.snapshots
+cat /etc/fstab | grep .snapshots
+sudo mount -a
+sudo chmod 750 /.snapshots
+sudo chmod a+rx /.snapshots
+sudo chown -R :wheel /.snapshots
+
+sudo cp /etc/snapper/configs/root /etc/snapper/configs/root.bak
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+sudo vim /etc/snapper/configs/root
+----------------------------------------------------------------------
+
+ALLOW_USERS="brahim"
+ALLOW_GROUPS="wheel"
+
+TIMELINE_MIN_AGE="1800"
+TIMELINE_LIMIT_HOURLY="5"
+TIMELINE_LIMIT_DAILY="7"
+TIMELINE_LIMIT_WEEKLY="0"
+TIMELINE_LIMIT_MONTHLY="0"
+TIMELINE_LIMIT_YEARLY="0"
+
+
+----------------------------------------------------------------------
+sudo systemctl enable --now snapper-boot.timer  
+sudo systemctl enable --now snapper-cleanup.timer
+----------------------------------------------------------------------
+
+create Snapshots and /boot partition to avoid update boot error:
+see changes on : => https://wiki.archlinux.org/title/System_backup#Snapshots_and_/boot_partition
+
+----------------------------------------------------------------------
+sudo vim /etc/pacman.d/hooks/95-bootbackup_pre.hook
+----------------------------------------------------------------------
+
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Path
+Target = usr/lib/modules/*/vmlinuz
+
+[Action]
+Depends = rsync
+Description = Backing up pre /boot...
+When = PreTransaction
+Exec = /usr/bin/bash -c 'rsync -a --mkpath --delete /boot/ "/.bootbackup/$(date +%Y_%m_%d_%H.%M.%S)_pre"/'
+----------------------------------------------------------------------
+
+sudo btrfs subvolume list /
+sudo btrfs subvolume get-default /
+sudo btrfs subvolume set-default 256 /
+sudo btrfs subvolume get-default /
+snapper ls
+sudo systemctl enable --now grub-btrfsd.service
+sudo chown :wheel /.snapshots 
+
+
+
+
+----------------------------------------------------------------------
+*** create manual snapshot:
+----------------------------------------------------------------------
+snapper -c root create -d "**Base system configuration**"
+snapper ls
+yay -S neofetch
+snapper ls
+
+----------------------------------------------------------------------
+*** see changes ***
+----------------------------------------------------------------------
+sudo snapper status 16..17
+
+----------------------------------------------------------------------
+*** undo changes ***
+----------------------------------------------------------------------
+sudo snapper undochange 16..17
+
+
+----------------------------------------------------------------------
+*** redo changes ***
+----------------------------------------------------------------------
+sudo snapper undochange 17..16
+
+----------------------------------------------------------------------
+*** delete snapshots ***
+----------------------------------------------------------------------
+delte 16 & 17
+sudo snapper delete 16 17
+
+
+----------------------------------------------------------------------
+*** rollback snapshots ***
+----------------------------------------------------------------------
+
+-----------------------------------
+### method1 (rollback classic) ###
+-----------------------------------
+
+sudo snapper --ambit classic rollback 14    
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+===>
+Creating read-only snapshot of current system. (Snapshot 20.)
+Creating read-write snapshot of snapshot 14. (Snapshot 21.)
+Setting default subvolume to snapshot => 21 <=.
+
+---------------------------------
+### method2 (arch way) ###
+---------------------------------
+sudo btrfs subvolume list /
+sudo mount /dev/sda2 -o subvolid=5 /mnt
+// mount broken system on /mnt
+cat @/etc/fstab 
+// => no such file or dir..err
+cd /mnt
+sudo /mnt/@ /mnt/@.broken
+// copy snapshot num 3 to /mnt/*@
+sudo btrfs subvol snapshot /mnt/@snapshots/3/snapshot/ /mnt/@
+cat @/etc/fstab 
+sudo btrfs subvolume list / | grep broken
+sudo rm -rf /mnt/@.broken
+sudo mount /dev/sda2 -o subvolid=5 /mnt
+

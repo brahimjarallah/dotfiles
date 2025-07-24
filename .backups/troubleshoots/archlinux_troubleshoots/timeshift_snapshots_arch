@@ -1,0 +1,20 @@
+yay -S grub-btrfs
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg 
+
+less /etc/default/grub-btrfs/config 
+
+reboot 
+
+yay -S timeshift-autosnap  
+
+reboot
+
+sudo systemctl enable --now grub-btrfsd.service
+
+systemctl -t mount
+
+
+--------------------------
+### to execute as wayland client
+sudo -E timeshift-launcher

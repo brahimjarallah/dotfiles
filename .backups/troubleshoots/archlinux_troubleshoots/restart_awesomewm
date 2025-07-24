@@ -1,0 +1,3 @@
+echo 'awesome.restart()' | awesome-client
+
+or mod+shift+r

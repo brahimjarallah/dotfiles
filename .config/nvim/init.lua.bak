@@ -1,0 +1,34 @@
+-- Alt + mnei as movement keys (Colemak-DH friendly)
+
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+-- Normal mode
+map('n', '<A-m>', 'h', opts)
+map('n', '<A-n>', 'j', opts)
+map('n', '<A-e>', 'k', opts)
+map('n', '<A-i>', 'l', opts)
+
+-- Visual mode
+map('v', '<A-m>', 'h', opts)
+map('v', '<A-n>', 'j', opts)
+map('v', '<A-e>', 'k', opts)
+map('v', '<A-i>', 'l', opts)
+
+-- Operator-pending mode
+map('o', '<A-m>', 'h', opts)
+map('o', '<A-n>', 'j', opts)
+map('o', '<A-e>', 'k', opts)
+map('o', '<A-i>', 'l', opts)
+
+-- Alt + mnei movement in insert mode (Colemak-DH)
+
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+-- Insert mode: Alt+mnei for ← ↓ ↑ →
+map('i', '<A-m>', '<Left>', opts)
+map('i', '<A-n>', '<Down>', opts)
+map('i', '<A-e>', '<Up>', opts)
+map('i', '<A-i>', '<Right>', opts)
+

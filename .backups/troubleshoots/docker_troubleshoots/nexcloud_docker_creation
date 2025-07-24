@@ -1,0 +1,4 @@
+ mkdir -p /mnt/srv/docker/cont/nextcloud/{db,html,db-backup} /mnt/srv/data/nc-data
+
+docker compose -f /mnt/srv/docker/comp/docker-compose.yml up -d
+

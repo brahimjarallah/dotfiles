@@ -1,0 +1,71 @@
+############################################################
+Step 1: Give Flatpak apps access to GTK themes and icons location
+############################################################
+
+GTK themes are located in /usr/share/themes and /usr/share/icons for all users, and in ~/.themes and ~/.icons for a specific user.
+
+To give all Flatpak packages permission to access ~/.themes and ~/.icons run the following command:
+
+------------------------------------------------------------
+sudo flatpak override --filesystem=$HOME/.themes
+sudo flatpak override --filesystem=$HOME/.icons
+------------------------------------------------------------
+
+Notice that you can’t give access to /usr/share/themes because, according to Flatpak documentation they are blacklisted.
+
+Alternatively, you can do this on a per-application basis as well. You need to specify the application ID for changing the theme.
+
+------------------------------------------------------------
+sudo flatpak override org.gnome.Calculator --filesystem=$HOME/.themes
+sudo flatpak override org.gnome.Calculator --filesystem=$HOME/.icons
+------------------------------------------------------------
+
+############################################################
+Step 2: Tell Flatpak apps which theme/icon to use
+############################################################
+
+Giving access to the themes and icons directory is not enough because this directory may contain multiple themes. To tell Flatpak which GTK theme/icon to use, first get the name of the desired item and then apply the following command:
+
+------------------------------------------------------------
+sudo flatpak override --env=GTK_THEME=my-theme 
+sudo flatpak override --env=ICON_THEME=my-icon-theme 
+------------------------------------------------------------
+
+As you can see in the screenshot below, a couple of themes and icons are available. Copy and paste the exact theme/icon name in the above command:
+
+give flatpak applications access to themes and icons directory via terminal
+Give Flatpak applications access to themes and icons directory via terminal
+Alternatively, for individual applications, run:
+
+------------------------------------------------------------
+sudo flatpak override org.gnome.Calculator --env=GTK_THEME=my-theme 
+sudo flatpak override org.gnome.Calculator --env=ICON_THEME=my-icon-theme 
+------------------------------------------------------------
+
+and replace my-theme and my-icon-theme with the folder name of the theme and icon you want to apply (and it must be located in ~/.themes and ~/.icons respectively).
+
+2. Applying GTK Themes and Icons to Flatpak applications with Flatseal (GUI Method)
+If you are not comfortable executing commands each time to change themes of Flatpak, Flatseal application can help you. Flatseal allows users to change and review the system resource access of installed Flatpak apps. In short, it is a permission manager for Flatpak applications.
+
+You can install Flatseal in any Linux distribution as a Flatpak:
+
+flatpak install flathub com.github.tchx84.Flatseal
+With Flatseal, you can perform the GTK theming of Flatpak apps, in a simplified way. Still, you need to know the name of the environment variables.
+
+Setting Theme and Icons for All Installed Flatpak Applications
+Open Flatseal and select the All Applications tab. You need to scroll a bit and can find two sections called Filesystem and Environment.
+
+In the “Filesystem” section, you need to specify the locations the Flatpak applications can access. Since we are in the “All Applications” tab, the permissions will be set for all installed Flatpak applications. In our case, you need to add both ~/.themes and ~/.icons directories.
+
+Similarly, in the “Environment” section, you need to add two environment variables, as in the command-line method. So set GTK_THEME and ICON_THEME, as shown in the screenshot (Use your theme/icon name instead).
+
+setting theme and icon for all flatpak apps through flatseal
+Setting theme and icon for all flatpak apps through flatseal
+Once done, restart the apps, to get the effect. Note that, this will set the specified theme and icon to all the Flatpak apps.
+
+Setting Theme and Icon for Individual Applications
+Like in the command-line method, in Flatseal, you can also choose to theme Flatpak apps individually. This is achieved by toggling the filesystem and environment variable separately for each app. To do this, instead of the “All Applications” tab, you can select each Application tab in Flatseal and do the same process.
+
+setting themes for flatpak apps on an individual basis through flatseal
+Setting themes for Flatpak apps on an individual basis through Flatseal
+You have to restart the particular app to get the applied effect.

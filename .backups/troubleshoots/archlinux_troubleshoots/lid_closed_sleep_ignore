@@ -1,0 +1,38 @@
+**** Disable Linux  doing anything closing the laptop lid:
+
+To prevent the system from going into suspend state upon closing the lid, edit the /etc/systemd/logind.conf file.
+
+$ sudo vim /etc/systemd/logind.conf
+
+Append the following lines to the file.
+
+[Login] 
+HandleLidSwitch=ignore 
+HandleLidSwitchDocked=ignore
+
+then Restart the systemd daemon (be aware that this will log you off) with this command:
+# sudo systemctl restart systemd-logind
+
+then switch off screen after 300 seconds
+# sudo vim /etc/default/grub
+GRUB_CMDLINE_LINUX="consoleblank=300"
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+--------------------------------------------------------------------------------
+
+# Disable Suspend and Hibernation in Linux
+$ sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+Then reboot the system and log in again.
+
+Verify if the changes have been effected using the command:
+$ sudo systemctl status sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+
+
+--------------------------------------------------------------------------------
+Enable Suspend and Hibernation in Linux
+$ sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+To verify this, run the command;
+$ sudo systemctl status sleep.target suspend.target hibernate.target hybrid-sleep.target

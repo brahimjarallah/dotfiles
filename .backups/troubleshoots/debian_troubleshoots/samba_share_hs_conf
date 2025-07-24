@@ -1,0 +1,112 @@
+أول خدمة على السيرفر المنزلي، إنشاء نظام متكامل لمشاركة الملفات بين أنظمة التشغيل المختفلة، والوصول إلى ملفاتك من خلال ويندوز أو أندرويد وبالتأكيد لينكس.
+شرح مفصل لكيفية إنشاء Samba Share على لينكس، وضبط إعدادات وصلاحيات المستخدم، وصلاحيات الوصول إلى الملفات.
+تحديث النظام
+⚓︎
+sudo apt update && sudo apt upgrade -y
+تنصيب Samba
+⚓︎
+sudo apt install samba
+إضافة حسابك على Samba
+⚓︎
+sudo smbpasswd -a $USER
+إنشاء حساب للمشاركة وإضافته إلى Samba
+⚓︎
+إنشاء الحساب
+⚓︎
+sudo adduser --no-create-home --disabled-password --disabled-login share
+إضافته إلى SAMBA
+⚓︎
+sudo smbpasswd -a share
+إنشاء مجلد للمشاركة
+⚓︎
+إنشاء المجلد
+⚓︎
+sudo mkdir /mnt/srv/share
+ضبط صلاحيات المجلد
+⚓︎
+sudo chown -R $USER:$USER /mnt/srv/share
+ضبط إعدادات Samba
+⚓︎
+أخذ نسخة إحتياطية من الملف الأصلي
+sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bk
+إنشاء ملف جديد
+sudo nano /etc/samba/smb.conf
+وإضافة ما يلي:
+تأكد من تعديل البيانات لتناسبك
+smb.conf
+[global]
+server string = Virtual Server
+netbios name = VSERVER
+workgroup = WORKGROUP
+security = user
+map to guest = Bad User
+name resolve order = bcast host
+include = registry
+passdb backend = tdbsam
+
+[home]
+path = /home/mbesar
+browsable = yes
+valid users = mbesar
+write list = mbesar
+read list = mbesar
+
+[srv]
+path = /mnt/srv
+browsable = yes
+valid users = mbesar
+write list = mbesar
+read list = mbesar
+
+[share]
+path = /mnt/srv/share
+browsable = yes
+writable = yes
+valid users = mbesar share
+create mask = 0755
+force create mode = 0755
+directory mask = 0755
+force directory mode = 0755
+
+[printers]
+comment = All Printers
+browseable = yes
+path = /var/spool/samba
+printable = yes
+guest ok = yes
+read only = no
+create mask = 0700
+تفعيل الخدمة
+sudo systemctl enable --now {s,n}mbd
+إعادة تشغيل الخدمة
+sudo systemctl restart {s,n}mbd
+السماح لحساب share بالوصول الكامل لملفات المجلد share
+⚓︎
+chmod 0777 /mnt/srv/share
+الوصول السريع لمجلدات السيرفر من خلال أنظمة لينكس المكتبية
+⚓︎
+تنصيب حزمة CIFS-UTILS
+⚓︎
+
+Fedora
+Ubuntu
+Arch
+sudo dnf install cifs-utils
+
+إنشاء مجلد جديد لتخصيصه نقطة وصول
+⚓︎
+mkdir ~/share
+إنشاء ملف بيانات الوصول
+⚓︎
+nano ~/smb.cred
+وأضف البيانات كالتالي:
+smb.cred
+username=USER-NAME
+password=PASSWORD
+إضافة بيانات السيرفر إلى الـ FSTAB
+⚓︎
+sudo nano /etc/fstab
+وإضافة السطر التالي:
+تأكد من تعديل البيانات لتناسبك
+fstab
+//server_IP/share_name  /home/YOUR_USER_NAME/share  cifs  credentials=/home/YOUR_USER_NAME/smb.cred,noperm  0  0

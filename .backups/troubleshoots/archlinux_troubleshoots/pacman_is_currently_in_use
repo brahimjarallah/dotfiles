@@ -1,0 +1,3 @@
+# sudo rm /var/lib/pacman/db.lck
+
+** now it should work !

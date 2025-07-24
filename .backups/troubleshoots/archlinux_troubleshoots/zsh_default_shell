@@ -1,0 +1,6 @@
+chsh -s $(which zsh)
+
+or 
+
+chsh -s /usr/bin/zsh
+

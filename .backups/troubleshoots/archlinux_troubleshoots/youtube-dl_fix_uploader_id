@@ -1,0 +1,12 @@
+ File "/usr/lib/python3.11/site-packages/youtube_dl/extractor/youtube.py", line 1794, in _real_extract
+    'uploader_id': self._search_regex(r'/(?:channel|user)/([^/?&#]+)', owner_profile_url, 'uploader id') if owner_profile_url else N
+
+edit file :
+sudo vim /usr/lib/python3.11/site-packages/youtube_dl/extractor/youtube.py
+
+go to line :1794 
+unchek # uploader_id
+
+
+all done :)
+

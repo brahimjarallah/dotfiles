@@ -1,0 +1,10 @@
+wget -O basic-install.sh https://install.pi-hole.net
+
+then
+
+sudo bash basic-install.sh
+
+
+or 
+
+ sudo curl -sSL https://install.pi-hole.net | bash

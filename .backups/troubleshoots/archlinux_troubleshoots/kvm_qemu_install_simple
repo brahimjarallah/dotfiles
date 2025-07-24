@@ -1,0 +1,5 @@
+Terminal Commands:
+1. sudo pacman -Syy qemu virt-manager virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat ebtables iptables
+2. sudo systemctl enable libvirtd.service
+3. sudo systemctl start libvirtd.service
+4. sudo usermod -G libvirt -a `whoami`

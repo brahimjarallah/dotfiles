@@ -1,0 +1,31 @@
+--------------------------------------------------
+Passing a Physical Disk Drive to a Proxmox VM
+--------------------------------------------------
+
+ls -n /dev/disk/by-id/
+
+/sbin/qm set [VM-ID] -virtio2 /dev/disk/by-id/[DISK-ID]
+
+example:
+/sbin/qm set 100 -virtio1 /dev/disk/by-id/nvme-nvme.c0a9-323234314536373632344530-435431303030503353534438-00000001-part1
+
+/sbin/qm set 100 -virtio2 /dev/disk/by-id/ata-Vi550_S3_SSD_LDC363R005487-part1
+
+--------------------------------------------------
+method 2
+--------------------------------------------------
+
+# list hard disk devices and ids
+
+lsblk |awk 'NR==1{print $0" DEVICE-ID(S)"}NR≫1{dev=$1;printf $0" ";system("find /dev/disk/by-id -lname \"*"dev"\" -printf \" %p\"");print "";}'|grep -v -E 'part|lvm'
+
+# copy the /dev/disk/by-id.... for the device to passthrough
+# add the disk to the VM, update the VM ID as needed
+
+qm set ≪%VM ID%≫ -≪%VIRTUAL DEVICE%≫ ≪%DEV DISK ID%≫
+
+qm set 100 -scsi1 /dev/disk/by-id/scsi-360026b902ad1ae00293167790419d3f2
+
+04. Stop the VM and Start it fresh for the new configuration change to take effect
+
+05. Verify inside the guest OS that the physical disk is connected

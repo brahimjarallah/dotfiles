@@ -1,0 +1,30 @@
+
+####################################################
+*** Method 1 *** 
+####################################################
+
+------------------------------------------------------------
+1. install reflector for flitering fastest mirror servers:
+------------------------------------------------------------
+
+ sudo pacman -S reflector rsync curl
+
+------------------------------------------------------------
+2. Retrieve latest mirror list using Reflector in Arch Linux
+Before running Reflector, you must backup your default mirror list file. Because, Reflector will overwrite it and replace the existing mirror list with a new one.
+------------------------------------------------------------
+
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+
+------------------------------------------------------------
+2.2. Retrieve latest N mirrors and sort by download rate
+------------------------------------------------------------
+
+$ sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
+------------------------------------------------------------
+Now, you can install, update, and upgrade packages from the most update-to-date mirrors.
+------------------------------------------------------------
+sudo pacman -Syu
+sudo pacman -S <package_name>
+

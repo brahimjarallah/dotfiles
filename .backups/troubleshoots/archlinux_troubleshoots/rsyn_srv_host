@@ -1,0 +1,23 @@
+------------------------------------------------------------
+host rsync
+------------------------------------------------------------
+sudo rsync -aAXxvh --progress --delete --exclude=.cache/  --dry-run --partial --timeout=60 /home/brahim/ hs@172.116.7.114:/mnt/srv/home/
+
+or
+
+sudo rsync -aAXxvh --progress M --delete --exclude=.cache/ --exclude={.cache,.cargo/,.config/BraveSoftware/} /home/brahim/ brahim@10.27.7.114:/mnt/srv/home/ 
+
+or 
+
+
+rsync -aAXxvh --progress --partial-dir=.rsync-partial --timeout=20  --exclude=".*" /mnt/srv/home/ brahim@172.116.7.100:/home/brahim/
+
+------------------------------------------------------------
+server rsync
+------------------------------------------------------------
+sudo rsync -aAXxvh --progress M  --delete docker brahim@10.27.7.100:/home/brahim/backups/server_backups/
+
+
+rsync -aAXxvh --progress  --ignore-existing --partial  --timeout=20  --exclude=".*" /home/brahim hs@172.116.7.114:/mnt/srv/home/
+~                                                          
+rsync -aAXxvh --progress M --dry-run --delete   --partial  --timeout=120  /home/brahim/ hs@172.116.7.114:/mnt/srv/home/

@@ -1,0 +1,41 @@
+SCP (secure copy) is a command-line utility that allows you to securely copy files and directories between two locations.
+
+scp [OPTION] [user@]SRC_HOST:]file1 [user@]DEST_HOST:]file2
+
+EXAMPLES:
+
+scp /docker-compose/docker-compose.yml hnider@192.168.1.145:~/raspberry_conf_backup
+
+or recursively :
+
+scp -r /docker-compose/docker-compose.yml hnider@192.168.1.145:~/raspberry_conf_backup
+
+-----------------------------------------------------
+Copy a Local File to a Remote System with the scp Command #
+-----------------------------------------------------
+
+scp file.txt remote_username@10.10.0.2:/remote/directory
+
+ $ scp hnider@192.168.1.145:~/remoteFile.txt ~/myDirecotry
+------------------
+
+** If SSH on the remote host is listening on a port other than the default 22 then you can specify the port using the -P argument: **
+
+scp -P 2322 file.txt remote_username@10.10.0.2:/remote/directory
+------------------
+
+** To copy a directory from a local to remote system, use the -r option: **
+
+-----------------------------------------------------
+Copy a File Between Two Remote Systems using the scp Command #
+-----------------------------------------------------
+scp user1@host1.com:/files/file.txt user2@host2.com:/files
+
+-----------------------
+To route the traffic through the machine on which the command is issued, use the -3 option:
+
+
+scp -3 user1@host1.com:/files/file.txt user2@host2.com:/files
+
+
+

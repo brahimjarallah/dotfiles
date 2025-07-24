@@ -1,0 +1,117 @@
+-----------------------------------------------------
+***** Add User to Group in Linux *****
+-----------------------------------------------------
+
+In this tutorial, we will explain how to add a user to a group in Linux systems. We will also show you how to remove a user from a group and how to create, delete, and list groups.
+
+-----------------------------------------------------
+tldr symmary 
+-----------------------------------------------------
+  - Change a username:
+    sudo usermod --login new_username username
+
+  - Change a user id:
+    sudo usermod --uid id username
+
+  - Change a user shell:
+    sudo usermod --shell path/to/shell username
+
+  - Add a user to supplementary groups (mind the lack of whitespace):
+    sudo usermod --append --groups group1,group2,... username
+
+  - Change a user home directory:
+    sudo usermod --move-home --home path/to/new_home username
+
+-----------------------------------------------------
+How to Add an Existing User to a Group
+-----------------------------------------------------
+
+Only root or users with sudo access can add a user to a group.
+
+To add an existing user to a secondary group, use the usermod -a -G command followed the name of the group and the user:
+sudo usermod -a -G groupname username
+ 
+For example, to add the user linuxize to the sudo group, you would run the following command:
+sudo usermod -a -G sudo linuxize
+ 
+-----------------------------------------------------
+How to Add an Existing User to a Group #
+-----------------------------------------------------
+
+Always use the -a (append) option when adding a user to a new group. If you omit the -a option, the user will be removed from any groups not listed after the -G option.
+
+On success, the usermod command does not display any output. It warns you only if the user or group doesn’t exist.
+
+-----------------------------------------------------
+How to Add an Existing User to Multiple Groups in One Command
+-----------------------------------------------------
+
+If you want to add an existing user to multiple secondary groups in one command, use the usermod command followed by the -G option name of the group separated by , (commas):
+
+sudo usermod -a -G group1,group2 username
+ 
+-----------------------------------------------------
+How to Remove a User From a Group
+-----------------------------------------------------
+
+To remove a user from a group, use the gpasswd command wit the -d option.
+
+In the following example, we are removing the user username from the group groupname:
+sudo gpasswd -d username groupname
+ 
+-----------------------------------------------------
+How to Create a Group
+-----------------------------------------------------
+
+To create a new group , use the groupadd command followed by the group name:
+sudo groupadd groupname
+ 
+-----------------------------------------------------
+How to Delete a Group
+-----------------------------------------------------
+
+To delete an existing group, use the groupdel command followed by the group name:
+
+sudo groupdel groupname
+ 
+-----------------------------------------------------
+How to Change a User’s Primary Group
+-----------------------------------------------------
+
+To change a user primary group, use the usermod command followed by the -g option:
+
+sudo usermod -g groupname username
+ 
+In the following example, we are changing the primary group of the user linuxize to developers:
+sudo usermod -g developers linuxize
+ 
+-----------------------------------------------------
+How to Create a New User and Assign Groups in One Command
+-----------------------------------------------------
+
+The following useradd command creates a new user named nathan with primary group users and secondary groups wheel and developers.
+
+sudo useradd -g users -G wheel,developers nathan
+ 
+-----------------------------------------------------
+Display User Groups
+-----------------------------------------------------
+
+To display complete user information, including all the groups of which a user is a member of, use the id command followed by the username:
+
+id username
+ 
+If you omit the username, the command will print the information about the currently logged-in user. Let’s check the user linuxize:
+id linuxize
+ 
+uid=1000(linuxize) gid=100(users) groups=100(users),10(wheel),95(storage),98(power),990(libvirt),993(docker),999(kvm)
+ 
+From the output above, we see that the primary group of the user is users and it belongs to wheel, storage, libvirt, docker, and kvm supplementary groups.
+
+Use the groups command to display the user’s supplementary groups:
+groups linuxize
+ 
+wheel storage power users libvirt docker kvm
+ 
+If no username is passed to the groups command, it will print the currently logged in user’s groups.
+

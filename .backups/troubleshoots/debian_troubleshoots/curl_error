@@ -1,0 +1,4 @@
+install 
+sudo apt install make curl rpm2cpio cpio
+
+

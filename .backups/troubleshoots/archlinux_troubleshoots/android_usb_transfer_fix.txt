@@ -1,0 +1,30 @@
+Android USB File Transfer in Linux | Mount Android Phones in Linux | Android USB MTP File Transfer
+
+Commands to be executed in the terminal for Arch based Distros:-
+
+sudo pacman -Syy
+sudo pacman -Syu
+reboot
+sudo pacman -S git
+sudo pacman -S mtpfs
+cd ~/Downloads
+git clone https://aur.archlinux.org/jmtpfs.git
+cd jmtpfs/
+makepkg -s
+sudo pacman -U jmtpfs*.tar.xz
+xdg-mime query default inode/directory
+sudo pacman -Sy gvfs-mtp
+sudo pacman -Sy gvfs-gphoto2
+sudo reboot
+
+Commands for Ubuntu, Kali & other Debian based distros:-
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install mtp-tools -y
+sudo apt install go-mtpfs -y
+sudo apt install jmtpfs -y
+sudo apt install gvfs-backends -y
+sudo reboot
+
+

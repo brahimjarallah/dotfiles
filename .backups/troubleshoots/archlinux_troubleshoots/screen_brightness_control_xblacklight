@@ -1,0 +1,37 @@
+** first install acpilight:
+
+paru -S acpilight
+sudo chmod -R :wheel /sys/class/backlight/intel_backlight/brightness
+
+#sudo chown hnider:wheel brightness
+--------------------------------------------------------------------
+## 2nd Method ##
+# sudo git clone https://gitlab.com/wavexx/acpilight.git ~/packages
+# cd /acpilight
+# sudo make install
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+** -set or - increase or -decrease -> brightness :
+
+xbacklight +10
+xbacklight -10
+
+# sudo xbacklight -set 50
+ 
+# sudo xbacklight -inc 15
+ 
+# sudo xbacklight -dec 15
+
+--------------------------------------------------------------------
+or 
+
+yay -S brightnessctl
+brightnessctl s 10%+
+brightnessctl s 10%+
+
+--------------------------------------------------------------------
+### for hyprland:###
+
+binde=,XF86MonBrightnessUp,   exec, brightnessctl s 10%+
+binde=,XF86MonBrightnessDown, exec, brightnessctl s 10%-

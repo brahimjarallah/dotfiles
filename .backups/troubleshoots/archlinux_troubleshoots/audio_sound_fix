@@ -1,0 +1,8 @@
+systemctl --user enable wireplumber.service
+systemctl --user enable pipewire.service
+systemctl --user enable pipewire-pulse.service
+
+** excute this command :
+systemctl --user restart pipewire pipewire-pulse
+
+systemctl --user daemon-reload

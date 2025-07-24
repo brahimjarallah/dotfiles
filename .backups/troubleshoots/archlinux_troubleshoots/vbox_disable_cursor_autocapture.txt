@@ -1,0 +1,5 @@
+VBoxManage setextradata "<VM NAME>" GUI/MouseCapturePolicy Disabled
+
+
+i
+

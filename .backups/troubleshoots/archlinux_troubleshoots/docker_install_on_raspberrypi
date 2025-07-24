@@ -1,0 +1,71 @@
+
+-----------------------------------------------------
+Installing Docker
+-----------------------------------------------------
+
+***** Update system *****
+sudo apt-get update && sudo apt-get upgrade
+
+***** Install Docker *****
+curl -sSL https://get.docker.com | sh
+
+***** Add a Non-Root User to the Docker Group *****
+sudo usermod -aG docker pi
+
+***** Check it runnings *****
+groups pi
+
+***** Check docker version *****
+docker version
+
+** for more docker sys details **
+sudo docker info
+
+***** Running docker hello-world image *****
+sudo docker run hello-world
+
+***** To list all docker images *****
+sudo docker images --all
+
+***** To remove the image: *****
+docker image rm hello-world
+
+***** Enabling & Starting docker service *****
+gpasswd -a pi docker
+sudo chown  pi /var/run/docker.sock
+sudo systemctl enable docker
+sudo systemctl start docker
+-----------------------------------------------------
+Installing Docker-Compose
+-----------------------------------------------------
+
+***** Installing  pip3 and python3 packages *****
+
+sudo apt-get install libffi-dev libssl-dev python3-dev python3 python3-pip -y
+
+***** Installing Docker-Compose *****
+
+sudo pip3 install docker-compose
+sudo pip install --upgrade pip
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev cargo
+
+sudo apt-get install docker-compose
+
+***** Enable Docker system service on boot *****
+sudo systemcl enabel docker
+
+***** Starting container with docker-compose *****
+docker-comopse -f docker-compose.yaml up -d
+
+-----------------------------------------------------
+
+** Upgrade Docker on Raspberry Pi **
+sudo apt-get upgrade
+
+** Uninstall Docker on Raspberry Pi **
+You can simply remove docker using the package manager:
+sudo apt-get purge docker-ce
+sudo apt-get purge docker-ce-cli
+
+** To delete leftover images, containers, volumes and other related data, run the following command: **
+sudo rm -rf /var/lib/docker

@@ -1,0 +1,91 @@
+solution 0 :
+ sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
+
+----------------------------------------------------------------------
+solution 1 :
+
+*** Check whether port 22 in that system is blocked by iptables;
+**  Just allow port in iptables and then check : =>>
+sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
+
+*** Else change port number of ssh from 22 to 2222 by editing:
+sudo  vim /etc/ssh/sshd_config         
+Port 2222
+
+sudo systemctl restart ssh.service
+sudo systemctl status ssh.service
+
+----------------------------------------------------------------------
+
+solution 2 :
+
+Since you’re encountering this error, it’s likely not port 22. In such cases, you can connect to that specific port with the following command 
+=>ssh -p <port_no> <username>@<ip>
+ssh -p 2222 pi@192.168.1.106
+
+----------------------------------------------------------------------
+solution 3 :
+
+The solution will be by adding the port number of your server preceded with "-p":
+Example of the command line:
+
+ssh -L localport:127.0.0.1:localport username@ServerIP **-p** **serverport**
+ssh -L localport:127.0.0.1:localport pi@192.168.1.192 **-p** **serverport**
+
+----------------------------------------------------------------------
+solution 4 :
+
+This solution is not for a raspberry pi !!!!!!!!!!!!!!!!!!!!!!
+
+*** Install WHM (Web Host Manager)
+To install cPanel & WHM on your server, run the following command:
+
+cd /home && curl -o latest -L https://securedownloads.cpanel.net/latest && sh latest
+
+Then Just go to whm then open Host Access Control Change as follows
+sshd ALL allow
+
+
+----------------------------------------------------------------------
+solution 5 :
+
+Allow SSH in firewall
+sudo apt-get install firewalld
+sudo ufw enable
+
+Next, replace port with the port no. and execute the following to allow the connection through the port:
+sudo ufw allow 2222
+sudo ufw reload
+
+or 
+
+
+firewall-cmd --permanent --add-port=22/tcp
+firewall-cmd --reload
+
+or
+
+sudo ufw allow 22/tcp
+sudo ufw reload 
+----------------------------------------------------------------------
+solution 6 :
+Ensure IP Is Whitelisted
+
+sudo vim  /etc/ssh/sshd_config
+ListenAddress 0.0.0.0
+sudo systemctl restart ssh.service
+
+----------------------------------------------------------------------
+solution 6 :
+installing WHM => Installing Webmin
+
+sudo apt-get install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python shared-mime-info
+
+
+wget http://prdownloads.sourceforge.net/webadmin/webmin_1.994_all.deb
+
+Go To >
+https://192.168.0.106:10000
+
+
+

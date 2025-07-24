@@ -1,0 +1,21 @@
+
+------------------------------------------------------------
+### # 1 Use xkbcommon tools or Wayland utilities to dump your current keymap.  ###
+------------------------------------------------------------
+
+yay -Sy xorg-xkbprint  xorg-xkbutils xdotool
+
+
+------------------------------------------------------------
+### #  to get a readable format of your keymap  ###
+------------------------------------------------------------
+
+xkbprint -xkb
+
+------------------------------------------------------------
+###  2. Create a Custom Keymap
+### #  Create a base keymap file using the default keymap or copy an existing one.  ###
+------------------------------------------------------------
+
+cp /usr/share/X11/xkb/symbols/us ~/.config/hypr/custom_keymap
+

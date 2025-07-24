@@ -1,0 +1,17 @@
+:: jre-openjdk and jre-openjdk-headless are in conflict
+==>
+pacman -Sy jdk-openjdk 
+
+or
+
+sudo pacman -Sy jdk-openjdk && sudo pacman -Syu
+
+
+
+or 
+
+Install jre-openjdk before updating
+
+pacman install jdk-openjdk --no-upgrade; pamac update --no-aur
+
+

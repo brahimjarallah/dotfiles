@@ -1,0 +1,23 @@
+
+vor vim keybinding use:
+    BASH: set -o vi (set -o emacs)
+--> ZSH : bindkey -v (bindkey -e)       // to  .zprofile
+    FISH : fish_vi_key_bindings (fish_default_key_bindings)
+
+
+----  To use clear screen with ctl+l using vim :
+
+Ctrl+L is also bound in vi command mode but not in insert mode. There's no default binding for clear-screen in insert mode. Readline bindings should be specified in ~/.inputrc, like so:
+
+set editing-mode vi
+$if mode=vi
+
+set keymap vi-command
+# these are for vi-command mode
+Control-l: clear-screen
+
+set keymap vi-insert
+# these are for vi-insert mode
+Control-l: clear-screen 
+$endif
+

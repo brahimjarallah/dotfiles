@@ -1,0 +1,12 @@
+curl 'http://api.aladhan.com/v1/timings/02-09-2023?latitude=36.703509&longitude=10.487084&method=3' -s
+
+or 
+
+curl "http://api.aladhan.com/v1/timings/1693686551?latitude=36.700264&longitude=10.491814&adjustment=1" -s  
+
+*** conversion date  d-m-y  format ***
+$(date -d "$d" +%d-%m-%Y)
+
+
+latitude=36.703509
+longitude=10.487084

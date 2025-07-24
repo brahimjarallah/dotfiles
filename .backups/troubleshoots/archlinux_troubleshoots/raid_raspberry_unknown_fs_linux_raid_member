@@ -1,0 +1,14 @@
+mount: unknown filesystem type 'linux_raid_member'
+
+
+You should not mount it directly using mount.
+You need first to run mdadm to assemble the raid array. A command like this should do it:
+
+mdadm --assemble --run /dev/md0 /dev/sdc1
+
+If it refuses to run the array because it will be degraded, then you can use --force option.
+This is assuming you don't have /dev/md0 device. Otherwise, you need to change this name.
+
+When this command is executed successfully, you can mount the created device normally using:
+
+mount /dev/md0 /mnt/test

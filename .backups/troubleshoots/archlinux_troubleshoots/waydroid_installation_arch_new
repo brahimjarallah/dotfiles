@@ -1,0 +1,71 @@
+------------------------------------------------------------
+update sys packages
+------------------------------------------------------------
+
+sudo pacman -Syyu     
+
+------------------------------------------------------------
+install required pkgs
+------------------------------------------------------------
+
+yay -S curl lxc ca-certificates
+
+------------------------------------------------------------
+create waydroid vendor location for android 11
+------------------------------------------------------------
+
+sudo mkdir -p /usr/share/waydroid-extra/image
+
+------------------------------------------------------------
+check if you have already downloaded android11 including vendor image:
+------------------------------------------------------------
+
+https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqa2ZwNWQxa20tTjVZQmFrTk85VUxzb1JqbG5XZ3xBQ3Jtc0ttRFdXc2J4NGlfVkRvcWtvaDNwZHhkZXpDLVVfbDA5SDdQbC1OeEotQnpWR3ZxTzJrcG40ZVRUa2U4WFo5ZHh1RGlxb3hoMk5YandPREZodEtZc0N1VS03STZ4YUNpVjYzQ1JKVXZwSmhDUkVWM05NVQ&q=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fblissos-dev%2Ffiles%2Fwaydroid%2Flineage%2Flineage-18.1%2FLineage-OS-18.1-waydroid_x86_64-202111291420-foss-sd-hd-ex_ax86-vaapi_gles-aep.zip%2Fdownload&v=6ib0A0hs7JM
+
+------------------------------------------------------------
+copy system.img and vendor.img to /usr/share/waydroid-extra/image
+------------------------------------------------------------
+
+sudo cp -v system.img vendor.img  /usr/share/waydroid-extra/image
+
+ls /usr/share/waydroid-extra/image  
+
+------------------------------------------------------------
+install waydroid
+------------------------------------------------------------
+
+yay -S waydroid
+
+
+install binder_linux-dkms and linux-headers
+
+yay -S dkms 
+yay -S linux-headers    
+
+cd
+git clone https://github.com/choff/anbox-modules.git
+cd anbox-modules
+sudo cp anbox.conf /etc/modules-load.d/
+sudo cp 99-anbox.rules /lib/udev/rules.d/
+sudo cp -rT ashmem /usr/src/anbox-ashmem-1
+sudo cp -rT binder /usr/src/anbox-binder-1
+sudo dkms install anbox-ashmem/1
+sudo dkms install anbox-binder/1
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+initilalize waydroid:
+------------------------------------------------------------
+
+sudo waydroid init -f
+
+
+
+
+ur

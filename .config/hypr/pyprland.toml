@@ -1,0 +1,46 @@
+[pyprland]
+plugins = ["scratchpads", "magnify"]
+
+# Magnify plugin configuration
+[magnify]
+margin = 0
+zoom_factor = 1.5
+nearest_neighbor = false
+
+# Scratchpads configuration
+[scratchpads.term]
+command = "kitty --class kitty-scratch"
+animation = "fromTop"
+class = "kitty-scratch"
+size = "75% 60%"
+margin = 50
+lazy = false
+
+[scratchpads.thunar]
+command = "thunar"
+class = "org.xfce.Thunar"
+animation = "fromTop"
+size = "70% 60%"
+margin = 50
+lazy = true
+
+[scratchpads.vlc]
+command = "vlc"
+animation = "fromBottom"
+class = "vlc"
+size = "80% 70%"
+margin = 50
+
+[scratchpads.mousepad]
+command = "mousepad"
+animation = "fromLeft"
+class = "mousepad"
+size = "70% 80%"
+margin = 5
+
+[scratchpads.peaclock]
+command = "kitty --class peaclock-scratch -e peaclock"
+animation = "fromTop"
+class = "peaclock-scratch"
+size = "50% 40%"
+margin = 100

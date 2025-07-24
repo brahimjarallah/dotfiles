@@ -1,0 +1,14 @@
+## Tele-Terminal tty: [TeleTYpe] 
+// used to access physical machine which no gui installed;
+
+        # alt+ctrl+f2 // tty2
+        # alt+ctrl+f3 // tty3
+        .
+        .
+        .
+
+        # alt+ctrl+f6 // tty6
+
+        # alt+ctrl+f1 // return to GUI mode
+## N.B:
+// # alt + f2,3,...f6  // if you are in tty command mode

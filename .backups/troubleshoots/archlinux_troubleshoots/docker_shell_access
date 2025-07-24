@@ -1,0 +1,2 @@
+docker exec -it <container_name> bash
+docker exec -it portainer bash

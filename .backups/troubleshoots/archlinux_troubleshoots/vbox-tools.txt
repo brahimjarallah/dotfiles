@@ -1,0 +1,13 @@
+1 virtualbox
+2 virtualbox-host-dkms
+3 virtualbox-host-modules
+4 Vrtualbox-ext-oracte AUR package )
+5 Then Load the Vbox driver wi th this cormand.
+6 sudo modprobe vboxdrv
+7 To give yourself permissions so virtualbox can access Shared folders and
+USB devices use this comand,
+8 sudo gpasswd -a SUSER vboKusers
+9 To load the virtualBox module at boot time, refer to Kernel_modulesLoading
+and create a .conf wi th the line:
+10 /etc/modules-load.d/virtualbox.conf
+11 vboxdrv

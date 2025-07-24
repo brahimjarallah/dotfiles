@@ -1,0 +1,76 @@
+### ***  Show used command *** ###
+seq 5 | xargs -t
+-> echo 1 2 3 4 5
+----------------------------------------------------------------------
+cut -d: -f1 < /etc/passwd | sort | xargs
+-->
+avahi bin colord cups daemon dbus dhcpcd dnsmasq flatpak ftp geoclue git hnider http jdownloader libvirt-qemu lightdm mail nobody nvidia-persistenced polkitd qemu root rtkit saned systemd-coredump systemd-journal-remote systemd-network systemd-oom systemd-resolve systemd-timesync tss usbmux uuidd
+
+----------------------------------------------------------------------
+ls -a | xargs -I {} echo "/home/hnider/{}"
+--->
+/home/hnider/Applications
+/home/hnider/.bash_profile
+/home/hnider/.bashrc
+/home/hnider/Books
+/home/hnider/.cache
+/home/hnider/.cargo
+/home/hnider/.config
+/home/hnider/Desktop
+/home/hnider/Documents
+/home/hnider/Dotfiles
+/home/hnider/Downloads
+...
+...
+----------------------------------------------------------------------
+ ### ***  create 10 files from 1->10 with '.txt' extension *** ###
+ seq 10 | xargs -I {} touch {}.txt
+--->
+ls
+10.txt  1.txt  2.txt  3.txt  4.txt  5.txt  6.txt  7.txt  8.txt  9.txt
+
+----------------------------------------------------------------------
+ ### ***  rename files form '.txt' to '.text' *** ###
+ #
+ ls | cut -d. -f1 | xargs -I {} mv {}.txt {}.text
+ -->
+ 10.text  2.text  4.text  6.text  8.text
+1.text   3.text  5.text  7.text  9.text
+
+
+----------------------------------------------------------------------
+ ### echo in one line ###
+ls | xargs -t
+echo 10.text 1.text 2.text 3.text 4.text 5.text 6.text 7.text 8.text 9.text
+
+----------------------------------------------------------------------
+ ### echo in one line with 2 args ###
+ ls | xargs -t -n 2
+ ---->
+10.text 1.text
+2.text 3.text
+4.text 5.text
+6.text 7.text
+8.text 9.text
+----------------------------------------------------------------------
+### ***  echo 1 argumment of 1 process and sleep 1 scecond between *** ###
+seq 5 | xargs -n 1 -P 1 bash -c 'echo $0; sleep 1'
+1
+2
+3
+4
+5
+
+----------------------------------------------------------------------
+### ***  find files with ".text" extension and remove them *** ###
+find . -type f -name "*.text" -exec rm {} \;
+
+or (faster execution with xargs -->)
+
+find . -type f -name "*.text" | xargs rm
+----------------------------------------------------------------------
+### ***  Create 10 files from 1->10 with the name foo.txt *** ###
+
+seq 10 | xargs -I {} touch foo{}.txt
+foo10.txt  foo1.txt  foo2.txt  foo3.txt  foo4.txt  foo5.txt  foo6.txt  foo7.txt  foo8.txt  foo9.txt
+

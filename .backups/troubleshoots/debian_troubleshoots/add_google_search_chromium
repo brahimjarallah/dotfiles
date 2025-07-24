@@ -1,0 +1,11 @@
+Search engine:
+Google
+
+Keyword:
+Google.com
+
+URL with %s in place of query:
+https://www.google.com/search?q=%s
+
+Suggestions URL with %s in place of query:
+https://www.google.com/complete/search?client=chrome&q=%s

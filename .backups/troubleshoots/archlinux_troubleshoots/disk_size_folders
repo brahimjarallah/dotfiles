@@ -1,0 +1,7 @@
+du -sh *
+
+
+
+
+du --summarize --human-readable *
+

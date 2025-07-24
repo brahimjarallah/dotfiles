@@ -1,0 +1,14 @@
+ ### Insert a line in a string after finding a match
+
+The following command will search “inng” in the string, “I like programming”, and a line of text, “Do you like programming?” will be inserted after the string if the searching string exists.
+
+Here, the “&” character is used to insert the line after the string.
+
+$ echo "I like programming." | sed 's/inng/& Do you like programming?/'
+The following output shows that “inng” does not exist in the string and no line is inserted after the string.
+
+
+The following command will search “ing.” in the string, “I like programming” and it exists in the string.
+
+$ echo "I like programming." | sed 's/ing./& Do you like programming?/'
+The following output shows that the new line is added after the string.

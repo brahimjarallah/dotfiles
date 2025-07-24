@@ -1,0 +1,11 @@
+paru gimp-plugin-bimp 
+
+Then:
+Step 1: Open GIMP and click File on the main menu.
+Step 2: Select Batch Image Manipulation from the drop-down menu.
+Step 3: A pop-up window appears. Under Manipulation Set, click the Add button.
+Step 4: Select a manipulation on the resulting pop-up menu.
+Step 5: Click the Add button again if you want to add another manipulation to the set, as shown above.
+Step 6: Click the Add Images button located under Input Files and Options and select the images you want to edit in bulk.
+Step 7: Select an output folder.
+Step 8: Click Apply to begin the batch edit process.

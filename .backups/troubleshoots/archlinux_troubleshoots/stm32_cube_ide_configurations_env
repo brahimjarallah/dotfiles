@@ -1,0 +1,37 @@
+1- install cubeIDE utilities:
+-t ARM-GCC: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/downloads
+-- STM Firmware: https://www.st.com/en/embedded-software/stm32-standard-peripheral-library-expansion.html?querycriteria=productId%3DLN1734#2 
+-- ST-LINK: https://github.com/stlink-org/stlink  (download release version) 
+
+2- extract files then go to stlink-1.xx folder:
+-- compile stlink files 
+   # make
+
+-- cd into stlink-1.xx/build/Release/bin/
+ // st-info ( to upload code)
+ // st-flash ( to flash memory)
+   # mv st-info st-flash ../../..
+ 
+-- Set  global environmemt variables: 
+
+# vim ~/.bashrc
+---------
+   # GCC ARM PATH
+   export PATH=$PATH:~/packages/STM32_CUBIDE_UTILITIES/gcc-arm-11.2.2022-mingw-w64-i686-arm-none-linux-gnueabihf/bin
+
+# ST-LINK PATH
+export PATH=$PATH:~/packages/STM32_CUBEIDE_UTILITIES/stlink-1.7.0
+---------
+// refrech terminal to take effect, then check arm-gcc verison:
+# source ~/.bashrc
+# arm-none-eabi-gcc --version
+# st-info --version
+# st-flash --version 
+
+
+
+
+
+
+
+

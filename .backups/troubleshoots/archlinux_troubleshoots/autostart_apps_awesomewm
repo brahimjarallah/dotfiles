@@ -1,0 +1,22 @@
+# mkdir ~/.config/awesome
+# cp /etc/xdg/awesome/rc.lua ~/.config/awesome/
+
+ -- Now  copy the following code at the bottom of your new rc.lua file
+
+do
+  local cmds =
+  {
+    "firefox",
+    "xedit"
+  }
+
+  for _,i in pairs(cmds) do
+    awful.util.spawn(i)
+  end
+end
+
+
+
+ -- In this example - firefox and xedit are run on startup.
+
+

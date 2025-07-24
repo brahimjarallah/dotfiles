@@ -1,0 +1,5 @@
+# to read sd card:
+sudo pacman -S udisks2
+
+# to read usb :
+sudo pacman -S usbutils

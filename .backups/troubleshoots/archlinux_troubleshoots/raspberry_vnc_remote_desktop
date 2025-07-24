@@ -1,0 +1,4 @@
+install vncviewer on host machine
+
+activate vnc on server machine
+then install xrdp on server machine

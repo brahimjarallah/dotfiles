@@ -1,0 +1,329 @@
+#
+# █▄▀ █▀▀ █▄█ █▄▄ █ █▄░█ █▀▄ █ █▄░█ █▀▀ █▀
+# █░█ ██▄ ░█░ █▄█ █ █░▀█ █▄▀ █ █░▀█ █▄█ ▄█
+
+# See https://wiki.hyprland.org/Configuring/Keywords/
+#  &  https://wiki.hyprland.org/Configuring/Binds/
+
+# Main modifier
+$mainMod = Super # super / meta / windows key
+
+# Assign apps
+$term     = kitty
+$editor   = code
+$file     = thunar
+$browser1 = brave --password-store=basic 
+$browser2 = firefox --password-store=basic 
+
+# Window/Session actions
+bindd = $mainMod+Shift, P,Color Picker , exec, hyprpicker -a # Pick color (Hex) >> clipboard# 
+bind = $mainMod, Q, exec, $scrPath/dontkillsteam.sh # close focused window
+bind = $mainMod, W, exec, $scrPath/dontkillsteam.sh # close focused window
+bind = $mainMod+Shift, Q, exec, $scrPath/dontkillsteam.sh # close focused window
+bind = $mainMod+Shift, W, exec, $scrPath/dontkillsteam.sh # close focused window
+bind = $mainMod, Delete, exit, # kill hyprland session
+bind = $mainMod, T, togglefloating, # toggle the window between focus and float
+bind = $mainMod+Shift, G, togglegroup, # toggle the window between focus and group
+bind = $mainMod, F, fullscreen, # toggle the window between focus and fullscreen
+bind = $mainMod+Alt, L, exec, swaylock # launch lock screen
+bind = $mainMod+Ctrl, G, exec, $scrPath/windowpin.sh # toggle pin on focused window
+bind = $mainMod, Backspace, exec, $scrPath/logoutlaunch.sh # launch logout menu
+bind = $mainMod, Space, exec, killall waybar || (env reload_flag=1 $scrPath/wbarconfgen.sh) # toggle waybar and reload config
+#bind = $mainMod+Shift, Space, exec, killall waybar || waybar # toggle waybar without reloading, this is faster
+bind = $mainMod, D, exec, drawj2d
+
+
+
+
+# Application shortcuts
+bind = $mainMod, Return, exec, $term # launch terminal emulator
+bind = $mainMod+Shift, E, exec, $file # launch file manager
+bind = $mainMod+Alt, E, exec, $editor # launch text editor
+bind = $mainMod, B, exec, $browser1 # launch web browser
+bind = $mainMod+Shift, B, exec, $browser2 # launch web browser
+bind = Ctrl+Shift, Escape, exec, $scrPath/sysmonlaunch.sh # launch system monitor (htop/btop or fallback to top)
+bind = $mainMod ALT, H, exec, kitty -e vim ~/.config/hypr/keybindings.conf   # edit Hyprland keybindings 
+bind = $mainMod CTRL, Z, exec, kitty -e vim ~/.zshrc   # edit Hyprland keybindings 
+bind = $mainMod, X, exec, xpad # launch xpad sticky notes
+bind = $mainMod+Shift, X, exec, kitty --class=floating-clock -e peaclock
+bind = Alt+Ctrl, P, exec, protonmail
+bind = $mainMod, U, exec, ~/.local/bin/qutebrowser-launch.sh
+bind = $mainMod, V, exec, ~/scripts/config_scripts/win10_rdp.sh # launch clipboard
+bind = ALT, P, exec, ~/backups/scripts/execution_scripts/show_prayers_notif.sh
+
+
+
+
+
+
+
+# Shortcut Actions
+
+# this runs the clipboard-to-Google-search script in Brave
+bind = $mainMod, C, exec, ~/scripts/config_scripts/google_search_clipboard.sh
+bind = $mainMod+Shift, C, exec, ~/scripts/config_scripts/google_translate_clipboard.sh
+bind = $mainMod, G, exec, brave --new-tab https://chat.openai.com
+#bind = $mainMod, U, exec, ~/.local/bin/qutebrowser-launch.sh
+bind = $mainMod, U, exec, /usr/bin/qutebrowser 
+
+#################################################################3
+
+# Rofi menus
+bind = $mainMod+Shift, Return, exec, pkill -x rofi || $scrPath/rofilaunch.sh d # launch application launcher
+#bind = $mainMod+Ctrl, Tab, exec, pkill -x rofi || $scrPath/rofilaunch.sh w # launch window switcher
+
+# Audio control
+bindl  = , XF86AudioMute, exec, $scrPath/volumecontrol.sh -o m # toggle audio mute
+bindl  = , XF86AudioMicMute, exec, $scrPath/volumecontrol.sh -i m # toggle microphone mute
+bindel = , XF86AudioLowerVolume, exec, $scrPath/volumecontrol.sh -o d # decrease volume
+bindel = , XF86AudioRaiseVolume, exec, $scrPath/volumecontrol.sh -o i # increase volume
+
+# Media control
+bindl  = , XF86AudioPlay, exec, playerctl play-pause # toggle between media play and pause
+bindl  = , XF86AudioPause, exec, playerctl play-pause # toggle between media play and pause
+bindl  = , XF86AudioNext, exec, playerctl next # media next
+bindl  = , XF86AudioPrev, exec, playerctl previous # media previous
+
+# Brightness control
+bindel = , XF86MonBrightnessUp, exec, $scrPath/brightnesscontrol.sh i # increase brightness
+bindel = , XF86MonBrightnessDown, exec, $scrPath/brightnesscontrol.sh d # decrease brightness
+
+# Move between grouped windows
+bind = $mainMod CTRL , H, changegroupactive, b
+bind = $mainMod CTRL , L, changegroupactive, f
+
+# Screenshot/Screencapture
+bind = $mainMod, P, exec, $scrPath/screenshot.sh s # partial screenshot capture
+bind = $mainMod+Ctrl, P, exec, $scrPath/screenshot.sh sf # partial screenshot capture (frozen screen)
+bind = $mainMod+Alt, P, exec, $scrPath/screenshot.sh m # monitor screenshot capture
+bind = , Print, exec, $scrPath/screenshot.sh p # all monitors screenshot capture
+bind = $mainMod, S, exec, grim -g "$(slurp)" - | tesseract stdin stdout | wl-copy # ocr_fast_capture
+bind = $mainMod+Shift, S, exec, ~/scripts/config_scripts/screen-ocr.sh 
+
+
+
+# Custom scripts
+bind = $mainMod+Alt, G, exec, $scrPath/gamemode.sh # disable hypr effects for gamemode
+bind = $mainMod+Alt, Right, exec, $scrPath/swwwallpaper.sh -n # next wallpaper
+bind = $mainMod+Alt, Left, exec, $scrPath/swwwallpaper.sh -p # previous wallpaper
+bind = $mainMod+Alt, Up, exec, $scrPath/wbarconfgen.sh n # next waybar mode
+bind = $mainMod+Alt, Down, exec, $scrPath/wbarconfgen.sh p # previous waybar mode
+bind = $mainMod+Ctrl, R, exec, pkill -x rofi || $scrPath/wallbashtoggle.sh -m # launch wallbash mode select menu
+bind = $mainMod+Alt, W, exec, pkill -x rofi || $scrPath/themeselect.sh # launch theme select menu
+#bind = $mainMod+Shift, A, exec, pkill -x rofi || $scrPath/rofiselect.sh # launch select menu
+#bind = $mainMod+Shift, X, exec, pkill -x rofi || $scrPath/themestyle.sh # launch theme style select menu
+bind = $mainMod+Shift, U, exec, pkill -x rofi || $scrPath/swwwallselect.sh # launch wallpaper select menu
+bind = $mainMod+Shift, V, exec, pkill -x rofi || $scrPath/cliphist.sh c # launch clipboard
+#bind = $mainMod+Shift, V, exec, pkill -x rofi || $scrPath/cliphist.sh # launch clipboard Manager
+bind = Alt+Shift, S, exec, $scrPath/keyboardswitch.sh # switch keyboard layout
+bind = $mainMod, slash, exec, pkill -x rofi || $scrPath/keybinds_hint.sh c # launch keybinds hint
+#bind = $mainMod+Alt, A, exec, pkill -x rofi || $scrPath/animations.sh # launch animations Manager
+
+
+# Alt+Tab window cycling keybindings for hyprland.conf
+#bind = ALT + CTRL, Tab, cyclenext,
+#bind = ALT + CTRL, Tab, bringactivetotop,
+#
+#bind = ALT SHIFT, Tab, cyclenext, prev
+#bind = ALT SHIFT, Tab, bringactivetotop,
+
+# Window cycling with Alt+Tab
+bind = ALT, TAB, cyclenext,
+bind = ALT, TAB, bringactivetotop,
+
+## Reverse cycling with Alt+Shift+Tab
+bind = ALT SHIFT, TAB, cyclenext, prev
+bind = ALT SHIFT, TAB, bringactivetotop,
+
+# Move/Change window focus
+bind = $mainMod, l, movefocus, l
+bind = $mainMod, h, movefocus, r
+bind = $mainMod, k, movefocus, u
+bind = $mainMod, j, movefocus, d
+#bind = Alt, Tab, movefocus, d
+
+# Switch workspaces
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+bind = $mainMod, 4, workspace, 4
+bind = $mainMod, 5, workspace, 5
+bind = $mainMod, 6, workspace, 6
+bind = $mainMod, 7, workspace, 7
+bind = $mainMod, 8, workspace, 8
+bind = $mainMod, 9, workspace, 9
+bind = $mainMod, 0, workspace, 10
+
+# Switch workspaces to a relative workspace
+#bind = $mainMod, Tab, workspace, r+1
+#bind = $mainMod+Shift, Tab, workspace, r-1
+
+# Move to the first empty workspace
+bind = $mainMod+Ctrl, Down, workspace, empty 
+
+# Resize windows
+binde = $mainMod+Ctrl, l, resizeactive, 30 0
+binde = $mainMod+Ctrl, h, resizeactive, -30 0
+binde = $mainMod+Ctrl, k, resizeactive, 0 -30
+binde = $mainMod+Ctrl, j, resizeactive, 0 30
+
+
+# Move active window to the left/right/up/down in tiling mode
+bind = $mainMod+Shift, h, movewindow, l
+bind = $mainMod+Shift, l, movewindow, r
+bind = $mainMod+Shift, k, movewindow, u
+bind = $mainMod+Shift, j, movewindow, d
+
+
+
+
+# Move focused window to a workspace
+bind = $mainMod+Shift, 1, movetoworkspace, 1
+bind = $mainMod+Shift, 2, movetoworkspace, 2
+bind = $mainMod+Shift, 3, movetoworkspace, 3
+bind = $mainMod+Shift, 4, movetoworkspace, 4
+bind = $mainMod+Shift, 5, movetoworkspace, 5
+bind = $mainMod+Shift, 6, movetoworkspace, 6
+bind = $mainMod+Shift, 7, movetoworkspace, 7
+bind = $mainMod+Shift, 8, movetoworkspace, 8
+bind = $mainMod+Shift, 9, movetoworkspace, 9
+bind = $mainMod+Shift, 0, movetoworkspace, 10
+
+# Move focused window to a relative workspace
+bind = $mainMod+Ctrl+Alt, h, movetoworkspace, r+1
+bind = $mainMod+Ctrl+Alt, l, movetoworkspace, r-1
+
+# Move active window around current workspace with mainMod + SHIFT + CTRL [←→↑↓]
+#$moveactivewindow=grep -q "true" <<< $(hyprctl activewindow -j | jq -r .floating) && hyprctl dispatch moveactive
+#binded = $mainMod SHIFT $CONTROL, l, Move activewindow left, exec, $moveactivewindow -30 0 || hyprctl dispatch movewindow l
+#binded = $mainMod SHIFT $CONTROL, h, Move activewindow right, exec, $moveactivewindow 30 0 || hyprctl dispatch movewindow r
+#binded = $mainMod SHIFT $CONTROL, k, Move activewindow up, exec, $moveactivewindow  0 -30 || hyprctl dispatch movewindow u
+#binded = $mainMod SHIFT $CONTROL, j, Move activewindow down, exec, $moveactivewindow 0 30 || hyprctl dispatch movewindow d
+
+
+# Scroll through existing workspaces
+#bind = $mainMod, mouse_down, workspace, e+1
+#bind = $mainMod, mouse_up, workspace, e-1
+
+# Move/Resize focused window
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
+#bindm = $mainMod, Z, movewindow
+#bindm = $mainMod, X, resizewindow
+
+## Move/Switch to special workspace (scratchpad)
+#bind = $mainMod+Alt, S, movetoworkspacesilent, special
+#bind = $mainMod, S, togglespecialworkspace,
+
+## Send focused window to scratchpad (special workspace)
+#bind = $mainMod, M, movetoworkspace, special
+
+# Toggle the scratchpad (show/hide)
+#bind = $mainMod SHIFT, M, togglespecialworkspace
+
+
+# Toggle focused window split
+#bind = $mainMod, J, togglesplit
+
+# Move focused window to a workspace silently
+bind = $mainMod+Alt, 1, movetoworkspacesilent, 1
+bind = $mainMod+Alt, 2, movetoworkspacesilent, 2
+bind = $mainMod+Alt, 3, movetoworkspacesilent, 3
+bind = $mainMod+Alt, 4, movetoworkspacesilent, 4
+bind = $mainMod+Alt, 5, movetoworkspacesilent, 5
+bind = $mainMod+Alt, 6, movetoworkspacesilent, 6
+bind = $mainMod+Alt, 7, movetoworkspacesilent, 7
+bind = $mainMod+Alt, 8, movetoworkspacesilent, 8
+bind = $mainMod+Alt, 9, movetoworkspacesilent, 9
+bind = $mainMod+Alt, 0, movetoworkspacesilent, 10
+
+
+################################################################################
+# Scratchpad keybindings - Fixed conflicts and using correct variable
+bind = $mainMod, R, exec, pypr toggle term
+bind = $mainMod+Ctrl, V, exec, pypr toggle vlc
+bind = $mainMod, M, exec, pypr toggle mousepad
+bind = $mainMod+Ctrl, E, exec, pypr toggle emacs
+bind = $mainMod+Ctrl, S, exec, pypr toggle spotify
+bind = $mainMod+Ctrl, C, exec, pypr toggle peaclock
+bind = $mainMod, E, exec, pypr toggle thunar
+#bind = $mainMod+Ctrl, B, exec, pypr toggle brave
+#bind = Ctrl+Shift, 0, exec, pypr toggle translator
+#bind = Ctrl+Shift, 1, exec, pypr toggle chatgpt
+#bind = Ctrl+Shift, 2, exec, pypr toggle claude
+#bind = Ctrl+Shift, 3, exec, pypr toggle grok
+#bind = Ctrl+Shift, 4, exec, pypr toggle gemini
+#bind = Ctrl+Shift, 5, exec, pypr toggle google
+#bind = Ctrl+Shift, 6, exec, pypr toggle notebooklm
+#bind = Ctrl+Shift, 7, exec, pypr toggle neuralwriter
+#bind = Ctrl+Shift, 8, exec, pypr toggle paste-formatter
+#bind = $mainMod, T, exec, pypr toggle thunar && hyprctl dispatch togglefloating
+#bind = $mainMod, F3, exec, pypr toggle wvkbd-mobintl
+
+
+bind = $mainMod, F3, exec, ~/.local/bin/toggle-wvkbd-colemak.sh
+
+
+
+################################################################################
+# Pypr zoom keybindings (using magnify plugin)
+bind = SUPER, Z, exec, pypr zoom ++0.5
+bind = SUPER SHIFT, Z, exec, pypr zoom --0.5
+bind = SUPER ALT, Z, exec, pypr zoom
+
+# Mouse wheel zoom (with Super key held) - CORRECT SYNTAX
+#bind = SUPER+Shift, mouse_up, exec, pypr zoom ++0.1      # Mouse wheel up (zoom in)
+#bind = SUPER+Shift, mouse_down, exec, pypr zoom --0.1    # Mouse wheel down (zoom out)
+
+################################################################################
+# For screen annotation 
+
+# Screenshot and annotate selected area
+bind = $mainMod , A, exec, grim -g "$(slurp)" - | swappy -f -
+
+# Screenshot and annotate full screen
+bind = $mainMod SHIFT, A, exec, grim - | swappy -f -
+
+# Screenshot area to file then annotate
+bind = $mainMod CTRL, A, exec, grim -g "$(slurp)" /tmp/screenshot.png && swappy -f /tmp/screenshot.png
+
+
+
+################################################################################
+
+
+# # Emacs keybindings for Hyprland (DT-Optimized)
+# # Add these lines to your ~/.config/hypr/hyprland.conf
+# 
+# # Primary Emacs client (Super + E)
+ bind = SUPER+Ctrl, E, exec, emacsclient -c -a 'emacs'
+# 
+# # Emacs in new workspace (Super + Shift + E)
+# bind = SUPER SHIFT, E, exec, [workspace 9] emacsclient -c -a 'emacs'
+# 
+# # Terminal Emacs (Super + Alt + E)
+# bind = SUPER ALT, E, exec, kitty -e emacsclient -nw -a 'emacs'
+# 
+# # Emacs daemon management
+# bind = SUPER, F1, exec, systemctl --user restart emacs.service
+# bind = SUPER, F2, exec, systemctl --user stop emacs.service
+# 
+# # Quick org-capture (Super + C)
+# bind = SUPER, C, exec, emacsclient -c -F '((name . "org-capture") (width . 80) (height . 24))' -e '(org-capture)'
+# 
+# # Quick notes (Super + N)
+# bind = SUPER, N, exec, emacsclient -c ~/org/notes.org
+# 
+# # Emacs everywhere (global text editing)
+# bind = SUPER, period, exec, emacsclient -c -F '((name . "emacs-everywhere") (width . 80) (height . 24))' -e '(emacs-everywhere)'
+# 
+# # Window rules for Emacs special windows
+# windowrulev2 = float, class:^(Emacs)$, title:^(org-capture)$
+# windowrulev2 = size 800 600, class:^(Emacs)$, title:^(org-capture)$
+# windowrulev2 = center, class:^(Emacs)$, title:^(org-capture)$
+# 
+# windowrulev2 = float, class:^(Emacs)$, title:^(emacs-everywhere)$
+# windowrulev2 = size 800 600, class:^(Emacs)$, title:^(emacs-everywhere)$
+# windowrulev2 = center, class:^(Emacs)$, title:^(emacs-everywhere)$
+############################################################3
+

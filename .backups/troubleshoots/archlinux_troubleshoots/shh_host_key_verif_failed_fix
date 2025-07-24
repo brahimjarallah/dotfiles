@@ -1,0 +1,5 @@
+ssh-keygen -R "you server hostname or ip"
+
+ex:
+# ssh-keygen -R 192.168.122.168
+

@@ -1,0 +1,9 @@
+[archlin@arch-lin debtap]$ makepkg -si
+==> ERROR: Cannot find the fakeroot binary.
+
+## solution:
+#sudo pacman -S base-devel
+
+##################################################
+
+

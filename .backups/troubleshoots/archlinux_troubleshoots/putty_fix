@@ -1,0 +1,28 @@
+fix iputty Gtk-WARNING cannot open display:
+
+You should enable X11Forwarding in /etc/ssh/sshd_config and then see what happens.
+
+Excerpt from a config file:
+
+ X11Forwarding yes
+ X11DisplayOffset 10
+ PrintMotd no
+ PrintLastLog yes
+ TCPKeepAlive yes
+
+
+****  X11 has to be open before you run visualsfm. You can open it in Applications -> Utilities -> X11. You must also define which display to use. Use printenv to see if the DISPLAY variable is set. If it is not set then use the following command:
+
+# export DISPLAY=":0"
+
+add this command to your .profile settings in your home folder to set it every time you open a terminal.
+
+
+other command:
+# env -i DISPLAY=:0 putty
+
+***** TO see tty serial ports:
+# dmesg | grep tty
+
+
+

@@ -1,0 +1,45 @@
+As Kitty's document specifies, you can have both tabs and split screens (Kitty calls them "windows").
+
+Tab:
+
+New tab: ctrl + shift + t
+
+Close tab: ctrl + shift + q
+
+Next tab: ctrl + shift + right
+
+Previous tab: ctrl + shift + left
+
+Window:
+
+New window: ctrl + shift + enter
+
+Close window: ctrl + shift + w
+
+Next window: ctrl + shift + ]
+
+Previous window: ctrl + shift + [
+
+
+ ### Windows 
+Create new split window	Ctrl + Shift + Enter
+Previous or next window	Ctrl + Shift + ] or [
+Change layout	Ctrl + Shift + L
+Close window	Ctrl + w
+
+### Tabs#
+New tab	Ctrl + t
+Close tab	Ctrl + q
+Previous or next tab	Ctrl + Shift + Right or Left
+Next layout	Ctrl + Shift + L
+
+--------------------------------------------------
+Some kitty conf in kitty.conf file
+--------------------------------------------------
+*** map lanuch kitty in current dir
+map shift+f1 launch --cwd=current
+
+*** map lanuch kitty in current dir in new tab
+map shift+f2 launch --cwd=current --type=tab
+
+

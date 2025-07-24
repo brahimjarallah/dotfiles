@@ -1,0 +1,5 @@
+iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT
+
+AllowAgentForwarding yes
+AllowTcpForwarding yes
+X11Forwarding yes

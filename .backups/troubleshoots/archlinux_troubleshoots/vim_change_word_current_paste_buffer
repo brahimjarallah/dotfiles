@@ -1,0 +1,23 @@
+# How can I do a 'change word' in Vim using the current paste buffer?
+
+You could use registers to do it and make a keybinding for the process.
+
+Yank the word you want to replace with [yw].
+
+The yanked word is in the 0 register which you can see by issuing :registers.
+
+Go to the word you want to replace and do [cw]. Do [Ctrl+r] followed by [0] to paste the 0 register.
+
+The map for that would look something like this (assuming [Ctrl+j] as our key combo):
+
+:map <C-j> cw<C-r>0<ESC>
+
+Option 2 (simpler)
+
+With your word yanked, cursor over the word you want to replace and do [viwp]. Which is visual select inner word and paste.
+
+Courtesy of @tlo in the comments: you could also just do [vep]. One char shorter. Downside have to position cursor at start of word and (as with mine) changes the buffer.
+
+Comment (from Michael):
+
+This is good. Extra note: the second method is indeed easier but, as is, only works for ONE substitution because after each substitution the buffer then gets changed to the field that was replaced (old text). The first method is a little harder to use BUT has the advantage that the buffer 0 stays 'as is' so you can use that method to do more than 1 replacement of the same text.

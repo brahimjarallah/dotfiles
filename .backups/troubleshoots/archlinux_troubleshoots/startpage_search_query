@@ -1,0 +1,16 @@
+from the web browser’s address bar work depends on how the user has added Startpage to the web browser
+(e.g., the Startpage — Private Search Engine browser extension doesn’t support this feature, whereas the Startpage Privacy Protection browser extension does). 
+If the user would like to add Startpage via the web browser’s settings on chrome://settings/searchEngines (Settings -> Search engine -> Manage search engines and site search), they can use the following 
+
+
+startpage.com
+
+www.startpage.com/
+
+query strings: URL with %s in place of query: 
+https://www.startpage.com/sp/search?query=%s
+
+Suggestions URL with %s in place of query: 
+https://www.startpage.com/sp/search?query=%s
+
+

@@ -1,0 +1,88 @@
+version: "3.9"
+
+networks:
+  hs:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.27.8.0/24
+
+services:
+
+ # =====================================
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    networks:
+      hs:
+    command: --no-analytics
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/srv/docker/cont/portainer:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 9000:9000
+      - 8000:8000
+      - 9443:9443
+    restart: always
+  # =====================================
+  nginx:
+    image: lscr.io/linuxserver/nginx
+    container_name: nginx
+    networks:
+      hs:
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Africa/Tunisia
+    volumes:
+      - /mnt/srv/docker/cont/nginx:/config
+    ports:
+      - 8082:80
+      #- 443:443
+    restart: unless-stopped
+ # =====================================
+  nextcloud:
+    image: nextcloud:25
+    container_name: nextcloud
+    user: 1000:1000
+    networks:
+      - hs
+    links:
+      - nextcloud-db
+    hostname: nc.vs-yt.mm
+    environment:
+      - TZ=Africa/Tunisia
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_HOST=nextcloud-db
+      - NEXTCLOUD_TRUSTED_DOMAINS=localhost nextcloud 10.27.7.177:8080 nc.vs-yt.mm *.vs-yt.mm
+      # - NEXTCLOUD_ADMIN_USER=alma
+      # - NEXTCLOUD_ADMIN_PASSWORD=password
+      # - NEXTCLOUD_DATA_DIR=/var/www/html/data # if you need to change data folder
+    volumes:
+      - /mnt/srv/docker/cont/nextcloud/html:/var/www/html
+      - /mnt/srv/data/nc-data:/var/www/html/data
+    ports:
+      - 8080:80
+    restart: unless-stopped
+ #--------------------------------------
+  nextcloud-db:
+    image: postgres:15
+    container_name: nextcloud-db
+    user: 1000:1000
+    networks:
+      - hs
+    environment:
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_DB=nextcloud
+    volumes:
+      - /mnt/srv/docker/cont/nextcloud/db:/var/lib/postgresql/data
+      - /mnt/srv/docker/cont/nextcloud/db-backup:/var/lib/postgresql/backup
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+

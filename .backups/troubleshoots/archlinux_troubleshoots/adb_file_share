@@ -1,0 +1,18 @@
+
+From my experience, use the adb tool to upload or download files.
+
+To upload files, use: adb push <files> '/sdcard/Download'
+Examples:
+adb push *.mp4 '/sdcard/Movies'
+adb push * sdcard/Download'
+
+To download files, use adb pull '/sdcard/Download/ .
+Examples:
+adb pull '/sdcard/Movies' .
+
+
+# sudo cp /home/archlin/Downloads/NewPipeData-20220221_144532.zip  /var/snap/anbox/common/data/media/0/Download/
+
+-------------------------------------------------------
+*** to install app use : ***
+# sudo adb  install path/to/app.apk

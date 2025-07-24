@@ -1,0 +1,9 @@
+With newlines:
+
+% sed -i '/the specific line/i #this\n##is my\ntext' foo
+
+% cat foo
+#this
+##is my
+text
+the specific line

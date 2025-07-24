@@ -1,0 +1,3 @@
+Shutdown after 2 hours:
+# sudo shutdown -P +120
+

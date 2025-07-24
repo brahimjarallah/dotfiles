@@ -1,0 +1,86 @@
+#!/bin/bash
+# ============================================================================
+# Combined Borg + Rsync Backup Script
+# ----------------------------------------------------------------------------
+# This script runs two backup phases:
+#   1. Borg backup: for efficient, compressed, encrypted snapshots.
+#   2. Rsync backup: for browsable local mirrors of the system and home.
+# ----------------------------------------------------------------------------
+# Logs are written to /var/log/combined-backup.log
+# ============================================================================
+
+# ---------------------------------------------------------------------------
+# Safety options:
+# -e  : Exit immediately if any command returns a non-zero exit code
+# -u  : Treat unset variables as an error
+# -o pipefail : Return the exit code of the last failed command in a pipeline
+# ---------------------------------------------------------------------------
+set -euo pipefail
+
+# ============================================================================
+# VARIABLES
+# ============================================================================
+
+# Log file where all output will be saved
+LOG_FILE="/var/log/combined-backup.log"
+
+# ============================================================================
+# FUNCTIONS
+# ============================================================================
+
+# Logging function that timestamps every log entry and appends to the log file
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
+
+# ============================================================================
+# MAIN SCRIPT
+# ============================================================================
+
+# Log the start of the backup process
+log "=== Starting Combined Backup (Borg + Rsync) ==="
+
+# -------------------------
+# PHASE 1: BORG BACKUP
+# -------------------------
+log "Phase 1: Running Borg backup..."
+
+# Run the Borg backup script located at the given path
+# It should create an encrypted, deduplicated backup of the system
+if /usr/local/bin/backup-scripts/borg-backup; then
+    # ✅ Success message
+    log "✅ Borg backup completed successfully"
+else
+    # ❌ Failure message, but continue anyway to rsync phase
+    log "❌ Borg backup failed - continuing with rsync anyway"
+fi
+
+# -------------------------------
+# PAUSE TO ALLOW DISK TO SETTLE
+# -------------------------------
+log "Waiting 30 seconds for disk I/O to settle..."
+
+# Sleep for 30 seconds to avoid disk contention between Borg and rsync
+sleep 30
+
+# -------------------------
+# PHASE 2: RSYNC BACKUP
+# -------------------------
+log "Phase 2: Running rsync mirror backup..."
+
+# Run the rsync-backup script in 'all' mode:
+# - Backs up system mirror (excluding /home)
+# - Backs up full home directory
+# - Backs up critical dotfiles
+if /usr/local/bin/backup-scripts/rsync-backup all; then
+    # ✅ Success message
+    log "✅ Rsync backup completed successfully"
+else
+    # ❌ Rsync failed, exit with error
+    log "❌ Rsync backup failed"
+    exit 1
+fi
+
+# Final success log
+log "=== Combined Backup Completed Successfully ==="
+

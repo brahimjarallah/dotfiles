@@ -1,0 +1,45 @@
+ How to delete LUKS encrypted device
+by admin
+
+While deleting a LUKS encrypted device using lvremove you would get an error as below :
+
+# lvremove /dev/mapper/datavg-lv_cryptvol 
+  Logical volume datavg/lv_cryptvol is used by another device.
+The reason being – it is a LUKS encrypted volume. Follow the steps below to delete a LUKS encrypted device.
+
+Deleting LUKS volume
+1. Determining the underlying device
+Run the following command to determine the underlying device for the LUKS device:
+
+# cryptsetup status cryptvol
+/dev/mapper/cryptvol is active.
+  type:  LUKS1
+  cipher:  aes-cbc-essiv:sha256
+  keysize: 256 bits
+  device:  /dev/mapper/datavg-lv_cryptvol
+  offset:  4096 sectors
+  size:    4190208 sectors
+  mode:    read/write
+2. Delete existing key on the device
+To remove an existing key from LUKS device, use cryptsetup luksRemoveKey command on the device from above command:
+
+# cryptsetup luksRemoveKey /dev/mapper/datavg-lv_cryptvol 
+Enter LUKS passphrase to be deleted: 
+
+WARNING!
+========
+This is the last keyslot. Device will become unusable after purging this key.
+
+Are you sure? (Type uppercase yes): YES
+3. Delete the LUKS device
+Once you have deleted the keys from device, you can delete the device using cryptsetup remove command.
+
+# cryptsetup remove /dev/mapper/cryptvol
+4. Remove the LVM volume
+In this case, the logical volume device can also be removed so that the space is freed for other logical volumes within the volume group to utilize.
+
+# lvremove /dev/mapper/datavg-lv_cryptvol
+Note: If the name of the LUKS device is unknown use the blkid command to determine the corresponding devices.
+# blkid
+ /dev/mapper/datavg-lv_cryptvol: UUID="c33892eb-c89e-435e-80cc-e0fb1c64838e" TYPE="crypto_LUKS" 
+ /dev/mapper/cryptvol: UUID="0b3cf4e6-14b4-4e93-a24b-98bd3b9e71ce" TYPE="ext4"

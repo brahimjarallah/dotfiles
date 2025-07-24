@@ -1,0 +1,16 @@
+install zram:
+
+
+sudo install zram-tools
+
+sudo cp /etc/default/zramswap /etc/default/zramswap.orig
+
+sudo vim /etc/default/zramswap 
+
+# umcomment 
+ALGO=lz4
+PERCENT=25
+
+
+sudo reboot
+

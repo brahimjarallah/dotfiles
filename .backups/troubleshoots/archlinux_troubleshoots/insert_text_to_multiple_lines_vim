@@ -1,0 +1,13 @@
+
+I do the following to append text to multiple lines:
+
+<c-V> - Enter Visual Block mode.
+Use j/k to select the lines.
+$ - Move cursor to last character.
+A - Enter insert mode after last character.
+Insert desired text.
+<Esc> - Exit insert mode and finish block append.
+
+When compared to writing :norm after selection there are even less key presses, but the real reason why I use this is because it's more instinctive for me to work on Visual Block mode for this type of changes.
+
+

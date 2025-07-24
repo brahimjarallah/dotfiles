@@ -1,0 +1,115 @@
+#!/bin/bash
+# ==============================================================================
+# Enhanced Backup System Status Script - FULLY COMMENTED
+# ------------------------------------------------------------------------------
+# This script gives you a detailed status overview of your entire backup setup,
+# covering Btrfs snapshots, Borg backup, Rsync mirrors, and recent logs.
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Print a header to indicate start of the backup status
+# ------------------------------------------------------------------------------
+echo "=== 4-LAYER BACKUP SYSTEM STATUS ==="
+echo
+
+# ------------------------------------------------------------------------------
+# Show systemd timers related to backups
+# Filters timers by keywords: btrfs, borg, rsync, or combined
+# ------------------------------------------------------------------------------
+echo "📅 SYSTEMD TIMERS STATUS:"
+systemctl list-timers | grep -E "(btrfs|borg|rsync|combined)" || echo "No backup timers found"
+echo
+
+# ------------------------------------------------------------------------------
+# Show all snapshots in /.snapshots
+# `tail -n +2` skips the total line
+# `ls -1 | wc -l` counts total snapshot directories
+# ------------------------------------------------------------------------------
+echo "📂 CURRENT SNAPSHOTS:"
+ls -la /.snapshots/ | tail -n +2
+echo "Total snapshots: $(ls -1 /.snapshots/ | wc -l)"
+echo
+
+# ------------------------------------------------------------------------------
+# Show status of the Borg repository
+# - Checks if the repo exists at /mnt/backup/borg-repo
+# - Lists the last 5 Borg archive snapshots
+# - If repo not found or unreadable, show fallback error
+# ------------------------------------------------------------------------------
+echo "💾 BORG REPOSITORY STATUS:"
+if [ -d "/mnt/backup/borg-repo" ]; then
+    echo "Repository location: /mnt/backup/borg-repo"
+    sudo borg list /mnt/backup/borg-repo 2>/dev/null | tail -5 || echo "No archives found or repository locked"
+else
+    echo "❌ Borg repository not found"
+fi
+echo
+
+# ------------------------------------------------------------------------------
+# Show Rsync backup mirror status
+# - Checks if both mirrors exist: system-mirror and home-mirror
+# - Displays size and last modified time of each mirror
+# - If summary file exists, print its location
+# ------------------------------------------------------------------------------
+echo "📁 RSYNC MIRRORS STATUS:"
+if [ -d "/mnt/backup/system-mirror" ] && [ -d "/mnt/backup/home-mirror" ]; then
+    echo "✅ System Mirror: $(du -sh /mnt/backup/system-mirror 2>/dev/null | cut -f1 || echo 'Unknown')"
+    echo "✅ Home Mirror: $(du -sh /mnt/backup/home-mirror 2>/dev/null | cut -f1 || echo 'Unknown')" 
+
+    # Show last update time (from modification date of directory)
+    echo "Last System Update: $(stat -c %y /mnt/backup/system-mirror 2>/dev/null | cut -d'.' -f1 || echo 'Never')"
+    echo "Last Home Update: $(stat -c %y /mnt/backup/home-mirror 2>/dev/null | cut -d'.' -f1 || echo 'Never')"
+
+    # If an info file exists, mention it
+    if [ -f "/mnt/backup/rsync-backup-info.txt" ]; then
+        echo "📄 Backup Summary Available: /mnt/backup/rsync-backup-info.txt"
+    fi
+else
+    echo "❌ Rsync mirrors not found"
+fi
+echo
+
+# ------------------------------------------------------------------------------
+# Show disk usage stats for snapshots and backup mount
+# `df -h` shows human-readable sizes of mounted volumes
+# ------------------------------------------------------------------------------
+echo "📊 DISK USAGE:"
+df -h /.snapshots /mnt/backup 2>/dev/null || echo "Could not get disk usage"
+echo
+
+# ------------------------------------------------------------------------------
+# Print last few lines of each log file to show recent backup activity
+# If a log file is missing, fallback message is shown
+# ------------------------------------------------------------------------------
+echo "📝 RECENT LOGS:"
+echo "--- Snapshot logs (last 3 lines) ---"
+tail -3 /var/log/btrfs-snapshots.log 2>/dev/null || echo "No snapshot logs found"
+echo
+
+echo "--- Borg logs (last 3 lines) ---"
+tail -3 /var/log/borg-backup.log 2>/dev/null || echo "No borg logs found"
+echo
+
+echo "--- Rsync logs (last 3 lines) ---"
+tail -3 /var/log/rsync-backup.log 2>/dev/null || echo "No rsync logs found"
+echo
+
+echo "--- Combined logs (last 3 lines) ---"
+tail -3 /var/log/combined-backup.log 2>/dev/null || echo "No combined logs found"
+echo
+
+# ------------------------------------------------------------------------------
+# Display a quick help menu with commands for backup tasks
+# Each line suggests a script or command available to the user
+# ------------------------------------------------------------------------------
+echo "🚀 QUICK ACCESS COMMANDS:"
+echo "backup-status          # This status screen"
+echo "backup-snapshot [type] # Create Btrfs snapshots (type = pre/post/hourly)"
+echo "backup-borg           # Run Borg encrypted backup"
+echo "rsync-dotfiles        # Quick dotfiles mirror"
+echo "rsync-home            # Mirror home directory"
+echo "rsync-system          # Mirror system files"
+echo "rsync-all             # Complete rsync mirror"
+echo "combined-backup       # Borg + Rsync together"
+echo "backup-browse         # Browse backup contents"
+

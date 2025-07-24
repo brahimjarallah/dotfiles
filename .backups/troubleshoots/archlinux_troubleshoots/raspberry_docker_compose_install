@@ -1,0 +1,23 @@
+ a raspberry pi the url part of the command results in
+
+https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-armv7l
+Looking at the latest stable release at https://github.com/docker/compose/releases/tag/1.24.1 you can see there is no download for the armv7l architecture so the file is empty because there is nothing to download.
+
+Will update answer once I figured out how to install docker-compose on Raspian.
+
+Edit:
+
+Via apt-get. Note: Currently (Nov. 8 2019) this installs version 1.21 which is not the latest available.
+
+sudo apt-get install docker-compose
+Via pip3. (Installs latest)
+
+sudo apt-get install python3-pip
+sudo pip3 install docker-compose
+And then restart your system with
+
+sudo shutdown -r
+
+=====================================================
+
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-armv7" -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose

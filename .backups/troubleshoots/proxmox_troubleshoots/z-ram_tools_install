@@ -1,0 +1,31 @@
+--> https://mmbesar.github.io/Tutorials/HS-Install-Debian-11/
+
+--------------------------------------------------
+Z-RAM tools Install
+--------------------------------------------------
+
+sudo apt install zram-tools
+ضبط الإعدادات على 70% من مساحة الرام:
+
+echo -e "ALGO=zstd\nPERCENT=70" | sudo tee -a /etc/default/zramswap
+I set it to 80%
+
+إعادة تشغيل الخدمة
+sudo service zramswap reload
+SWAP FILE⚓︎
+إنشاء ملف بمساحة 4 جيجا
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=4194304
+ضبط الصلاحيات على الملف
+sudo chmod 600 /swapfile
+format as swap - تخصيص الملف للعمل
+sudo mkswap /swapfile
+تفعيله
+sudo swapon /swapfile
+fstab إضافة الملف إلى
+أخذ نسخة إحتياطية من الملف الأصلي
+sudo cp /etc/fstab /etc/fstab.bak
+تعديل ملف الـ fstab
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+مراجعة الاعدادات
+⚓︎
+sudo swapon --show

@@ -1,0 +1,8 @@
+ls | wc -l
+
+ls /etc | wc -l
+
+
+
+Count Files Recursively using find
+find /etc -type f | wc -l

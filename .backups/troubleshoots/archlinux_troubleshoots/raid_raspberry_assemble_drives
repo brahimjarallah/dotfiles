@@ -1,0 +1,27 @@
+# Add /dev/sdb1 to /dev/md0
+
+sudo mdadm --assemble --scan
+sudo mdadm -a /dev/md0 /dev/sdb1
+sudo mkdir /nas
+sudo chmod 777 /nas
+
+sudo blkid
+(copy mdadm UUID)
+
+sudo vim /etc/fstab
+UUID=bece7a43-35c4-445f-8d7b-d641340c1467	/nas	ext4	defaults 0 0
+or
+UUID=bece7a43-35c4-445f-8d7b-d641340c1467	/nas	ext4	rw,nofail	0	2
+
+sudo mount -a
+
+mdadm --detail --scan >> /etc/mdadm/mdadm.conf
+or
+mdadm --detail --scan >> /etc/mdadm.conf
+
+mkinitcpio -P
+
+sudo cat /proc/mdstat
+
+----------------------------------------------------------------------
+useful link =>> https://rotadev.com/how-do-i-move-a-linux-software-raid-to-a-new-machine-server-fault/

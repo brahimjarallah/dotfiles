@@ -1,0 +1,18 @@
+rsync -ah --progress /source /destination
+
+-a: do archive recursive copy || -X: keep extended properties of files || -A: ACL keep users permissions  
+rsync -aAXv --progress  --delete --exclude={/home/hnider/.cache/*,/home/hnider/downloads/*} /home /mnt/m1
+
+----------------------------------------------------------------------
+rsync -aAXv -h M --progress --exclude={.cache,.wine} --delete ~/.* ~/backups/dotfiles_backups/my_dotfiles/
+----------------------------------------------------------------------
+RYSYNC TEST (dry-run)
+sudo rsync -aAhv --exclude={~/.cache/*,~/downloads/*}  --dry-run ~/* /run/media/hnider/1DF802EB175020CD/
+
+----------------------------------------------------------------------
+RYSYNC copy recursively with exclude and preserving user permissions
+
+sudo rsync -aAhv --exclude={~/.cache/*,~/downloads/*}  --dry-run ~/* /run/media/hnider/1DF802EB175020CD/
+
+
+sudo rsync -aAhv --exclude={~/.cache/*,~/downloads/*} ~/* /run/media/hnider/1DF802EB175020CD/

@@ -1,0 +1,9 @@
+fc-list -v
+fc-list | grep -i "word"
+
+
+
+fc-list : family 
+
+fc-list : family | grep awesome
+

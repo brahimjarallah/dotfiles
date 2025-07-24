@@ -1,0 +1,16 @@
+--------------------------------------------------
+Commands:
+--------------------------------------------------
+
+yay -S cronie-git
+sudo systemctl enable --now cronie.service
+
+journalctl -u cronie.service
+
+crontab -e
+
+crontab -l
+
+!#/bin/bash
+rsync -aAXvhP --delete --exclude={share,srv,trash,.cache} -e ssh /home/brahim/ srv@10.27.7.191:/mnt/srv/home/
+

@@ -1,0 +1,26 @@
+# SOLUTION 1
+
+paru nmap
+sudo nmap -sn 192.168.1.*
+
+or
+sudo nmap -sn 192.168.43.0/24
+sudo nmap -sP 192.168.43.0/24
+--------------------------------------------------
+
+# SOLUTION 2
+paru arp-scan
+sudo arp-scan --interface=enp0s3 --localnet
+
+---------------------------
+
+# SOLUTION 3
+
+#download ipscan (gui)
+paru ipscan
+# then scan all network ip's
+
+---------------------------
+
+# SOLUTION 4
+check it from router wlan settings

@@ -1,0 +1,29 @@
+
+paru samba cifs-utils gvfs-smb
+
+mkdir /home/hnider/share
+sudo chmod 777 -R /home/hnider/share
+sudo chown hnider /home/hnider/share
+sudo chmod 777 -R  /share
+sudo vim /root/.usercredentials
+sudo chmod 400 /root/.usercredentials
+sudo mount -t cifs -o rw,vers=3.0,credentials=/root/.usercredentials //192.168.1.106/share /home/hnider/share/
+or 
+sudo mount -t cifs -o rw,vers=3.0,credentials=/home/pi/.usercredentials //192.168.18.106/share /home/pi/share/
+
+sudo nano /root/.examplecredentials
+'''
+username=example_username
+password=example_password
+'''
+sudo chmod 400 /root/.examplecredentials
+
+sudo smbpasswd -a pi
+
+sudo vim /etc/fstab
+'''
+//192.168.18.106/share /home/hnider/share cifs vers=3.0,_netdev,credentials=/root/.usercredentials
+'''
+
+sudo systemctl daemon-reload
+

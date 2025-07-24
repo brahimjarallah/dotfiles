@@ -1,0 +1,33 @@
+----------------------------------------------------------------------
+This is how the arabic text appeared after doing symbol_map.
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+screenshot_2018-05-16_01-03-52
+
+I tried these fonts:
+
+ttf-fira-code
+ttf-ubuntu-mono-nerd
+Ubuntu Mono
+Source Code Pro
+Meslo LG M Regular
+Liberation Mono
+Hack Regular
+DejaVu Sans Mono
+----------------------------------------------------------------------
+symbol_map U+e002 ttf-fira-code
+or 
+#symbol_map U+0600-U+06FF ttf-fira-code
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+### add this to kitty ###
+trans -no-bidi :ar hello
+----------------------------------------------------------------------
+ try without -no-bidi, in case -no-bidi breaks it.
+----------------------------------------------------------------------
+
+install fribidi to get rtl support
+yay -S fribidi

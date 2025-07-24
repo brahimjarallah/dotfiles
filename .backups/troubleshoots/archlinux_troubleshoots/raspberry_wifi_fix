@@ -1,0 +1,43 @@
+cd /run/media/hnider/rootfs/
+sudo touch ssh
+sudo chmod 777 ssh
+
+sudo vim wpa_supplicant.conf
+'''
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US
+network={
+ ssid="<wifi_name_here>"
+ psk="<passwd_here>" }
+'''
+
+*** unmount sd card from pc and plug in it into raspberry pi:
+ping rpi-srv.local
+ssh-keygen -R 192.168.1.192
+---------------------------------------------------------------
+
+I solved this issue by mounting the SD card and removing all of the SSH keys from /etc/ssh/
+
+rm /mnt/rootfs/etc/ssh/*key*
+
+I am now able to SSH to the pi
+
+---------------------------------------------------------------
+
+
+# Reset the SSH server daemon configuration (and Linux client):
+# resets all SSH configuration
+
+# on the SSH server (Raspberry Pi)
+sudo systemctl stop sshd
+sudo rm /mnt/hdd/ssh/ssh_host*
+sudo ssh-keygen -A
+sudo systemctl start sshd
+
+#. on SSH client Linux
+sudo rm ~/.ssh/known_hosts
+
+---------------------------------------------------------------
+
+

@@ -1,0 +1,27 @@
+Xhost
+Xhost can be used to temporarily allow root access.
+
+
+### Permanently allow root access ###
+I SKIPPED METHOD 1
+Method 1: Add the line
+session optional pam_xauth.so
+to /etc/pam.d/su and /etc/pam.d/su-l. Then switch to your root user using su or su -.
+
+Method 2: Globally in /etc/profile
+Add the following line to /etc/profile:
+
+export XAUTHORITY=/home/username/.Xauthority
+This will permanently allow root to connect to a non-root user's X server.
+
+Or, merely specify a particular app:
+
+XAUTHORITY=/home/username/.Xauthority appname
+where appname is the name of the particular app. (e.g. kwrite)
+
+Using xhost
+
+$ xhost si:localuser:root
+To remove this access after the application has been closed:
+
+$ xhost -si:localuser:root

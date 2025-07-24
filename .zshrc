@@ -88,6 +88,10 @@ alias gitbare='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias gitbare-addlist='while IFS= read -r file; do git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME add -f "$HOME/$file"; done < ~/.dotfiles-include.txt'
 alias gitbare-status='gitbare status -s'
 alias gitbare-sync='gitbare commit -am "update dotfiles" && gitbare push'
+alias gitbare-pull='gitbare pull --rebase'
+alias gitbare-log='gitbare log --oneline -10'
+alias gitbare-diff='gitbare diff --name-only'
+alias gitbare-unstage='gitbare reset HEAD'
 
 
 

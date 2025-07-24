@@ -1,0 +1,13 @@
+Just run it twice, with "newer" mode (-u or --update flag) plus -t (to copy file modified time), -r (for recursive folders), and -v (for verbose output to see what it is doing):
+
+rsync -rtuv /path/to/dir_a/* /path/to/dir_b
+rsync -rtuv /path/to/dir_b/* /path/to/dir_a
+
+This won't handle deletes, but I'm not sure there is a good solution to that problem with only periodic sync'ing.
+
+############################################################
+######  ### ***  example : *** ## #####
+############################################################
+
+ rsync -raAtuv /home/hnider/backups/troubleshut_backups/troubleshuts_archlinux/* /mnt/m1/backups/troubleshut_backups/troubleshuts_archlinux
+

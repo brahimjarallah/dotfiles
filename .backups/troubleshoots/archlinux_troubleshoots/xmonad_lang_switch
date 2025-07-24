@@ -1,0 +1,5 @@
+--- TO FIX !!!!!!!!!!!!!!!!!!!!!!! ---
+
+  -- the xmonad language layout
+ -- ^++^ subKeys "lang"
+ --    [ ("M1-S", addName "switch lang"  $ spawn  "setxkbmap -layout \"us,ar\" -option \"\"")] -- %! switch lang

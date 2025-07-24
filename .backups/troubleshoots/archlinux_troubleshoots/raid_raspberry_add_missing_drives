@@ -1,0 +1,41 @@
+***** Add missing drives *****
+sudo mdadm /dev/md0 --add /dev/sda1
+----------------------------------------------------------------------
+
+umount /nas
+mdadm --stop /dev/md0
+mdadm --assemble --scan
+
+*** Else add them manually :
+sudo mdadm --assemble --scan /dev/md0 /dev/sda1 /dev/sdb1
+=> mdadm: /dev/md3 has been started with 1 drive (out of 2).
+
+mdadm --detail /dev/md0
+
+** activate md0
+mdadm -A /dev/md0
+mdadm --run /dev/md0
+
+** update conf file:
+mdadm --examine --scan >> /etc/mdadm/mdadm.conf
+
+** Add the missing drive fix:
+sudo mdadm /dev/md0 --add /dev/sda1
+
+
+watch cat /proc/mdstat
+
+sudo mdadm --examine /dev/sdb1
+sudo mdadm --examine /dev/sdc1
+mdadm --examine shows
+
+
+
+----------------------------------------------------------------------
+*** If it doesn't work re-create the entire array with the following command:
+
+sudo mdadm --create /dev/md0 --assume-clean --level=1 --verbose --raid-devices=2 missing /dev/sdb1
+
+or 
+
+mdadm --manage /dev/md0 --re-add /dev/sdc1

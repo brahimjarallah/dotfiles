@@ -1,0 +1,8 @@
+rsync -aAXxvh ~/.[^.]*
+
+ to exclude hidden directories:
+
+--exclude=".*/"
+
+
+

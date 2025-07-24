@@ -1,0 +1,21 @@
+----------------------------------------------------------------------
+# // sed replace text after a specific word method ""
+----------------------------------------------------------------------
+sudo sed -i -e '/ALLOW_USERS/s/""/"brahim"/' \
+            -e '/ALLOW_GROUPS/s/""/"wheel"/'  /etc/snapper/configs/root
+
+
+----------------------------------------------------------------------
+# //Sed to remove everything after "=" method
+----------------------------------------------------------------------
+sudo sed -i -e '/TIMELINE_LIMIT_HOURLY=/ s/=.*/="5"/'
+            -e '/TIMELINE_LIMIT_DAILY=/ s/=.*/="7"/' 
+            -e '/TIMELINE_LIMIT_WEEKLY=/ s/=.*/="0"/' 
+            -e '/TIMELINE_LIMIT_MONTHLY=/ s/=.*/="0"/' 
+            -e '/TIMELINE_LIMIT_YEARLY=/ s/=.*/="0"/' /etc/snapper/configs/root
+
+----------------------------------------------------------------------
+# // or replace everything between ""  method:
+----------------------------------------------------------------------
+#sudo sed  -e '/TIMELINE_LIMIT_HOURLY/ / s/"[^"][^"]*"/"5"/' /etc/snapper/configs/root
+

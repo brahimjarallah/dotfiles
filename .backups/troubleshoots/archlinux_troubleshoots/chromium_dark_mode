@@ -1,0 +1,12 @@
+ ==> chrome://flags
+
+--------------------------------------------------
+enable darkmode
+--------------------------------------------------
+enable -> Auto Dark Mode for Web Contents
+
+--------------------------------------------------
+enable ungoogled_chrome extension
+--------------------------------------------------
+Handling of extension MIME type requests -> Always prompt for install
+

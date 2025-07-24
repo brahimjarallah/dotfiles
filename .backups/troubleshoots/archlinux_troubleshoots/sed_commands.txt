@@ -1,0 +1,62 @@
+cat test.txt 
+
+
+
+
+------------------------------------------------------------
+find /etc -type f > paths.txt
+sudo find /etc -type f > paths.txt
+
+
+sed 's./etc/..' test.txt 
+
+sudo grep -r conf . >> ~/test/conftest.txt
+
+find . -iname "*.txt"
+
+find . -name "*.note" -exec sed 's/conf/configback/ {} \;
+
+find . -name "*.note" -exec sed -i 's/conf/configback/ {} \;
+find . -name "*.note" -exec sed 's/conf/configback/g' {} \;
+find . -name "*.note" -exec sed -i 's/conf/configback/g' {} \;
+------------------------------------------------------------
+sed -i '3s/#//' file.note 
+
+sed -i '3s/./#./' file.note 
+sed -i '3s/.//' file.note 
+
+sed -i '3s/ file.note 
+
+sed -i '3s/#//' file.note 
+
+sed -i '3s/#//g' file.note 
+sed -i '3s/#//g' file.note 
+sed -i '3s/#//' file.note 
+
+sed 's/#.*//g' file.note 
+
+sed 's/\s*#.*//g' file.note 
+
+sed 's/\s*#.*//g; s/configback/config/g' file.note 
+
+sed 's/\s*#.*//g; /conf/ d' file.note 
+
+sed 's/\s*#.*//g; /configback/ p' file.note 
+
+sed 's/\s*#.*//g; /configback/ q' file.note 
+
+sed 's/\s*#.*//g; 11 q' file.note 
+------------------------------------------------------------
+# delete entire blank lines
+sed -i '/^$/ d' file.note
+
+# replace any 'vim' occurance with blank
+sed -i 's/^vim.*//g' ~/sed_commands.txt 
+
+# 'when there is 'vim' occurance delete entire line
+sed -i '/vim/ d' ~/sed_commands.txt 
+
+sed -E '/^(#|$)/ d' ~/sed_commands.txt 
+
+# find all txt files current dir and replace 
+find . name '*.txt' | xargs sed -i .bak 's/podman/docker/g' {} \;

@@ -1,0 +1,7 @@
+sudo pacman -Sy
+sudo pacman -S reflector
+
+# Now generate mirrorlist. Note: If you are not in the U.S. change "United States" to your own country.
+
+reflector --verbose --country 'United States' -l 5 --sort rate --save /etc/pacman.d/mirrorlist
+

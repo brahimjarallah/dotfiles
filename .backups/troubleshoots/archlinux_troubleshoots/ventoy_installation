@@ -1,0 +1,6 @@
+download the latest .tar.gz version of ventoy:
+
+extact ventoy folder -> tar xvf ventoy.tar.gz
+select the usb drive to install in (/dev/sdc ; for example)
+
+sudo sh Ventoy2Disk.sh -i /dev/sdc

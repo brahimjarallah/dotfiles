@@ -1,0 +1,28 @@
+set shell zsh
+set shellopts '-c'
+set previewer ~/.config/lf/previewer.sh
+set cleaner ~/.config/lf/cleaner.sh
+set drawbox true
+set icons true
+set number true
+set scrolloff 10
+set period 0
+set dirfirst true
+
+map l open
+map h up
+map j down
+map k updir
+map q quit
+map gh cd ~
+map gd cd ~/Downloads
+map gp cd ~/Pictures
+map / search
+map n search-next
+map N search-prev
+map i shell ~/.config/lf/info.sh
+map y copy
+map p paste
+map d delete
+map r rename
+map S shell ~/.config/lf/scripts/open_in_term.sh

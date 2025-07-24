@@ -1,0 +1,26 @@
+#------------------------------------------------------------
+### copy icons and themes ###
+#------------------------------------------------------------
+cp -rv /usr/share/themes/* ~/.themes
+cp -rv /usr/share/icons/* ~/.icons
+
+#------------------------------------------------------------
+### Filesystem ###
+#------------------------------------------------------------
+Other files:
+~/.xdg-config/gtk-4:ro
+~/.xdg-config/gtk-3.0:ro
+~/.xdg-config/gtk-2.0:ro
+~/.xdg-config/fontconfig:ro
+~/.xdg-config/Kvantum:ro
+~/.icons:ro
+~/.themes:ro
+
+#------------------------------------------------------------
+### Environment ###
+#------------------------------------------------------------
+Variables:
+QT_THEME=Adwaita-dark
+ICON_THEME=papirus-icon-theme
+GTK_THEME=Adwaita-dark
+

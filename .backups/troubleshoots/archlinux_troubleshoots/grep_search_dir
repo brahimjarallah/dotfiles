@@ -1,0 +1,8 @@
+grep -nr 'yourString*' .
+
+The dot at the end searches the current directory. Meaning for each parameter:
+
+-n            Show relative line number in the file
+'yourString*' String for search, followed by a wildcard character
+-r            Recursively search subdirectories listed
+.             Directory for search (current directory)

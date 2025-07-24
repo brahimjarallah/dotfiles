@@ -1,0 +1,5 @@
+flatpak search freecad
+
+flatpak install <app_id>
+flatpak install org.freecadweb.FreeCAD
+

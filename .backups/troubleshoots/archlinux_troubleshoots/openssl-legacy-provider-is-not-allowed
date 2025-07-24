@@ -1,0 +1,29 @@
+
+On Linux, you need to edit your /etc/ssl/openssl.cnf
+
+##[provider_sect]
+##default = default_sect
+##legacy = legacy_sect
+##
+##[default_sect]
+##activate = 1
+##
+##[legacy_sect]
+##activate = 1
+to:
+
+[provider_sect]
+default = default_sect
+legacy = legacy_sect
+
+[default_sect]
+activate = 1
+
+[legacy_sect]
+activate = 1
+
+-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`-`
+# run this command
+unset NODE_OPTIONS
+
+

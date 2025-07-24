@@ -1,0 +1,21 @@
+You can use lists to create directories and it can get pretty wild.
+
+Some examples to get people thinking about it:
+
+mkdir sa{1..50}
+mkdir -p sa{1..50}/sax{1..50}
+mkdir {a-z}12345 
+mkdir {1,2,3}
+mkdir test{01..10}
+mkdir -p `date '+%y%m%d'`/{1,2,3} 
+mkdir -p $USER/{1,2,3} 
+50 directories from sa1 through sa50
+same but each of the directories will hold 50 times sax1 through sax50 (-p will create parent directories if they do not exist.
+26 directories from a12345 through z12345
+comma separated list makes dirs 1, 2 and 3.
+10 directories from test01 through test10.
+same as 4 but with the current date as a directory and 1,2,3 in it.
+same as 4 but with the current user as a directory and 1,2,3 in it.
+So, if I understood it correctly and you want to create some directories, and within them new directories, then you could do this:
+
+mkdir -p sa{1..10}/{1,2,3}

@@ -1,0 +1,20 @@
+sudo vim /etc/resolv.conf
+
+nameserver <dns_ip>
+
+
+sudo /etc/NetworkManager/dispatcher.d/override.sh 
+cp -f /etc/resolv.conf.override /etc/resolv.conf
+
+sudo chown root:root /etc/NetworkManager/dispatcher.d/override.sh
+
+sudo chmod 755 sudo chown root:root /etc/NetworkManager/dispatcher.d/override.sh
+
+systemctl enable NetworkManager-dispatcher.service
+
+
+systemctl start NetworkManager-dispatcher.service
+
+
+reboot :)
+

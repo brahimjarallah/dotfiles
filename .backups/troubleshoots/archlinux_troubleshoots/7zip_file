@@ -1,0 +1,4 @@
+yay -S p7zip
+
+7za x yourfile.7z
+

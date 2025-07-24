@@ -1,0 +1,53 @@
+Removal of mdadm RAID Devices
+In order to remove the mdadm RAID Devices our Support Techs recommend the following steps:
+
+Step 1: Unmount and Remove all Filesystems
+
+We need to make sure all filesystems have been unmounted. For that, we use umount. It also ensures we have exclusive access to the disk.
+
+umount /dev/md1
+Step 2: Determine mdadm RAID Devices
+
+To do so, we run the following command:
+
+cat /proc/mdstat
+
+cat /proc/mdstat
+For example, the output will be like this:
+
+md1 : active raid1 sdf1[1] sde1[0] 2929555456 blocks super 1.2 [2/2] [UU] bitmap: 0/22 pages [0KB], 65536KB chunk md0 : active raid10 sda1[3] sdd1[1] sdb1[0] sdc1[2] 976502784 blocks super 1.2 512K chunks 2 near-copies [4/4] [UUUU] 
+unused devices: &lt;none&gt;
+Now, we need to make sure we take a note of the disks that are part of the RAID group.
+
+When we proceed to step 5, we will need the names.
+
+Step 3: Stop mdadm RAID Device
+
+Our next step is to stop the device.
+
+mdadm --stop /dev/md1
+For example, the output will look similar to this:
+
+mdadm: stopped /dev/md1
+Step 4: Remove mdadm RAID Device
+
+mdadm --remove /dev/md1
+At time, we may come across the following error:
+
+mdadm: error opening md1: No such file or directory
+Then, we go ahead with the following step.
+
+Step 5: Remove the Superblocks
+
+mdadm --zero-superblock /dev/sdf1 /dev/sde1
+Step 6: Verify RAID Device Was Removed
+
+Finally, we use lsblk and cat /proc/mdstat and confirm there are no active RAID devices.
+
+
+---------------------------------------------------------------------
+To Remove All Partitions / Data And Create Empty Disk:
+
+sudo dd if=/dev/zero of=/dev/sdb  bs=512  count=1
+
+fdisk -l /dev/sdb

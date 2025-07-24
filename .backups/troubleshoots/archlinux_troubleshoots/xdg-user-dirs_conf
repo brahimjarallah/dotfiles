@@ -1,0 +1,38 @@
+--------------------------------------------------
+install xdg-user-dirs
+--------------------------------------------------
+yay -S xdg-user-dirs
+
+--------------------------------------------------
+create user-dirs.dirs conf file:
+--------------------------------------------------
+
+touch ~/.config/user-dirs.dirs
+
+--------------------------------------------------
+copy theses lines of your choice path:
+--------------------------------------------------
+
+vim ~/.config/user-dirs.dirs
+
+# 
+XDG_DESKTOP_DIR="$HOME/desktop"
+XDG_DOCUMENTS_DIR="$HOME/desktop"
+XDG_DOWNLOAD_DIR="$HOME/downloads"
+XDG_MUSIC_DIR="$HOME/media/msc"
+XDG_PICTURES_DIR="$HOME/media/photos"
+XDG_PUBLICSHARE_DIR="$HOME/"
+XDG_TEMPLATES_DIR="$HOME/desktop"
+XDG_VIDEOS_DIR="$HOME/media/videos"
+
+--------------------------------------------------
+update the xdg user dirs
+--------------------------------------------------
+
+xdg-user-dirs-update
+
+--------------------------------------------------
+Alternatively, it is also possible to specify custom folders using the command line. For example, the following command will produce the same results as the above configuration file edit:
+--------------------------------------------------
+
+xdg-user-dirs-update --set DOWNLOAD ~/Internet

@@ -1,0 +1,50 @@
+ Examples : 
+
+*** A PURE COPY OF ORIGINAL FILES -> TO REMOTE SERVER ***
+--------------------------------------------------
+rsync -aAXvhP --delete --exclude={share,srv,trash,.cache}  /home/brahim/ srv@10.27.7.191:/mnt/srv/home/
+or 
+rsync -aAXv --progress -h M  --exclude=.cache/ --delete   /home/brahim/ srv@10.27.7.189:/mnt/srv/home/
+--------------------------------------------------
+
+*** or shh with a key ***
+
+--------------------------------------------------
+#00 10,13,16,19,21 * * * rsync -aAXvhP --delete --exclude={share,srv,trash,.cache}  -e "ssh -i /home/brahim/.ssh/id_rsa" /home/brahim/ srv@10.27.7.191:/mnt/srv/home/
+--------------------------------------------------
+
+--------------------------------------------------
+rsync -aAXvhP --delete --exclude=share /mnt/srv/* /mnt/bkp/
+--------------------------------------------------
+
+*** APPEND TO A FILE REMOTELY ***
+--------------------------------------------------
+rsync -e ssh --append /home/brahim/.config/zsh/.aliases srv@10.27.7.191:/home/srv/.aliases
+--------------------------------------------------
+
+*** SCRIPT WAY TO REMOTE SERVER ***
+----------------------------------------------------------------------
+!#/bin/bash
+echo "Backup starting..."
+date
+rsync   -e "ssh -i /home/brahim/.ssh/id_rsa" \
+        -aAXvhP  /home/brahim/ srv@10.27.7.191:/mnt/srv/home/ \
+        --exclude={share,srv,trash,.cache} \
+        --delete
+echo "Backup ended"
+----------------------------------------------------------------------
+
+*** SCRIPT WAY TO LOCAL SERVER ***
+----------------------------------------------------------------------
+!#/bin/bash
+
+echo "Backup starting..."
+date
+/usr/bin/rsync   -e "ssh -i /home/brahim/.ssh/id_rsa" \
+                -aAXvhP  /home/brahim/ srv@10.27.7.191:/mnt/srv/home/ \
+                --exclude={share,srv,trash,.cache} \
+                --delete
+echo "Backup ended"
+----------------------------------------------------------------------
+
+P.S --> sudo crontab -e ==> for cron root priviliges

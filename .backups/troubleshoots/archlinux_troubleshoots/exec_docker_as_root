@@ -1,0 +1,4 @@
+docker exec -u 0 debian whoami
+
+
+docker exec -u root debian whoami

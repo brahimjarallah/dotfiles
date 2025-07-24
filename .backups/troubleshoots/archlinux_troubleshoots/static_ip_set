@@ -1,0 +1,11 @@
+sudo nmcli connection modify ens18 ipv4.addresses 10.xx.xx.xx/24 ipv4.gateway 110.xx.xx.xx ipv4.dns 10.xx.xx.xx,8.8.4.4 ipv4.method manual
+
+sudo systemctl restart NetworkManager
+or 
+
+nmcli networking off
+nmcli networking on
+
+nmcli -o
+sudo systemctl status NetworkManager
+

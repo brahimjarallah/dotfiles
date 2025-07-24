@@ -1,0 +1,98 @@
+[pyprland]
+plugins = ["scratchpads"]
+
+[scratchpads.term]
+command = "kitty --class kitty-scratch"
+animation = "fromTop"
+class = "kitty-scratch"
+size = "75% 60%"
+margin = 50
+lazy = false
+
+[scratchpads.thunar]
+command = "thunar"
+class = "org.xfce.Thunar"
+animation = "fromTop"
+size = "70% 60%"
+margin = 50
+lazy = true
+
+[scratchpads.vlc]
+command = "vlc"
+animation = "fromBottom"
+class = "vlc"
+size = "80% 70%"
+margin = 50
+
+[scratchpads.mousepad]
+command = "mousepad"
+animation = "fromLeft"
+class = "mousepad"
+size = "70% 80%"
+margin = 5
+
+[scratchpads.peaclock]
+command = "kitty --class peaclock-scratch -e peaclock"
+animation = "fromTop"
+class = "peaclock-scratch"
+size = "50% 40%"
+margin = 100
+
+#[scratchpads.translator]
+#command = "brave --enable-extensions --force-dark-mode --enable-features=WebUIDarkMode --user-data-dir=/tmp/brave-translator --new-window --app=https://translate.google.com --class=google-translate"
+#animation = "fromRight"
+#class = "google-translate"
+#size = "70% 80%"
+#margin = 50
+
+#[scratchpads.emacs]
+#command = "emacs"
+#animation = "fromTop"
+#class = "emacs"
+#size = "85% 90%"
+#margin = 30
+
+#[scratchpads.spotify]
+#command = "spotify"
+#animation = "fromRight"
+#class = "spotify"
+#size = "75% 80%"
+#margin = 50
+
+#[scratchpads.chatgpt]
+#command = "brave --enable-extensions --force-dark-mode --enable-features=WebUIDarkMode --user-data-dir=/tmp/brave-chatgpt --new-window --app=https://chat.openai.com --class=chatgpt-app"
+#animation = "fromLeft"
+#class = "chatgpt-app"
+#size = "75% 85%"
+#margin = 50
+#
+#[scratchpads.claude]
+#command = "brave --enable-extensions --force-dark-mode --enable-features=WebUIDarkMode --user-data-dir=/tmp/brave-claude --new-window --app=https://claude.ai --class=claude-app"
+#animation = "fromRight"
+#class = "claude-app"
+#size = "75% 85%"
+#margin = 50
+#
+#[scratchpads.grok]
+#command = "brave --enable-extensions --force-dark-mode --enable-features=WebUIDarkMode --user-data-dir=/tmp/brave-grok --new-window --app=https://grok.x.ai --class=grok-app"
+#animation = "fromTop"
+#class = "grok-app"
+#size = "75% 85%"
+#margin = 50
+#
+#[scratchpads.gemini]
+#command = "brave --enable-extensions --force-dark-mode --enable-features=WebUIDarkMode --user-data-dir=/tmp/brave-gemini --new-window --app=https://gemini.google.com --class=gemini-app"
+#animation = "fromBottom"
+#class = "gemini-app"
+#size = "75% 85%"
+#margin = 50
+
+
+#[scratchpads.wvkbd]
+#command = "wvkbd-mobintl --layer=overlay"
+#class = "wvkbd"
+#size = "80% 30%"
+#animation = "fromTop"
+
+
+

@@ -1,0 +1,231 @@
+##### Commands ¶ #####
+############################################################
+This section shows information about builtin commands. Modal commands do not take any arguments, but instead change the operation mode to read their input conveniently, and so they are meant to be assigned to keybindings.
+
+quit                     (default 'q')
+Quit lf and return to the shell.
+
+up                       (default 'k' and '<up>')
+half-up                  (default '<c-u>')
+page-up                  (default '<c-b>' and '<pgup>')
+scroll-up                (default '<c-y>')
+down                     (default 'j' and '<down>')
+half-down                (default '<c-d>')
+page-down                (default '<c-f>' and '<pgdn>')
+scroll-down              (default '<c-e>')
+Move/scroll the current file selection upwards/downwards by one/half a page/full page.
+
+updir                    (default 'h' and '<left>')
+Change the current working directory to the parent directory.
+
+open                     (default 'l' and '<right>')
+If the current file is a directory, then change the current directory to it, otherwise, execute the 'open' command. A default 'open' command is provided to call the default system opener asynchronously with the current file as the argument. A custom 'open' command can be defined to override this default.
+
+jump-next                (default ']')
+jump-prev                (default '[')
+Change the current working directory to the next/previous jumplist item.
+
+top                      (default 'gg' and '<home>')
+bottom                   (default 'G' and '<end>')
+Move the current file selection to the top/bottom of the directory.
+
+high                     (default 'H')
+middle                   (default 'M')
+low                      (default 'L')
+Move the current file selection to the high/middle/low of the screen.
+
+toggle
+Toggle the selection of the current file or files given as arguments.
+
+invert                   (default 'v')
+Reverse the selection of all files in the current directory (i.e. 'toggle' all files). Selections in other directories are not effected by this command. You can define a new command to select all files in the directory by combining 'invert' with 'unselect' (i.e. 'cmd select-all :unselect; invert'), though this will also remove selections in other directories.
+
+invert-below
+Reverse the selection (i.e. 'toggle') of all files at or after the current file in the current directory.
+
+To select a contiguous block of files, use this command on the first file you want to select. Then, move down to the first file you do *not* want to select (the one after the end of the desired selection) and use this command again. This achieves an effect similar to the visual mode in vim.
+
+This command is experimental and may be removed once a better replacement for the visual mode is implemented in 'lf'. If you'd like to experiment with using this command, you should bind it to a key (e.g. 'V') for a better experience.
+
+unselect                 (default 'u')
+Remove the selection of all files in all directories.
+
+glob-select
+glob-unselect
+Select/unselect files that match the given glob.
+
+calcdirsize
+Calculate the total size for each of the selected directories. Option 'info' should include 'size' and option 'dircounts' should be disabled to show this size. If the total size of a directory is not calculated, it will be shown as '-'.
+
+copy                     (default 'y')
+If there are no selections, save the path of the current file to the copy buffer, otherwise, copy the paths of selected files.
+
+cut                      (default 'd')
+If there are no selections, save the path of the current file to the cut buffer, otherwise, copy the paths of selected files.
+
+paste                    (default 'p')
+Copy/Move files in copy/cut buffer to the current working directory. A custom 'paste' command can be defined to override this default.
+
+clear                    (default 'c')
+Clear file paths in copy/cut buffer.
+
+sync
+Synchronize copied/cut files with server. This command is automatically called when required.
+
+draw
+Draw the screen. This command is automatically called when required.
+
+redraw                   (default '<c-l>')
+Synchronize the terminal and redraw the screen.
+
+load
+Load modified files and directories. This command is automatically called when required.
+
+reload                   (default '<c-r>')
+Flush the cache and reload all files and directories.
+
+echo
+Print given arguments to the message line at the bottom.
+
+echomsg
+Print given arguments to the message line at the bottom and also to the log file.
+
+echoerr
+Print given arguments to the message line at the bottom as 'errorfmt' and also to the log file.
+
+cd
+Change the working directory to the given argument.
+
+select
+Change the current file selection to the given argument.
+
+delete         (modal)
+Remove the current file or selected file(s). A custom 'delete' command can be defined to override this default.
+
+rename         (modal)   (default 'r')
+Rename the current file using the builtin method. A custom 'rename' command can be defined to override this default.
+
+source
+Read the configuration file given in the argument.
+
+push
+Simulate key pushes given in the argument.
+
+read           (modal)   (default ':')
+Read a command to evaluate.
+
+shell          (modal)   (default '$')
+Read a shell command to execute.
+
+shell-pipe     (modal)   (default '%')
+Read a shell command to execute piping its standard I/O to the bottom statline.
+
+shell-wait     (modal)   (default '!')
+Read a shell command to execute and wait for a key press in the end.
+
+shell-async    (modal)   (default '&')
+Read a shell command to execute asynchronously without standard I/O.
+
+find           (modal)   (default 'f')
+find-back      (modal)   (default 'F')
+find-next                (default ';')
+find-prev                (default ',')
+Read key(s) to find the appropriate file name match in the forward/backward direction and jump to the next/previous match.
+
+search                   (default '/')
+search-back              (default '?')
+search-next              (default 'n')
+search-prev              (default 'N')
+Read a pattern to search for a file name match in the forward/backward direction and jump to the next/previous match.
+
+filter         (modal)
+setfilter
+Command 'filter' reads a pattern to filter out and only view files matching the pattern. Command 'setfilter' does the same but uses an argument to set the filter immediately. You can supply an argument to 'filter', in order to use that as the starting prompt.
+
+mark-save      (modal)   (default 'm')
+Save the current directory as a bookmark assigned to the given key.
+
+mark-load      (modal)   (default "'")
+Change the current directory to the bookmark assigned to the given key. A special bookmark "'" holds the previous directory after a 'mark-load', 'cd', or 'select' command.
+
+mark-remove    (modal)   (default '"')
+Remove a bookmark assigned to the given key.
+
+tag
+Tag a file with '*' or a single width character given in the argument. You can define a new tag clearing command by combining 'tag' with 'tag-toggle' (i.e. 'cmd tag-clear :tag; tag-toggle').
+
+tag-toggle               (default 't')
+Tag a file with '*' or a single width character given in the argument if the file is untagged, otherwise remove the tag.
+
+Command Line Commands ¶
+The prompt character specifies which of the several command-line modes you are in. For example, the 'read' command takes you to the ':' mode.
+
+When the cursor is at the first character in ':' mode, pressing one of the keys '!', '$', '%', or '&' takes you to the corresponding mode. You can go back with 'cmd-delete-back' ('<backspace>' by default).
+
+The command line commands should be mostly compatible with readline keybindings. A character refers to a unicode code point, a word consists of letters and digits, and a unix word consists of any non-blank characters.
+
+cmd-escape               (default '<esc>')
+Quit command line mode and return to normal mode.
+
+cmd-complete             (default '<tab>')
+Autocomplete the current word.
+
+cmd-menu-complete
+cmd-menu-complete-back
+Autocomplete the current word with menu selection. You need to assign keys to these commands (e.g. 'cmap <tab> cmd-menu-complete; cmap <backtab> cmd-menu-complete-back'). You can use the assigned keys assigned to display the menu and then cycle through completion options.
+
+cmd-menu-accept
+Accept the currently selected match in menu completion and close the menu.
+
+cmd-enter                (default '<c-j>' and '<enter>')
+Execute the current line.
+
+cmd-interrupt            (default '<c-c>')
+Interrupt the current shell-pipe command and return to the normal mode.
+
+cmd-history-next         (default '<c-n>' and '<down>')
+cmd-history-prev         (default '<c-p>' and '<up>')
+Go to next/previous item in the history.
+
+cmd-left                 (default '<c-b>' and '<left>')
+cmd-right                (default '<c-f>' and '<right>')
+Move the cursor to the left/right.
+
+cmd-home                 (default '<c-a>' and '<home>')
+cmd-end                  (default '<c-e>' and '<end>')
+Move the cursor to the beginning/end of line.
+
+cmd-delete               (default '<c-d>' and '<delete>')
+Delete the next character.
+
+cmd-delete-back          (default '<backspace>' and '<backspace2>')
+Delete the previous character. When at the beginning of a prompt, returns either to normal mode or to ':' mode.
+
+cmd-delete-home          (default '<c-u>')
+cmd-delete-end           (default '<c-k>')
+Delete everything up to the beginning/end of line.
+
+cmd-delete-unix-word     (default '<c-w>')
+Delete the previous unix word.
+
+cmd-yank                 (default '<c-y>')
+Paste the buffer content containing the last deleted item.
+
+cmd-transpose            (default '<c-t>')
+cmd-transpose-word       (default '<a-t>')
+Transpose the positions of last two characters/words.
+
+cmd-word                 (default '<a-f>')
+cmd-word-back            (default '<a-b>')
+Move the cursor by one word in forward/backward direction.
+
+cmd-delete-word          (default '<a-d>')
+Delete the next word in forward direction.
+
+cmd-capitalize-word      (default '<a-c>')
+cmd-uppercase-word       (default '<a-u>')
+cmd-lowercase-word       (default '<a-l>')
+Capitalize/uppercase/lowercase the current word and jump to the next word.
+
+maps
+List all key mappings

@@ -1,0 +1,8 @@
+sudo pacman -S xmonad xmonad-contrib xmonad-utils xmobar
+sudo pacman -S dmenu xterm
+ -- probably you need ghc compiler and haskell utilities -> see hhc tui for haskell  in troubleshouts (to install necessary pkgs)
+
+-- installing xmobar
+# mkdir /home/archlin/.config/xmobar
+# cp -r xmobar/ ~/.config/xmobar/xmobarrc
+

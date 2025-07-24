@@ -1,0 +1,10 @@
+paru cdrkit
+
+(cdrtools)
+
+small iso (4GB~)
+mkisofs output.iso /path/to/folder
+
+or big iso:
+
+ genisoimage -r -J -o Android_tv9_dual.iso /home/hnider/applications/system_app_images/android_images/Android_tv_pendrive_dual/

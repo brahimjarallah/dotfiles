@@ -1,0 +1,14 @@
+yay -S tesseract
+yay -S tesseract-data-eng
+yay -S tesseract-data-fra
+yay -S tesseract-data-ara
+
+### SYNTAX: ###
+tesseract imagename outputbase
+
+tesseract myimage.png ouputimage.txt
+
+
+Using Multiple Languages
+tesseract images/eurotext.png - -l eng+deu
+

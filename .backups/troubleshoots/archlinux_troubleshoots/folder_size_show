@@ -1,0 +1,43 @@
+*** Getting the Size of a Directory
+
+du -sh /home/Documents
+=>
+188k  /home/Documents
+
+
+----------------------------------------------------------------------
+sudo du -shc /var/*
+=>
+24K	/var/db
+4.0K	/var/empty
+4.0K	/var/games
+77G	/var/lib
+4.0K	/var/local
+0	/var/lock
+
+----------------------------------------------------------------------
+*** Get a report about the disk usage of the first-level subdirectories is to use the --max-depth option:
+
+sudo du -h --max-depth=1 /var
+=>
+77G	  /var/lib
+24K	  /var/db
+4.0K	/var/empty
+4.0K	/var/local
+4.0K	/var/opt
+196K	/var/spool
+
+----------------------------------------------------------------------
+By default, the du command shows the disk space used by the directory or file. To find the apparent size of a directory, use the --apparent-size option. The “apparent size” of a file is how much data is actually in the file.
+
+sudo du -sh --apparent-size /var
+
+----------------------------------------------------------------------
+
+sort the directories by their size and then pipe the output to the head command that will print only the top 5 directories:
+
+sudo du -h /var/ | sort -rh | head -5
+=>
+85G	/var/
+77G	/var/lib
+75G	/var/lib/libvirt/images

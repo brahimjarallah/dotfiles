@@ -1,0 +1,18 @@
+FROM node:17-alpine	// pulling node image
+
+WORKDIR /app		// specifiying working dir
+
+COPY package.json .	// copy json before npm deps
+
+RUN npm install		// install dependencies into img 
+COPY . .		// copying the src files into it
+
+EXPOSE 4000		// specify the port published to
+
+CMD ["node", "app.js"]  // specify the cmd exec to app
+
+--------------------------------------------------------
+
+To build image (create a new layer image):
+$ docker build -t myapp2 .  // builld app in current dir
+$ docker run --name myapp2_c -p 4000:4000 myapp2

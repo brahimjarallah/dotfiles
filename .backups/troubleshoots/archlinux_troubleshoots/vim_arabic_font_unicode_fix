@@ -1,0 +1,15 @@
+Unicode bidirectionality (bidi) offers the user the ability to view both right-to-left as well as left-to-right text properly at the same time within the same window. Vim, due to simplicity, does not offer bidi. Instead, it provides commands to make switching between the two directions easier.
+
+----------------------------------------------------------------------
+" switch to right-left mode (arabic)
+:set rl
+" switch to left-right mode (english)
+:set norl
+----------------------------------------------------------------------
+
+However, if your terminal supports bidi, you can tell Vim that the terminal is in charge of text direction with the termbidi setting:
+----------------------------------------------------------------------
+set termbidi
+----------------------------------------------------------------------
+
+If termbidi is set, changing the arabic setting will now only affect your keyboard mapping and the delcombine, which allows you to delete overlapping characters (fathah + letter) individually.

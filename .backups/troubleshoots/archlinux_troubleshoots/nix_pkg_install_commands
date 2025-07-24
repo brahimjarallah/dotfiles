@@ -1,0 +1,23 @@
+*** Installation ***
+Source: https://github.com/NixOS/nix
+
+curl -L https://nixos.org/nix/install | sh
+
+https://search.nixos.org/packages
+
+01--Or from terminal you can list all packages with :  nix-env -qaP
+02-then just grep what you are looking for. Example:  nix-env -qaP | grep hugo
+
+001-List Installed packages:	 	nix-env -q
+002-Install Packages:			nix-env -iA nixpkgs.packagename
+002.1-install pkg with nix--shell       nix-shell -p joplin-desktop
+003-Erase Packages:			nix-env -e packagename
+004-Update All Packages 			nix-env -u
+005-Update Specific Packages 		nix-env -u packagename
+006-Hold Specific Package 		nix-env --set-flag keep true packagename
+007-List Backups (Generations) 		nix-env --list-generations
+008-Rollback to Last Backup 		nix-env --rollback
+009-Rollback to Specific Generation 	nix-env --switch-generation #
+0010-list installed app generations	nix-env --list--generation
+0010-delete installed generations 1	nix-env --delete--generation 1
+0011-test app withou installing it	nix-shell -p <brave> 

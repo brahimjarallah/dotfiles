@@ -1,0 +1,11 @@
+3
+
+
+You can do it with the following sequence of keystrokes:
+
+in f2.dat file:
+
+gg0w<C-v>G$y
+in f1.dat file
+
+gg0$<C-v>G$A<Space><Esc>$p

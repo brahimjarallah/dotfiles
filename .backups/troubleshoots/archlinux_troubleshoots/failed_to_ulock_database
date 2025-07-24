@@ -1,0 +1,9 @@
+1- first remove ancien db:
+sudo rm /var/lib/pacman/db.lck
+
+2-  also you can update arch keyring:
+
+sudo pacman -Sy archlinux-keyring
+
+3- then 
+ pacman -Syu

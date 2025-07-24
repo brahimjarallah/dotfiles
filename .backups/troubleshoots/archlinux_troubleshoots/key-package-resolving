@@ -1,0 +1,13 @@
+» Pacman & Package Upgrade Issues
+Unable to update (key issues / corrupted packages)
+
+error: gnupg: signature from "Levente Polyak <anthraxx@archlinux.org>" is unknown trust
+:: File /var/cache/pacman/pkg/gnupg-2.2.32-1-x86_64.pkg.tar.zst is corrupted (invalid or corrupted package (PGP signature)).
+Do you want to delete it?
+
+
+--- refrech keys --- 
+# sudo pacman-key --refresh-keys
+
+--- validate keys ---
+# sudo pacman -Sy archlinux-keyring && sudo pacman -Su

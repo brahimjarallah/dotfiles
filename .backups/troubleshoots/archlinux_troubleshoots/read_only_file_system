@@ -1,0 +1,14 @@
+First, run this command with sudo permission:
+
+----------------------------------------------------------------------
+sudo fsck -n -f
+----------------------------------------------------------------------
+
+Then reboot the machine.
+----------------------------------------------------------------------
+reboot
+----------------------------------------------------------------------
+
+-f — Force checking even if the file system seems clean.
+
+-n — Open the file system read-only, and assume an answer of no to all questions. Allows e2fsck to be used non-interactively. This option may not be specified at the same time as the -p or -y options.

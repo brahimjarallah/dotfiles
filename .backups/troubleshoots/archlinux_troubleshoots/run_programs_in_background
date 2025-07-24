@@ -1,0 +1,15 @@
+setsid gnome-calculator
+gnome-calculator & disown
+(gnome-calculator &)
+nm-applet & exit
+nohup nm-applet &  
+
+
+bg
+fg
+jobs
+
+
+sudo rsync Templates/* /var/www/html/files/ &
+jobs
+disown  -h  %1

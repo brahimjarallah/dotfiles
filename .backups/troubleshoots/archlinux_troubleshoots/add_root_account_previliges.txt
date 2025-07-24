@@ -1,0 +1,35 @@
+## Create a Sudo User on Arch Linux
+
+1. Install sudo
+
+	# pacman --sync sudo
+
+2. Add a New User Account and set a strong password for the new user with the passwd tool.
+
+	# useradd --create-home example_user
+
+	# passwd example_user
+
+3. Add the User to the Wheel Group
+
+	# usermod --append --groups wheel example_user
+
+4. Edit Sudoers File
+
+	# sudo vim /etc/sudoers
+
+	## Uncomment to allow members of group wheel to execute any command
+	%wheel ALL=(ALL) ALL
+
+5. Test
+	Switch to the new user.
+	# su - example_user
+	
+	Verify you are the new user with whoami, then test sudo access with sudo whoami, 
+	which should return root.
+
+	$ whoami
+       	example_user
+
+	$ sudo whoami
+	-> root

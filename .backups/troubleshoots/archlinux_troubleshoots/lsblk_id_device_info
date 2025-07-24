@@ -1,0 +1,1 @@
+sudo lsblk -o name,size,fstype,label,model,serial,mountpoint

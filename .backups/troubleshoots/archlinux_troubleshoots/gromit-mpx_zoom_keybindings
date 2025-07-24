@@ -1,0 +1,10 @@
+F9	    ====> Toggle drawing
+Shift-F9    ====> Clear screen
+Ctrl-F9	    ====> Toggle visibility
+Alt-F9	    ====> Quit app
+Click	    ====> Draw with red pen (default)
+Shift-Click ====> Blue pen
+Ctrl-Click  ====> Yellow pen
+Wheel-btn   ====> Green pen with arrow
+Right click ====> Eraser
+

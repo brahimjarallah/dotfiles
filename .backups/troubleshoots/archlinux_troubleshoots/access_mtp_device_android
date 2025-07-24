@@ -1,0 +1,3 @@
+ cd /run/user/$UID/gvfs/
+ ls 
+ cd <intoDir>

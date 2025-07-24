@@ -1,0 +1,5 @@
+ *** dbus update env activ ***
+ dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY 
+
+ *** remove desktop unessacary portals: ***
+yay -R xdg-desktop-portal

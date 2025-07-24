@@ -1,0 +1,8 @@
+
+sudo apt install packaging-dev debian-keyring devscripts equivs
+
+
+rmadison coreutils --architecture amd64
+
+# Debian testing packages sources
+deb-src http://deb.debian.org/debian/ testing main

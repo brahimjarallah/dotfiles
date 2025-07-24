@@ -1,0 +1,14 @@
+--------------------------------------------------
+pass the USB device ID to the guest
+--------------------------------------------------
+
+Assigning an Alcor memory stick connected to the host to VM 804.
+Figure out in the host the Device Type by
+
+lsusb | grep Alcor
+
+** The result is:
+Bus 002 Device 013: ID 058f:6387 Alcor Micro Corp. Flash Drive
+Assign it to the VM by
+
+qm set 804 -usb0 host=058f:6387

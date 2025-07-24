@@ -1,0 +1,4 @@
+ sudo timedatectl set-timezone Africa/Tunis
+
+  sudo timedatectl status
+

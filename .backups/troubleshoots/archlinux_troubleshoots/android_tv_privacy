@@ -1,0 +1,9 @@
+No, Android TV requires Google Apps (and services) to work, otherwise is just AOSP.
+
+Best practice, don't sign in on Google Account, use AuroraStore and F-Droid client, block trackers/ads with a DNS blackhole (NextDNS, PiHole, Adguard...) or local blocker (Blockada, PersonaDNSFilter...), disable bloatware and unnecessary apps (don't disable Google Play Store, Google app or other system required app, otherwise will bootloop)
+
+fjoy
+organic maps
+osm
+tor
+

@@ -1,0 +1,18 @@
+[location]
+lat = 36.5731
+lon = 10.6722
+
+[prayer]
+method = "MuslimWorldLeague"
+madhab = "Shafi"
+fajr_mod = 0
+dohr_mod = 0
+asr_mod = 0
+maghrib_mod = 0
+isha_mod = 0
+
+[notification]
+notify_before = false
+urgency = "Critical"
+icon = "/usr/share/icons/mosque-svgrepo-com.png"
+interval = 20

@@ -1,0 +1,7 @@
+Important: First, install Node 12+.
+
+NPM_CONFIG_PREFIX=~/.joplin-bin npm install -g joplin
+sudo ln -s ~/.joplin-bin/bin/joplin /usr/bin/joplin
+
+By default, the application binary will be installed under ~/.joplin-bin. You may change this directory if needed. Alternatively, if your npm permissions are setup as described here (Option 2) then simply running npm -g install joplin would work.
+

@@ -1,0 +1,11 @@
+# vim /etc/httpd/conf.d/01-vhost.conf
+
+<VirtualHost *:80>
+   DocumentRoot /srv/main/www
+   CustomLog "logs/default-vshost.log" combined
+</VirtualHost>
+
+<Directory /srv/main/www>
+   Require all granted
+</Directory>
+ 

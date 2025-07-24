@@ -1,0 +1,36 @@
+
+ ### ***  TO FIRST LETTER UPPERCASE FILES_&_DIRS  *** ###
+
+#######################
+for f in *; do 
+    target="$(perl -lpe 's/.*/lc($&)/e; s/(^| )./uc($&)/ge' <<<"$f")"; 
+    [ -e "$target" ] && 
+        echo "File \"$target\" exists, skipping \"$f\"" || 
+        mv "$f" "$target"; 
+done
+#######################
+
+or
+for f in *; do mv -i "$f" "`echo $f | sed -e 's/\(.*\)/\L\1/' -e 's/\( .\)/\U\1/g' -e 's/\(^.\)/\U\1/g'`"; done
+
+or 
+#######################
+for f in *; do 
+    mv -i "$f" "`echo $f | 
+     sed -e 's/\(.*\)/\L\1/' -e 's/\( .\)/\U\1/g' -e 's/\(^.\)/\U\1/g'`"; 
+done
+######################
+
+ ### ***  TO LOWER FILES ONLY  *** ###
+
+find . -type f -exec sh -c  '
+    dn=`dirname "$1"`
+    bn=`basename "$1"`
+    fn=`echo "${bn%.*}"`
+    ext=`echo "${bn##*.}"`
+    FN=`echo "${fn^^}"`
+    newfn="${FN}"."${ext}"
+    #echo ${dn}/$newfn
+    if [ "${fn}" = "${FN}" ] ;then : ;else echo "${bn} renamed to ${newfn}";mv "$1" "${dn}/${newfn}";fi
+' _ {} \;
+

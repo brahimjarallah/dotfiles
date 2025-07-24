@@ -1,0 +1,11 @@
+sudo snapper -c root list
+sudo btrfs property list -ts /.snapshots/341/snapshot/
+sudo btrfs property set -ts /.snapshots/341/snapshot/ ro false
+sudo snapper --ambit classic rollback 341  
+sudo snapper rollback 341
+
+
+
+
+______________________
+ps: 341 = snapshot num

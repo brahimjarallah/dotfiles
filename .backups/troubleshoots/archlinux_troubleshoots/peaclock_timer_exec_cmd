@@ -1,0 +1,5 @@
+timer-exec 'notify-send -a peaclock "timer complete" && ~/backups/scripts_backups/exec_scripts/beep.sh'
+
+or 
+
+timer-exec 'notify-send -a peaclock "timer complete" && ~/backups/scripts_backups/exec_scripts/beep.sh'

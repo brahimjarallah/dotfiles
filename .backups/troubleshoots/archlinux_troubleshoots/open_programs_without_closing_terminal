@@ -1,0 +1,7 @@
+$ nohup <myProgram> &
+
+or
+
+$ <myProgram> &
+$ disown
+

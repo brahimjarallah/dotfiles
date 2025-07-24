@@ -1,0 +1,9 @@
+$ sudo -sE 
+
+or 
+
+yay -S xorg-xhost
+xhost
+xhost +si:localuser:root
+
+

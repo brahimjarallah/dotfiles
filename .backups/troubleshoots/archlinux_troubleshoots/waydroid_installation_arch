@@ -1,0 +1,86 @@
+--------------------------------------------------
+Install  install linux-zen kernel
+--------------------------------------------------
+sudo pacman -S linux-zen linux-zen-headers
+
+We need to tell systemd-boot to boot with the newly kernel installed
+
+sudo vim /etc/defaults/grub
+GRUB_DISABLE_SUBMENU=y
+GRUB_SAVEDEFAULT=true
+GRUB_DEFAULT=saved
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+SAVE the file and exit then reboot
+
+--------------------------------------------------
+Install waydroid
+--------------------------------------------------
+
+yay -S waydroid
+
+
+*** Warning !! (for google apps -> install waydroid-image-gapps , sudo waydroid -init -s GAPPS -f, then follow this script => https://github.com/casualsnek/waydroid_script) ***
+
+sudo pacman -S python-pip
+pip install pyclip
+
+--------------------------------------------------
+install vanilla waydroid final without gapps
+--------------------------------------------------
+sudo waydroid init
+
+sudo systemctl enable --now waydroid-container.service
+
+waydroid session start
+
+--------------------------------------------------
+*** Usage ***
+--------------------------------------------------
+
+** Launch full GUI:
+waydroid show-full-ui
+
+** Launch shell:
+waydroid shell
+
+** Install an application:
+waydroid app install <path_to_apk>
+
+
+Run an application:
+** waydroid app launch <package-name>
+or
+
+** List apps
+waydroid app list
+
+** enable multi_windows 
+waydroid prop set persist.waydroid.multi_windows true
+
+--------------------------------------------------
+** Network
+--------------------------------------------------
+**Dns traffic needs to be allowed:
+ufw allow 67
+ufw allow 53
+
+** Packet forwarding needs to be allowed:
+ufw default allow FORWARD
+
+** For firewalld, you can use those commands: DNS:
+firewall-cmd --zone=trusted --add-port=67/udp
+firewall-cmd --zone=trusted --add-port=53/udp
+
+** Packet forwarding:
+firewall-cmd --zone=trusted --add-forward
+
+** make it trusted permanent on firewalld
+firewall-cmd --runtime-to-permanent
+
+reboot
+
+** To upgrage 
+waydroid upgrade
+
+

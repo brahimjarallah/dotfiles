@@ -1,0 +1,9 @@
+-----------------------------------------------------------------
+Autobackup from remote server with rsync command without password
+-----------------------------------------------------------------
+crontab -e
+
+
+
+rsync -aAXvhP --delete --exclude={share,srv,trash,.cache} -e ssh /home/brahim/ srv@10.27.7.191:/mnt/srv/home/ --password-file=~/rsync.pass
+

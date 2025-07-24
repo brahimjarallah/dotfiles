@@ -1,0 +1,27 @@
+
+If you want to move only the first file in a directory, to the current working directory, you can use for, because it loops over files in an ordered way. Replace /path/to/ with the real path to your POSCARS directory, and test it first like this with echo:
+----------------------------------------------------------------------
+for file in /path/to/POSCARS/* ; do echo mv -v -- "$file" . ; break ; done
+----------------------------------------------------------------------
+
+This will find the first file in POSCARS and simulate moving it to the current working directory. If it shows what you want, then re-run the command without echo to actually move the file:
+
+----------------------------------------------------------------------
+for file in /path/to/POSCARS/* ; do mv -v -- "$file" . ; break ; done
+----------------------------------------------------------------------
+mv -v -- move the file and report the action, then do not accept further options
+. is the current working directory
+break means break the loop after the first iteration, so it will stop moving files after finding the first one
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+or 
+
+mv `ls | head -2` folder/
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+or
+
+mv -- *(D.oN[-1]) folder/

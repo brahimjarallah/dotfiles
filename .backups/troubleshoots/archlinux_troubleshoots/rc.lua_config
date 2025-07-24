@@ -1,0 +1,18 @@
+# sudo pacman -S xorg-xprop
+
+# sudo find / -iname "rc.lua"
+----------
+
+# mkdir -p .config/awesome/
+
+# sudo cp /etc/xdg/awesome/rc.lua .config/awesome/
+----------
+
+# mkdir .config/awesome/themes/
+
+#  sudo cp /usr/share/awesome/themes/default/theme.lua .config/awesome/themes/themes.lua
+
+----------
+
+
+

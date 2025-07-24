@@ -1,0 +1,6 @@
+tablet
+bluetooth-sendto --device=80:20:FD:2D:92:53  ~/Applications/ANDROID_APPS/PHOTO_TOOLS/Text_Scanner_base.apk
+
+phone:
+bluetooth-sendto --device=24:FB:65:63:68:2F  ~/Applications/ANDROID_APPS/GAMES_LEISURE_SPORT/8_Ball_Pool_base.apk
+

@@ -1,0 +1,5 @@
+sudo snapper -c home create-config /home
+
+### the config home created at /etc/snapper/configs/home ###
+
+

@@ -1,0 +1,105 @@
+## Set timer for 15 minutes and start it immediately
+timer 15m
+timer start
+
+# When timer ends, send a desktop notification and play a sound
+timer-exec 'notify-send -a peaclock "Timer complete" && mpv --no-terminal ~/sounds/notification.wav'
+
+# Set initial mode to timer
+mode timer
+
+# Enable 24-hour time format
+time-format 24h
+
+# Show seconds in clock display
+show-seconds true
+
+# Show date below the time
+show-date true
+
+# Set color scheme (24-bit colors)
+active-foreground-color "#93cee9"
+inactive-foreground-color "#868686"
+background-color "#1c1c1c"
+
+background_opacity 0.9
+foreground #ffcc00
+
+
+# Views: digital, ASCII, binary, icon — toggle with keys during runtime
+view digital
+
+# Layout options
+auto-size true          # Auto resize based on terminal window
+auto-ratio true         # Maintain aspect ratio automatically
+padding 1 1             # X Y padding (spaces)
+margin 0 0              # X Y margin
+block-size 4 7          # Width Height of blocks (digits)
+
+# Locale and timezone (optional)
+locale en_US.UTF-8
+timezone UTC
+
+# Key bindings hints:
+# q - quit
+# <space> - start/stop timer or stopwatch
+# w/e/r - switch clock/timer/stopwatch mode
+# s - toggle seconds
+# d - toggle date
+# a - toggle 12/24 hour format
+# x/c - adjust colors (active/inactive fg)
+# f/g - toggle auto-size and auto-ratio
+# u/i/o/p - adjust ratio, margin, padding, block size
+
+# End of config
+ Set timer for 15 minutes and start it immediately
+timer 15m
+timer start
+
+# When timer ends, send a desktop notification and play a sound
+timer-exec 'notify-send -a peaclock "Timer complete" && mpv --no-terminal ~/sounds/notification.wav'
+
+# Set initial mode to timer
+mode timer
+
+# Enable 24-hour time format
+time-format 24h
+
+# Show seconds in clock display
+show-seconds true
+
+# Show date below the time
+show-date true
+
+# Set color scheme (24-bit colors)
+active-foreground-color "#93cee9"
+inactive-foreground-color "#868686"
+background-color "#1c1c1c"
+
+# Views: digital, ASCII, binary, icon — toggle with keys during runtime
+view digital
+
+# Layout options
+auto-size true          # Auto resize based on terminal window
+auto-ratio true         # Maintain aspect ratio automatically
+padding 1 1             # X Y padding (spaces)
+margin 0 0              # X Y margin
+block-size 4 7          # Width Height of blocks (digits)
+
+# Locale and timezone (optional)
+locale en_US.UTF-8
+timezone UTC
+
+# Key bindings hints:
+# q - quit
+# <space> - start/stop timer or stopwatch
+# w/e/r - switch clock/timer/stopwatch mode
+# s - toggle seconds
+# d - toggle date
+# a - toggle 12/24 hour format
+# x/c - adjust colors (active/inactive fg)
+# f/g - toggle auto-size and auto-ratio
+# u/i/o/p - adjust ratio, margin, padding, block size
+
+# End of config
+
