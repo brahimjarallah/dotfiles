@@ -13,6 +13,13 @@ set -euo pipefail
 # Path to the Borg repository where backups will be stored
 REPO="/mnt/backup/borg-repo"
 
+if [ ! -d "$REPO" ]; then
+    echo "📁 Directory $REPO does not exist. Creating..."
+    mkdir -p "$REPO" && echo "✅ Created $REPO successfully."
+else
+    echo "✔️ Directory $REPO already exists."
+fi
+
 # Path to the log file where all backup actions will be recorded
 LOG_FILE="/var/log/borg-backup.log"
 
