@@ -1,146 +1,218 @@
 #!/bin/bash
-# This script performs a full system backup using BorgBackup
-# It includes logging, safety checks, exclusions, and a retention policy
+# Arch Linux Btrfs Borg Backup Script
+# Safe backup using Btrfs snapshots approach
+# Manual execution only
 
-# Safety flags to make script more robust:
-# -e: exit immediately if a command fails
-# -u: treat unset variables as an error
-# -o pipefail: if any command in a pipeline fails, the whole pipeline fails
 set -euo pipefail
 
-# --------------- CONFIGURATION SECTION ---------------
-
-# Path to the Borg repository where backups will be stored
+# --------------- CONFIGURATION ---------------
 REPO="/mnt/backup/borg-repo"
-
-# Path to the log file where all backup actions will be recorded
+SNAPSHOT_DIR="/mnt/snapshots-backup"
 LOG_FILE="/var/log/borg-backup.log"
-
-# Get the current hostname (useful for naming the backup)
 HOSTNAME=$(hostname)
-
-# Create a unique backup name using hostname and current date+time
-# Example: myhost-2025-07-24-113020
 BACKUP_NAME="${HOSTNAME}-$(date +%Y-%m-%d-%H%M%S)"
 
-# --------------- LOGGING FUNCTION ---------------
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
-# Simple logging function that prints a timestamped message to stdout and appends it to the log file
+# --------------- LOGGING FUNCTION ---------------
 log() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+    local level="$1"
+    shift
+    local message="$*"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    
+    case $level in
+        "INFO") echo -e "${BLUE}[INFO]${NC} $message" | tee -a "$LOG_FILE" ;;
+        "SUCCESS") echo -e "${GREEN}[SUCCESS]${NC} $message" | tee -a "$LOG_FILE" ;;
+        "WARNING") echo -e "${YELLOW}[WARNING]${NC} $message" | tee -a "$LOG_FILE" ;;
+        "ERROR") echo -e "${RED}[ERROR]${NC} $message" | tee -a "$LOG_FILE" ;;
+    esac
+    echo "$timestamp - [$level] $message" >> "$LOG_FILE"
 }
 
+# --------------- CLEANUP FUNCTION ---------------
+cleanup() {
+    log "INFO" "Cleaning up temporary snapshots..."
+    
+    if [ -d "$SNAPSHOT_DIR/root-snapshot" ]; then
+        sudo btrfs subvolume delete "$SNAPSHOT_DIR/root-snapshot" 2>/dev/null || true
+    fi
+    
+    if [ -d "$SNAPSHOT_DIR/home-snapshot" ]; then
+        sudo btrfs subvolume delete "$SNAPSHOT_DIR/home-snapshot" 2>/dev/null || true
+    fi
+    
+    if [ -d "$SNAPSHOT_DIR" ] && [ -z "$(ls -A $SNAPSHOT_DIR 2>/dev/null)" ]; then
+        sudo rmdir "$SNAPSHOT_DIR" 2>/dev/null || true
+    fi
+    
+    # Clean up temporary files
+    rm -f /tmp/pkglist.txt /tmp/aur.txt 2>/dev/null || true
+}
+
+# Set trap to cleanup on exit
+trap cleanup EXIT
+
 # --------------- SAFETY CHECKS ---------------
+log "INFO" "Starting Borg backup: $BACKUP_NAME"
 
-# Check if the mount point for the external backup drive is active
+# Check if running as root (we need sudo for snapshots)
+if [[ $EUID -eq 0 ]]; then
+    log "ERROR" "Don't run this script as root directly. Use sudo when needed."
+    exit 1
+fi
+
+# Check if backup drive is mounted
 if ! mountpoint -q /mnt/backup; then
-    log "❌ Backup drive not mounted at /mnt/backup"
+    log "ERROR" "Backup drive not mounted at /mnt/backup"
     exit 1
 fi
 
-# Check if the Borg repository directory exists
+# Check if repository exists
 if [ ! -d "$REPO" ]; then
-    log "❌ Borg repository not found at $REPO"
+    log "ERROR" "Borg repository not found at $REPO"
+    log "INFO" "Run: borg init --encryption=none $REPO"
     exit 1
 fi
 
-# --------------- BEGIN BACKUP ---------------
+# Check available space (rough estimate)
+AVAILABLE_SPACE=$(df /mnt/backup | awk 'NR==2 {print $4}')
+if [ "$AVAILABLE_SPACE" -lt 10485760 ]; then # Less than 10GB
+    log "WARNING" "Low disk space on backup drive (less than 10GB available)"
+fi
 
-log "Starting Borg backup: $BACKUP_NAME"
+# --------------- CREATE PACKAGE LISTS ---------------
+log "INFO" "Creating package lists for system reconstruction..."
 
-# Create list of installed packages from official repositories
-# `pacman -Qqen`: list of explicitly installed native packages
-log "Creating package lists"
-pacman -Qqen > /tmp/pkglist.txt
+pacman -Qqen > /tmp/pkglist.txt 2>/dev/null || {
+    log "ERROR" "Failed to create package list"
+    exit 1
+}
 
-# List of AUR or foreign packages (installed manually)
-pacman -Qqem > /tmp/aur.txt
+pacman -Qqem > /tmp/aur.txt 2>/dev/null || {
+    log "WARNING" "Failed to create AUR package list (continuing anyway)"
+    touch /tmp/aur.txt
+}
 
-# --------------- RUN BORG BACKUP ---------------
+log "SUCCESS" "Package lists created successfully"
 
-# The `borg create` command does the actual backup.
-# Below are the options and what they mean:
+# --------------- CREATE BTRFS SNAPSHOTS ---------------
+log "INFO" "Creating Btrfs snapshots for consistent backup..."
 
+# Create snapshot directory
+sudo mkdir -p "$SNAPSHOT_DIR"
+
+# Create root snapshot
+if ! sudo btrfs subvolume snapshot -r / "$SNAPSHOT_DIR/root-snapshot"; then
+    log "ERROR" "Failed to create root snapshot"
+    exit 1
+fi
+
+# Create home snapshot  
+if ! sudo btrfs subvolume snapshot -r /home "$SNAPSHOT_DIR/home-snapshot"; then
+    log "ERROR" "Failed to create home snapshot"
+    exit 1
+fi
+
+log "SUCCESS" "Snapshots created successfully"
+
+# --------------- PERFORM BACKUP ---------------
+log "INFO" "Starting Borg backup process..."
+
+# Run the backup
 borg create \
-    --verbose \                        # Print detailed output
-    --filter AME \                     # Show Added/Modified/Existing files
-    --list \                           # List all files being backed up
-    --stats \                          # Show statistics after backup
-    --show-rc \                        # Show return code at end
-    --compression lz4 \                # Use LZ4 compression (fast, light)
-    --exclude-caches \                 # Exclude cache directories with CACHEDIR.TAG
-    --exclude '/dev/*' \               # Exclude device files
-    --exclude '/proc/*' \              # Exclude virtual proc filesystem
-    --exclude '/sys/*' \               # Exclude sysfs
-    --exclude '/tmp/*' \               # Exclude temporary files
-    --exclude '/run/*' \               # Exclude runtime data
-    --exclude '/mnt/*' \               # Avoid backing up other mounted drives
-    --exclude '/media/*' \             # Same for media
-    --exclude '/lost+found' \          # Don't backup recovered fs data
-    --exclude '/var/tmp/*' \           # Temporary system files
-    --exclude '/var/cache/pacman/pkg/*' \ # Pacman package cache (can be redownloaded)
-    --exclude '/.snapshots/*' \        # Exclude Btrfs snapshots
-    --exclude '/home/*/.cache/*' \     # Exclude user cache directories
-    --exclude '/home/*/.local/share/Trash/*' \ # Exclude user trash
-    --exclude '/home/*/.mozilla/firefox/*/Cache/*' \ # Firefox cache
-    --exclude '/home/*/.config/google-chrome/*/Cache/*' \ # Chrome cache
-    --exclude '/home/*/.config/BraveSoftware/Brave-Browser/*/Cache/*' \  # Brave cache
-    --exclude '/home/*/.steam/steam/steamapps/*' \ # Exclude Steam downloaded games
-    \
-    "$REPO::$BACKUP_NAME" \            # Destination: repo + archive name
-    / \                                # Include root filesystem
-    /tmp/pkglist.txt \                 # Also include package list
-    /tmp/aur.txt                       # And AUR package list
+    --verbose \
+    --filter AME \
+    --list \
+    --stats \
+    --show-rc \
+    --compression lz4 \
+    --exclude-caches \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/dev/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/proc/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/sys/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/tmp/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/run/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/mnt/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/media/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/lost+found" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/var/tmp/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/var/cache/pacman/pkg/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/.snapshots/*" \
+    --exclude "$SNAPSHOT_DIR/root-snapshot/var/lib/docker/*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.cache/*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.local/share/Trash/*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.mozilla/firefox/*/Cache*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.config/google-chrome/*/Cache*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.config/BraveSoftware/*/Cache*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.config/chromium/*/Cache*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.steam/steam/steamapps/*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/Downloads/tmp/*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.local/share/virtualenv/*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.docker/*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/VirtualBox VMs/*" \
+    --exclude "$SNAPSHOT_DIR/home-snapshot/*/.vagrant.d/boxes/*" \
+    "$REPO::$BACKUP_NAME" \
+    "$SNAPSHOT_DIR/root-snapshot" \
+    "$SNAPSHOT_DIR/home-snapshot" \
+    /boot \
+    /tmp/pkglist.txt \
+    /tmp/aur.txt
 
-# Store the exit code of the borg command to handle it later
 backup_exit=$?
 
-# --------------- CLEANUP TEMP FILES ---------------
-
-# Remove the temporary package list files we created earlier
-rm -f /tmp/pkglist.txt /tmp/aur.txt
-
-# --------------- LOG BACKUP RESULT ---------------
-
-log "Backup finished with exit code: $backup_exit"
-
-# If the backup succeeded
+# --------------- CHECK BACKUP RESULT ---------------
 if [ $backup_exit -eq 0 ]; then
-    log "✅ Backup completed successfully: $BACKUP_NAME"
+    log "SUCCESS" "Backup completed successfully: $BACKUP_NAME"
+elif [ $backup_exit -eq 1 ]; then
+    log "WARNING" "Backup completed with warnings: $BACKUP_NAME"
+    log "INFO" "Warning status is normal for system backups (permission issues, etc.)"
 else
-    # If it failed, log and exit with same code
-    log "❌ Backup failed with exit code: $backup_exit"
+    log "ERROR" "Backup failed with exit code: $backup_exit"
     exit $backup_exit
 fi
 
-# --------------- PRUNE OLD BACKUPS (RETENTION POLICY) ---------------
+# --------------- RETENTION POLICY (PRUNE) ---------------
+log "INFO" "Applying retention policy (pruning old backups)..."
 
-log "Pruning old backups"
-
-# Run `borg prune` to keep only the latest:
-# - 7 daily backups
-# - 4 weekly backups
-# - 6 monthly backups
 borg prune \
-    --list \                      # Show each archive pruned
-    --prefix "${HOSTNAME}-" \    # Only delete backups matching this hostname prefix
-    --show-rc \                   # Show return code
-    --keep-daily 7 \              # Keep last 7 days
-    --keep-weekly 4 \            # Keep last 4 weeks
-    --keep-monthly 6 \           # Keep last 6 months
-    "$REPO"                      # Target Borg repository
+    --list \
+    --prefix "${HOSTNAME}-" \
+    --show-rc \
+    --keep-daily 7 \
+    --keep-weekly 4 \
+    --keep-monthly 6 \
+    "$REPO"
 
-# Store exit status of prune command
 prune_exit=$?
 
-# --------------- LOG PRUNE RESULT ---------------
-
-# Log whether prune succeeded or failed
 if [ $prune_exit -eq 0 ]; then
-    log "✅ Pruning completed successfully"
+    log "SUCCESS" "Retention policy applied successfully"
 else
-    log "❌ Pruning failed with exit code: $prune_exit"
+    log "ERROR" "Pruning failed with exit code: $prune_exit"
 fi
 
-log "Borg backup operation completed"
+# --------------- FINAL STATUS ---------------
+log "INFO" "Backup operation completed"
+log "INFO" "Repository location: $REPO"
+log "INFO" "Archive name: $BACKUP_NAME"
 
+# Show repository stats
+log "INFO" "Repository statistics:"
+borg info "$REPO" | tail -n 10
+
+log "SUCCESS" "All operations completed successfully!"
+
+echo
+echo -e "${GREEN}=== BACKUP COMPLETED ===${NC}"
+echo -e "Archive: ${BLUE}$BACKUP_NAME${NC}"
+echo -e "Log file: ${BLUE}$LOG_FILE${NC}"
+echo
+echo "To list all backups: borg list $REPO"
+echo "To mount a backup: borg mount $REPO::$BACKUP_NAME /tmp/restore"
+echo

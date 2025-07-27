@@ -69,6 +69,11 @@ alias ld='eza -lhD --icons=auto' # long list dirs
 alias lt='eza --icons=auto --tree' # list folder as tree
 alias un='$aurhelper -Rns' # uninstall package
 alias up='$aurhelper -Syu' # update system/package/aur
+alias p='peaclock' # show peaclock tui
+alias t='timedatectl | grep "Local time" | awk '\''{print substr($5,1,5)}'\' # shows only the current time
+alias ca='timedatectl | grep "Local time" | awk '\''{print $4}'\' # shows only time cal
+
+
 alias pl='$aurhelper -Qs' # list installed package
 alias pa='$aurhelper -Ss' # list available package
 alias pc='$aurhelper -Sc' # remove unused cache
