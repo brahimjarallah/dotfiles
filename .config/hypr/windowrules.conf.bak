@@ -84,6 +84,7 @@ windowrulev2 = float, class:^(thunar)$, workspace:special
 windowrulev2 = center, class:^(thunar)$, workspace:special  
 windowrulev2 = size 70% 60%, class:^(thunar)$, workspace:special
 
+
 windowrulev2 = float,class:^(mousepad)$
 windowrulev2 = float,class:^(protonmail)$
 windowrulev2 = float,class:^(xpad)$
@@ -112,18 +113,7 @@ windowrulev2 = float,class:^(io.missioncenter.MissionCenter)$ # MissionCenter-Gt
 
 # Window rules for scratchpads
 windowrulev2 = float,class:^(kitty-scratch)$
-windowrulev2 = float,class:^(google-translate)$
-#windowrulev2 = float,class:^(brave-scratch)$
 windowrulev2 = float,class:^(peaclock-scratch)$
-windowrulev2 = float,class:^(chatgpt-app)$
-windowrulev2 = float,class:^(claude-app)$
-windowrulev2 = float,class:^(grok-app)$
-windowrulev2 = float,class:^(gemini-app)$
-windowrulev2 = float,class:^(google-app)$
-windowrulev2 = float,class:^(notebooklm-app)$
-windowrulev2 = float,class:^(neuralwriter-app)$
-windowrulev2 = float,class:^(paste-formatter-app)$
-
 
 # common modals
 windowrule = float,title:^(Open)$

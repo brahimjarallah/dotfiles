@@ -72,7 +72,8 @@ alias up='$aurhelper -Syu' # update system/package/aur
 alias p='peaclock' # show peaclock tui
 alias t='timedatectl | grep "Local time" | awk '\''{print substr($5,1,5)}'\' # shows only the current time
 alias ca='timedatectl | grep "Local time" | awk '\''{print $4}'\' # shows only time cal
-
+alias k='killall'
+alias sc='scrcpy -d' # remote control android from laptop
 
 alias pl='$aurhelper -Qs' # list installed package
 alias pa='$aurhelper -Ss' # list available package
@@ -126,10 +127,6 @@ alias mkdir='mkdir -p'
 chx() {
   [[ $1 ]] || { echo "Usage: mkshx <file.sh>"; return 1; }
   install -m755 /dev/stdin "$1" <<EOF
-#!/usr/bin/env bash
-set -euo pipefail
-
-echo "Hello from \$0"
 EOF
   ${EDITOR:-nvim} "$1"
 }
@@ -167,6 +164,9 @@ export KICAD_FOOTPRINT_DIR=/usr/share/kicad/footprints
 export KICAD_3DMODEL_DIR=/usr/share/kicad/3dmodels
 export EDITOR=vim
 export VISUAL=vim
+export XDG_DOWNLOAD_DIR="$HOME/downloads"
+
+
 
 
 
@@ -191,3 +191,18 @@ alias rsync-system="sudo /usr/local/bin/backup-scripts/rsync-backup system"
 alias rsync-all="sudo /usr/local/bin/backup-scripts/rsync-backup all"
 alias combined-backup="sudo /usr/local/bin/backup-scripts/combined-backup"
 alias backup-browse="ls -la /mnt/backup/ && echo && cat /mnt/backup/rsync-backup-info.txt"
+export PATH="$HOME/.local/bin:$PATH"
+
+# Shell-GPT integration ZSH v0.2
+_sgpt_zsh() {
+if [[ -n "$BUFFER" ]]; then
+    _sgpt_prev_cmd=$BUFFER
+    BUFFER+="⌛"
+    zle -I && zle redisplay
+    BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd" --no-interaction)
+    zle end-of-line
+fi
+}
+zle -N _sgpt_zsh
+bindkey ^l _sgpt_zsh
+# Shell-GPT integration ZSH v0.2
