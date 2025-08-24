@@ -98,7 +98,7 @@ alias gitbare-pull='gitbare pull --rebase'
 alias gitbare-log='gitbare log --oneline -10'
 alias gitbare-diff='gitbare diff --name-only'
 alias gitbare-unstage='gitbare reset HEAD'
-
+alias ytmp3='yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail --add-metadata -o "~/Downloads/%(title)s.%(ext)s"'
 
 
 
@@ -113,6 +113,8 @@ alias cda='cd ~/troubleshoots_backups/archlinux_troubleshoots'
 alias cdi='cd ~/.backups/scripts/install_scripts'
 alias cdt='cd ~/.backups/scripts/troubleshoots_scripts'
 alias cdc='cd ~/.backups/scripts/config_scripts'
+alias cdo='cd ~/.personal-backup/official/'
+alias w="weylus &"
 
 
 alias mkdir='mkdir -p'
@@ -175,11 +177,11 @@ export XDG_DOWNLOAD_DIR="$HOME/downloads"
 #fi
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 # Backup management aliases
-alias backup-status="sudo /usr/local/bin/backup-scripts/backup-status"
-alias backup-snapshot="sudo /usr/local/bin/backup-scripts/btrfs-snapshot"
-alias backup-cleanup="sudo /usr/local/bin/backup-scripts/btrfs-cleanup"
-alias backup-borg="sudo /usr/local/bin/backup-scripts/borg-backup"
-alias backup-list="sudo borg list /mnt/backup/borg-repo"
+alias btrfs-status="sudo /usr/local/bin/backup-scripts/backup-status"
+alias btrfs-snapshot="sudo /usr/local/bin/backup-scripts/btrfs-snapshot"
+alias btrfs-cleanup="sudo /usr/local/bin/backup-scripts/btrfs-cleanup"
+alias btrfs-borg="sudo /usr/local/bin/backup-scripts/borg-backup"
+alias btrfs-list="sudo borg list /mnt/backup/borg-repo"
 
 
 
@@ -206,3 +208,4 @@ fi
 zle -N _sgpt_zsh
 #bindkey ^l _sgpt_zsh
 # Shell-GPT integration ZSH v0.2
+export PATH=$HOME/.npm-global/bin:$PATH

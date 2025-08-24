@@ -1,0 +1,22 @@
+# Create headless
+hyprctl output create headless
+
+# Wait for it to appear
+timeout=5
+for i in $(seq 1 $timeout); do
+    output=$(hyprctl monitors | grep HEADLESS-)
+    if [ -n "$output" ]; then
+        break
+    fi
+    sleep 0.2
+done
+
+# Get the first HEADLESS monitor name
+HEADLESS_NAME=$(hyprctl monitors | grep HEADLESS- | awk '{print $2}' | head -n1)
+
+# Set resolution
+hyprctl keyword monitor "$HEADLESS_NAME,1280x720@60,-1920x0,1"
+
+# Start WayVNC on it
+wayvnc -o "$HEADLESS_NAME" -f 60 -v &
+
