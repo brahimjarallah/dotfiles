@@ -1,0 +1,22 @@
+(
+    # Show previews + icons like Windows
+    window_previews: true,
+    show_icons: true,
+
+    # Order windows by most recently used (MRU)
+    switch_order: "MRU",
+
+    # Close when releasing Alt (like Windows)
+    close_on_release: true,
+
+    # Nice layout
+    layout: "grid",   # options: grid, row, column
+
+    # Optional: theme tweaks
+    theme: (
+        border_radius: 12,
+        highlight_color: "#5294E2", # Windows blue
+        background: "#1E1E1Ecc",
+    ),
+)
+

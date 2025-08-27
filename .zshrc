@@ -74,7 +74,7 @@ alias t='timedatectl | grep "Local time" | awk '\''{print substr($5,1,5)}'\' # s
 alias ca='timedatectl | grep "Local time" | awk '\''{print $4}'\' # shows only time cal
 alias k='killall'
 alias sc='scrcpy -d' # remote control android from laptop
-
+alias h='htop'
 alias pl='$aurhelper -Qs' # list installed package
 alias pa='$aurhelper -Ss' # list available package
 alias pc='$aurhelper -Sc' # remove unused cache
