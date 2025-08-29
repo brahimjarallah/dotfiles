@@ -8,39 +8,51 @@ zoom_factor = 1.5
 nearest_neighbor = false
 
 # Scratchpads configuration
-[scratchpads.term]
-command = "kitty --class kitty-scratch"
-animation = "fromTop"
-class = "kitty-scratch"
-size = "75% 60%"
-margin = 50
-lazy = false
 
 [scratchpads.thunar]
 command = "thunar"
+autostart = false
 class = "org.xfce.Thunar"
 animation = "fromTop"
 size = "70% 60%"
 margin = 50
-lazy = true
+lazy = true   # <-- this forces startup spawn
+
+
+[scratchpads.term]
+command = "kitty --class kitty-scratch"
+autostart = false
+animation = "fromTop"
+class = "kitty-scratch"
+size = "75% 60%"
+margin = 50
+lazy = true   # <-- this forces startup spawn
+
 
 [scratchpads.vlc]
 command = "vlc"
+autostart = false
 animation = "fromBottom"
 class = "vlc"
 size = "80% 70%"
 margin = 50
+lazy = true   # <-- this forces startup spawn
 
 [scratchpads.mousepad]
 command = "mousepad"
+autostart = false
 animation = "fromLeft"
 class = "mousepad"
 size = "70% 80%"
 margin = 5
+lazy = true   # <-- this forces startup spawn
 
 [scratchpads.peaclock]
 command = "kitty --class peaclock-scratch -e peaclock"
+autostart = false
 animation = "fromTop"
 class = "peaclock-scratch"
 size = "50% 40%"
 margin = 100
+lazy = true   # <-- this forces startup spawn
+
