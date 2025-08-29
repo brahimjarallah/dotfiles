@@ -114,6 +114,7 @@ alias cdi='cd ~/.backups/scripts/install_scripts'
 alias cdt='cd ~/.backups/scripts/troubleshoots_scripts'
 alias cdc='cd ~/.backups/scripts/config_scripts'
 alias cdo='cd ~/.personal-backup/official/'
+alias cdk='~/.backups/scripts/execution_scripts/key-back.sh'
 alias w="weylus &"
 
 
